@@ -2,10 +2,12 @@ import express from 'express';
 import dotenv from 'dotenv';
 import budgetRoute from './routes/budgetRoutes.js';
 import errorHandler from './middleware/errorMiddleware.js';
-
+import connectDB from './config/db.js';
+import colors from 'colors'; // Allows the use of Colors in temrinal.
 dotenv.config();
 const port = process.env.PORT || 8000;
 
+connectDB();
 const app = express();
 
 app.use(express.json());

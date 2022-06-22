@@ -1,3 +1,5 @@
+import { Budget } from '../models/budgetModel.js';
+
 /**
  * Function used to get a budget from MongoDb.
  *
@@ -8,9 +10,10 @@
  * @param {object} res  The response object.
  */
 export async function getBudget(req, res) {
+  const budget = await Budget.find();
   return res
     .status(200)
-    .json({ version: 1, message: 'From Controllers', ...req?.query });
+    .json({ version: 1, message: 'From Controllers', ...req?.query, budget });
 }
 
 /**
@@ -29,7 +32,12 @@ export async function setBudget(req, res) {
     res.status(400);
     throw new Error('Please add a text field');
   }
-  return res.status(200).json({ version: 1, goal: 'Set Budget' });
+
+  const budget = await Budget.create({
+    text,
+  });
+
+  return res.status(200).json({ version: 1, goal: 'Set Budget', budget });
 }
 
 /**
