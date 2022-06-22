@@ -8,6 +8,7 @@ const BudgetItemSchema = new mongoose.Schema(
     },
     event: { type: String },
     amount: { type: mongoose.Decimal128 },
+    date: Date,
   },
   {
     timestamps: true,
