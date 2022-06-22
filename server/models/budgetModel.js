@@ -1,16 +1,17 @@
 import mongoose from 'mongoose';
 
-export const Budget = mongoose.model(
-  'Budget',
-  mongoose.Schema(
-    {
-      text: {
-        type: String,
-        required: [true, 'Please add a text value (schema)'],
-      },
+const BudgetItemSchema = new mongoose.Schema(
+  {
+    item: {
+      type: String,
+      required: [true, 'Please add an item.'],
     },
-    {
-      timestamps: true,
-    }
-  )
+    event: { type: String },
+    amount: { type: mongoose.Decimal128 },
+  },
+  {
+    timestamps: true,
+  }
 );
+
+export const Budget = mongoose.model('Budget', BudgetItemSchema);

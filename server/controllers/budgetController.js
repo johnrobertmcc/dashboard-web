@@ -10,10 +10,42 @@ import { Budget } from '../models/budgetModel.js';
  * @param {object} res  The response object.
  */
 export async function getBudget(req, res) {
-  const budget = await Budget.find();
-  return res
-    .status(200)
-    .json({ version: 1, message: 'From Controllers', ...req?.query, budget });
+  const {
+    item = null,
+    amount = null,
+    event = null,
+    id = null,
+    lte = null,
+    gte = null,
+  } = req?.query;
+
+  let searchParams = {};
+
+  if (id) {
+    searchParams._id = id;
+  }
+  if (item) {
+    searchParams.item = item;
+  }
+  if (event) {
+    searchParams.event = event;
+  }
+  if (amount) {
+    searchParams.amount = amount;
+  }
+  if (lte) {
+    searchParams.amount = { $lte: lte };
+  }
+  if (gte) {
+    searchParams.amount = { $gte: gte };
+  }
+
+  const budget = await Budget.find(searchParams);
+  return res.status(200).json({
+    version: process.env.VERSION,
+    items: budget?.length,
+    budget,
+  });
 }
 
 /**
@@ -26,18 +58,20 @@ export async function getBudget(req, res) {
  * @param {object} res  The response object.
  */
 export async function setBudget(req, res) {
-  const { text = null } = req?.body;
+  const { item = null, event = null, amount = 0 } = req?.body;
 
-  if (!text) {
+  if (!item) {
     res.status(400);
-    throw new Error('Please add a text field');
+    throw new Error('Please add an item field');
   }
 
   const budget = await Budget.create({
-    text,
+    item,
+    amount,
+    event,
   });
 
-  return res.status(200).json({ version: 1, goal: 'Set Budget', budget });
+  return res.status(200).json({ version: process.env.VERSION, budget });
 }
 
 /**
@@ -50,9 +84,27 @@ export async function setBudget(req, res) {
  * @param {object} res  The response object.
  */
 export async function updateBudget(req, res) {
-  return res
-    .status(200)
-    .json({ version: 1, goal: `Update Budget: ${req?.params?.id}` });
+  const { item = null, event = null, amount = 0 } = req?.body;
+  const { id } = req?.params;
+
+  let updateParams = {};
+
+  if (item) {
+    updateParams.item = item;
+  }
+  if (event) {
+    updateParams.event = event;
+  }
+  if (amount) {
+    updateParams.amount = amount;
+  }
+  const budget = await Budget.updateOne({ _id: id }, updateParams);
+
+  return res.status(200).json({
+    version: process.env.VERSION,
+    goal: `Update Budget: ${id}`,
+    budget,
+  });
 }
 
 /**
@@ -65,7 +117,13 @@ export async function updateBudget(req, res) {
  * @param {object} res  The response object.
  */
 export async function deleteBudget(req, res) {
-  res
-    .status(200)
-    .json({ version: 1, goal: `Delete Budget: ${req?.params?.id}` });
+  const { id } = req?.params;
+
+  Budget.deleteOne({ _id: id }).then(() =>
+    console.log(`Successfully deleted: ${id}.`.bgBlack.red.bold)
+  );
+  res.status(200).json({
+    version: process.env.VERSION,
+    goal: `Delete Budget: ${req?.params?.id}`,
+  });
 }
