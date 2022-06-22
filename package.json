@@ -1,12 +1,12 @@
 {
   "name": "react-mern",
   "version": "1.0.0",
-  "description": "Dashboard access.",
+  "description": "Dashboard access on the Web.",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node backend/server.js",
-    "server": "nodemon backend/server.js",
+    "start": "node server/server.js",
+    "server": "nodemon server/server.js",
     "client": "cd client && npm run start"
   },
   "author": "J.R. McCann",
