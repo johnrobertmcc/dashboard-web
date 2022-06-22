@@ -62,12 +62,11 @@ export async function getBudget(req, res) {
  * @param {object} res  The response object.
  */
 export async function setBudget(req, res) {
-  const today = new Date();
   const {
     item = null,
     event = null,
     amount = 0,
-    date = today.toDateString(),
+    date = new Date().toDateString(),
   } = req?.body;
 
   if (!item) {
