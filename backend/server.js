@@ -15,4 +15,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/v1/budget', budgetRoute);
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Server running on port: ${port}`));
+app.listen(port, () =>
+  console.log(`Server running on port: ${port}`.underline.white.red)
+);
