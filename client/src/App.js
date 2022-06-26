@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LogIn, Register, Dashboard } from './components/pages';
-import { Header, Container } from './components/layout';
+import { LogIn, Register, Dashboard } from 'components/pages';
+import { Header, Container } from 'components/layout';
 
 /**
- * Application used to display and post information about one's daily life.
+ * The default Layout of the application.
  *
  * @author  John Robert McCann
  * @since   6/25/2022
