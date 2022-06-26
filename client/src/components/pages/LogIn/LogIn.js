@@ -3,8 +3,11 @@ import { useState, useEffect } from 'react';
 import createInputRows from 'functions/utils/createInputRows';
 
 /**
- * Renders the Login Page.
+ * Renders the Login Page to log into one's own dashbord.
  *
+ * @author  John Robert McCann
+ * @since   6/26/2022
+ * @version 1.0.0
  * @return {Element}    The LogIn component.
  */
 export default function LogIn() {

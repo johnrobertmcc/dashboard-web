@@ -9,7 +9,7 @@ import { Header } from './components/layout';
  * @author  John Robert McCann
  * @since   6/25/2022
  * @version 1.0.0
- * @returns {Element} The Dasboard Web App itself.
+ * @returns {Element} The Dashboard Web App itself.
  */
 export default function App() {
   return (

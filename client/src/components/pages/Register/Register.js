@@ -3,8 +3,11 @@ import { useState, useEffect } from 'react';
 import createInputRows from 'functions/utils/createInputRows';
 
 /**
- * Renders the Register Component
+ * Renders the Register Page to register a new user.
  *
+ * @author  John Robert McCann
+ * @since   6/26/2022
+ * @version 1.0.0
  * @return {Element}    The Register component.
  */
 export default function Register() {
