@@ -15,20 +15,17 @@ const initialState = {
 };
 
 // Register User.
-export const register = createAsyncThunk(
-  '/auth/register',
-  async (user, thunkApi) => {
-    try {
-      return await registerUser(user);
-    } catch (e) {
-      const message =
-        e?.response?.data?.message || e?.message || e.toString() || null;
-      return thunkApi.rejectWithValue(message);
-    }
+const register = createAsyncThunk('/auth/register', async (user, thunkApi) => {
+  try {
+    return await registerUser(user);
+  } catch (e) {
+    const message =
+      e?.response?.data?.message || e?.message || e.toString() || null;
+    return thunkApi.rejectWithValue(message);
   }
-);
+});
 
-export const authSlice = createSlice({
+const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {

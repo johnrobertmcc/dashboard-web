@@ -18,7 +18,7 @@ export default function Header() {
       <ul className={styles.list}>
         {LINKS.map((link, i) => {
           return (
-            <li className={styles.link}>
+            <li className={styles.link} key={i}>
               <Link to={link?.url}>{link?.title}</Link>
             </li>
           );

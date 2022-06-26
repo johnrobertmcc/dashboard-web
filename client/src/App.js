@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LogIn, Register, Dashboard } from 'components/pages';
 import { Header, Container } from 'components/layout';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 /**
  * The default Layout of the application.
@@ -13,15 +15,18 @@ import { Header, Container } from 'components/layout';
  */
 export default function App() {
   return (
-    <Router>
-      <Header />
-      <Container>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </Container>
-    </Router>
+    <>
+      <Router>
+        <Header />
+        <Container>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </Container>
+      </Router>
+      <ToastContainer />
+    </>
   );
 }
