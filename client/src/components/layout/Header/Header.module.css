@@ -1,0 +1,10 @@
+.header {
+  @apply h-16 border flex justify-between items-center;
+}
+.list {
+  @apply flex;
+}
+
+.link {
+  @apply px-3 font-bold hover:underline;
+}

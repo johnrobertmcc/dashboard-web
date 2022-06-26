@@ -1,4 +1,5 @@
 import { Budget } from '../models/budgetModel.js';
+import { User } from '../models/userModel.js';
 
 /**
  * Function used to get a budget from MongoDb.
@@ -21,7 +22,7 @@ export async function getBudget(req, res) {
     tag = null,
   } = req?.query;
 
-  let searchParams = {};
+  let searchParams = { user: req?.user?.id };
 
   if (id) {
     searchParams._id = id;
@@ -52,7 +53,7 @@ export async function getBudget(req, res) {
   return res.status(200).json({
     version: process.env.VERSION,
     items: budget?.length,
-    budget,
+    budget: budget,
   });
 }
 
@@ -66,14 +67,13 @@ export async function getBudget(req, res) {
  * @param {object} res  The response object.
  */
 export async function setBudget(req, res) {
-  console.log('jr req', req?.body);
-
   const {
     item = 'nonessential.',
     event = null,
     amount = '0',
     date = new Date().toDateString(),
     tag = null,
+    user = req?.user?.id || null,
   } = req?.body;
 
   if (!item) {
@@ -87,6 +87,7 @@ export async function setBudget(req, res) {
     event,
     date,
     tag,
+    user,
   });
 
   return res.status(200).json({ version: process.env.VERSION, budget });
@@ -128,6 +129,18 @@ export async function updateBudget(req, res) {
   if (tag) {
     updateParams.tag = tag;
   }
+  const user = await User.findById(req?.user?.id);
+
+  if (!user) {
+    res.status(401);
+    throw new Error('User not Found.');
+  }
+
+  if (id !== user?.id) {
+    res.status(401);
+    throw new Error('User not authorized.');
+  }
+
   const budget = await Budget.updateOne({ _id: id }, updateParams);
 
   return res.status(200).json({
@@ -149,6 +162,17 @@ export async function updateBudget(req, res) {
 export async function deleteBudget(req, res) {
   const { id } = req?.params;
 
+  const user = await User.findById(req?.user?.id);
+
+  if (!user) {
+    res.status(401);
+    throw new Error('User not Found.');
+  }
+
+  if (id !== user?.id) {
+    res.status(401);
+    throw new Error('User not authorized.');
+  }
   Budget.deleteOne({ _id: id }).then(() =>
     console.log(`Successfully deleted: ${id}.`.bgBlack.red.bold)
   );

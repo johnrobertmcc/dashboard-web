@@ -5,8 +5,9 @@ import {
   updateBudget,
   deleteBudget,
 } from '../controllers/budgetController.js';
+import { protect } from '../middleware/authMiddleware.js';
 const router = Router();
-router.route('/').get(getBudget).post(setBudget);
-router.route('/:id').put(updateBudget).delete(deleteBudget);
+router.route('/').get(protect, getBudget).post(protect, setBudget);
+router.route('/:id').put(protect, updateBudget).delete(protect, deleteBudget);
 
 export default router;

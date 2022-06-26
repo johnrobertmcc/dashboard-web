@@ -6,8 +6,10 @@ import {
   deleteUser,
   getUser,
 } from '../controllers/userController.js';
+import { protect } from '../middleware/authMiddleware.js';
+
 const router = Router();
-router.route('/me').get(getUser);
+router.get('/me', protect, getUser);
 router.route('/').post(registerUser);
 router.route('/login').post(loginUser);
 router.route('/:id').put(updateUser).delete(deleteUser);

@@ -1,33 +1,27 @@
-import { Calendar } from '@johnrobertmcc/dashboard-library';
-import styles from './App.module.css';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { LogIn, Register, Dashboard } from './components/pages';
+import { Header } from './components/layout';
 
 /**
- * Dashboard View for J.R. McCann.
+ * Application used to display and post information about one's daily life.
  *
- * @returns {Element}  The Dashboard Web View and Modifier.
+ * @author  John Robert McCann
+ * @since   6/25/2022
+ * @version 1.0.0
+ * @returns {Element} The Dasboard Web App itself.
  */
-function App() {
-  function handleClick(e) {
-    e.preventDefault();
-
-    const budgetItem = {
-      body: {
-        amount: 5,
-        item: 'Chalupa',
-      },
-    };
-
-    axios.post('http://localhost:5000/api/v1/budget', budgetItem);
-    console.log('jr posted');
-  }
+export default function App() {
   return (
-    <div>
-      <h1 className={styles.calendar}>Testing</h1>
-      <button onClick={(e) => handleClick(e)}>Click Here</button>
-    </div>
+    <>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
-
-export default App;
