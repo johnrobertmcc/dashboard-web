@@ -12,7 +12,6 @@ import Container from '../Container';
  * @return {Element} The Header component.
  */
 export default function Header() {
-  console.log('jr header');
   return (
     <Container layout="nav" tag={'header'} className={styles.header}>
       <img src="./favicon.webp" alt="J.R. Inc" className={styles.logoImg} />
