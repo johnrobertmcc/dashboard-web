@@ -1,0 +1,18 @@
+.containerW {
+  @apply container relative w-full px-10;
+
+  max-width: 1400px;
+}
+.paddingTop {
+  @apply pt-12;
+}
+
+.paddingBtm {
+  @apply pb-12;
+}
+
+.nav {
+  @apply px-5;
+
+  max-width: 1650px;
+}

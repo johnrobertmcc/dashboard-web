@@ -1,6 +1,7 @@
 import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
 import { LINKS } from 'constants';
+import Container from '../Container';
 
 /**
  * Renders the Global Header Component.
@@ -12,7 +13,7 @@ import { LINKS } from 'constants';
  */
 export default function Header() {
   return (
-    <header className={styles.header}>
+    <Container layout="nav" tag={'header'} className={styles.header}>
       <img src="./favicon.webp" alt="J.R. Inc" className={styles.logoImg} />
       <ul className={styles.list}>
         {LINKS.map((link, i) => {
@@ -23,6 +24,6 @@ export default function Header() {
           );
         })}
       </ul>
-    </header>
+    </Container>
   );
 }
