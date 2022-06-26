@@ -18,6 +18,7 @@ export async function getBudget(req, res) {
     lte = null,
     gte = null,
     date = null,
+    tag = null,
   } = req?.query;
 
   let searchParams = {};
@@ -43,6 +44,9 @@ export async function getBudget(req, res) {
   if (date) {
     searchParams.date = date;
   }
+  if (date) {
+    searchParams.tag = tag;
+  }
 
   const budget = await Budget.find(searchParams);
   return res.status(200).json({
@@ -62,11 +66,14 @@ export async function getBudget(req, res) {
  * @param {object} res  The response object.
  */
 export async function setBudget(req, res) {
+  console.log('jr req', req?.body);
+
   const {
-    item = null,
+    item = 'nonessential.',
     event = null,
-    amount = 0,
+    amount = '0',
     date = new Date().toDateString(),
+    tag = null,
   } = req?.body;
 
   if (!item) {
@@ -79,6 +86,7 @@ export async function setBudget(req, res) {
     amount,
     event,
     date,
+    tag,
   });
 
   return res.status(200).json({ version: process.env.VERSION, budget });
@@ -94,7 +102,13 @@ export async function setBudget(req, res) {
  * @param {object} res  The response object.
  */
 export async function updateBudget(req, res) {
-  const { item = null, event = null, amount = 0, date = null } = req?.body;
+  const {
+    item = null,
+    event = null,
+    amount = 0,
+    date = null,
+    tag = null,
+  } = req?.body;
   const { id } = req?.params;
 
   let updateParams = {};
@@ -110,6 +124,9 @@ export async function updateBudget(req, res) {
   }
   if (date) {
     updateParams.date = date;
+  }
+  if (tag) {
+    updateParams.tag = tag;
   }
   const budget = await Budget.updateOne({ _id: id }, updateParams);
 

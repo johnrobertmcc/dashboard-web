@@ -5,19 +5,25 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node server/server.js",
+    "project": "npm-run-all --parallel tab:*",
     "server": "nodemon server/server.js",
-    "client": "cd client && npm run start"
+    "tab:server": "ttab -t 'Server' nodemon server/server.js",
+    "tab:client": "ttab -t 'Client' npm --prefix ./client run start:client",
+    "tab:echo": "echo 'Starting project...'"
   },
   "author": "J.R. McCann",
   "license": "ISC",
   "dependencies": {
+    "@johnrobertmcc/dashboard-library": "^0.0.2",
     "colors": "^1.4.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "mongoose": "^6.4.0"
+    "mongoose": "^6.4.0",
+    "node-fetch": "^3.2.6",
+    "ttab": "^0.7.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "npm-run-all": "^4.1.5"
   }
 }
