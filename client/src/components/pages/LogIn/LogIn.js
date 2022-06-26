@@ -1,6 +1,6 @@
 import styles from './LogIn.module.css';
 import { useState, useEffect } from 'react';
-import createInputRows from '../../../functions/utils/createInputRows';
+import createInputRows from 'functions/utils/createInputRows';
 
 /**
  * Renders the Login Page.

@@ -11,6 +11,7 @@ const { sign } = jwt;
  * @since  6/25/2022
  * @route  POST /api/v1/user
  * @access Public
+ * @version 1.0.0
  * @param  {object} req  The request object.
  * @param  {object} res  The response object.
  */
@@ -55,6 +56,7 @@ export async function registerUser(req, res) {
  * @author John Robert McCann
  * @since  6/25/2022
  * @route  POST /api/v1/user/login
+ * @version 1.0.0
  * @access Public
  * @param  {object} req  The request object.
  * @param  {object} res  The response object.
@@ -88,6 +90,7 @@ export async function loginUser(req, res) {
  * @author John Robert McCann
  * @since  6/25/2022
  * @route  GET /api/v1/user/me
+ * @version 1.0.0
  * @access Private
  * @param  {object} req  The request object.
  * @param  {object} res  The response object.
@@ -103,6 +106,7 @@ export async function getUser(req, res) {
  *
  * @author  John Robert McCann
  * @since   6/25/2022
+ * @version 1.0.0
  * @access  Private
  * @param   {string}  id The id of the user to validate.
  * @returns {boolean}    Returns true or false.
@@ -116,6 +120,7 @@ function _generateToken(id) {
  * @author John Robert McCann
  * @since  6/25/2022
  * @route  POST /api/v1/user/:id
+ * @version 1.0.0
  * @access Private
  * @param {object} req  The request object.
  * @param {object} res  The response object.
@@ -130,6 +135,7 @@ export function updateUser(req, res) {
  * @author John Robert McCann
  * @since 6/25/2022
  * @route POST /api/v1/user/:id
+ * @version 1.0.0
  * @access Private
  * @param {object} req  The request object.
  * @param {object} res  The response object.

@@ -1,3 +1,7 @@
+.logoImg {
+  @apply h-12;
+}
+
 .header {
   @apply h-16 border flex justify-between items-center;
 }

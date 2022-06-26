@@ -1,4 +1,4 @@
-import { Input } from '../../components/utils';
+import { Input } from 'components/utils';
 
 export default function createInputRows(data, callBack) {
   return Object.keys(data).map((input) => {

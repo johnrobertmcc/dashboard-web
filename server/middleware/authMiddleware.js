@@ -1,9 +1,14 @@
 import jwt from 'jsonwebtoken';
 import { User } from '../models/userModel.js';
-import bcrypt from 'bcryptjs';
-const { genSalt, hash, compare } = bcrypt;
 const { verify } = jwt;
 
+/**
+ * Function used to protect against malicious attacks and confirmt he use of a bearer token.
+ *
+ * @param {object}   req  The request object.
+ * @param {object}   res  The response object.
+ * @param {Function} next Triggers the next procedural function.
+ */
 export async function protect(req, res, next) {
   let token = null;
 

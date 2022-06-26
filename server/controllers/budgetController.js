@@ -2,11 +2,13 @@ import { Budget } from '../models/budgetModel.js';
 import { User } from '../models/userModel.js';
 
 /**
- * Function used to get a budget from MongoDb.
+ * Function used to get a single user's budget from MongoDb.
  *
  * @author John Robert McCann
  * @since 6/19/2022
  * @route GET /api/v1/budget.
+ * @access Private
+ * @version 1.0.0
  * @param {object} req  The request object.
  * @param {object} res  The response object.
  */
@@ -63,6 +65,8 @@ export async function getBudget(req, res) {
  * @author John Robert McCann
  * @since 6/19/2022
  * @route POST /api/v1/budget.
+ * @access Private
+ * @version 1.0.0
  * @param {object} req  The request object.
  * @param {object} res  The response object.
  */
@@ -99,6 +103,7 @@ export async function setBudget(req, res) {
  * @author John Robert McCann
  * @since 6/19/2022
  * @route PATCH /api/v1/budget.
+ * @access Private
  * @param {object} req  The request object.
  * @param {object} res  The response object.
  */
@@ -156,6 +161,7 @@ export async function updateBudget(req, res) {
  * @author John Robert McCann
  * @since 6/19/2022
  * @route DELETE /api/v1/budget.
+ * @version 1.0.0
  * @param {object} req  The request object.
  * @param {object} res  The response object.
  */

@@ -1,6 +1,6 @@
 import styles from './Register.module.css';
 import { useState, useEffect } from 'react';
-import createInputRows from '../../../functions/utils/createInputRows';
+import createInputRows from 'functions/utils/createInputRows';
 
 /**
  * Renders the Register Component

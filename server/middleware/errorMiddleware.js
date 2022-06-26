@@ -1,11 +1,9 @@
 /**
  * Middleware function used to handle the error response from MongoDB.
  *
- *
- * @param {object} err The error itself
- * @param {object} req The request object.
- * @param {object} res The response object.
- * @param {*} next
+ * @param {object}   req  The request object.
+ * @param {object}   res  The response object.
+ * @param {Function} next Triggers the next procedural function.
  */
 export default function errorHandler(err, req, res, next) {
   const statusCode = res?.statusCode || 500;
