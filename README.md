@@ -4,6 +4,10 @@ This application is designed to allow a user to view their budget items, calenda
 
 Source Code: <https://github.com/johnrobertmcc/dashboard-web>
 
+## Setup
+
+To run locally, just run `npm run project` in base directory to run the mongodb server and the frontend in parallel.
+
 ## Tech Stack
 
 - All data is stored in MongoDB
