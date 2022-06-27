@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { registerUser } from './authService.js';
+import { registerUser, logOut } from './authService.js';
 
 /**
  * Feature used to authenticate a user as the owner of the DB budgetItems from local storage.
@@ -28,6 +28,10 @@ export const register = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk('auth/logout', async () => {
+  return await logOut();
+});
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -54,6 +58,9 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action?.payload || null;
+        state.user = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
         state.user = null;
       });
   },

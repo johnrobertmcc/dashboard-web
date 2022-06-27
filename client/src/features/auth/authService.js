@@ -17,3 +17,13 @@ export async function registerUser(userData) {
 
   return response?.data;
 }
+
+/**
+ * Function used to register a new user to the database and set token to local storage.
+ *
+ * @author John Robert McCann
+ * @since 6/27/2022
+ */
+export async function logOut() {
+  localStorage.removeItem('user');
+}
