@@ -14,16 +14,19 @@ const initialState = {
   message: '',
 };
 
-// Register User.
-const register = createAsyncThunk('/auth/register', async (user, thunkApi) => {
-  try {
-    return await registerUser(user);
-  } catch (e) {
-    const message =
-      e?.response?.data?.message || e?.message || e.toString() || null;
-    return thunkApi.rejectWithValue(message);
+// Register user
+export const register = createAsyncThunk(
+  'auth/register',
+  async (user, thunkAPI) => {
+    try {
+      return await registerUser(user);
+    } catch (error) {
+      const message =
+        error?.response?.data?.message || error?.message || error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
+);
 
 const authSlice = createSlice({
   name: 'auth',
@@ -31,9 +34,10 @@ const authSlice = createSlice({
   reducers: {
     reset: (state) => {
       state.isSuccess = false;
-      state.isLoading = false;
       state.isError = false;
       state.message = '';
+      state.isLoading = false;
+      // setTimeout(() => (), 10000);
     },
   },
   extraReducers: (builder) => {

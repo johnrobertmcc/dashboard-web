@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = '/api/users/';
+const API_URL = 'http://localhost:5000/api/v1/user/';
 
 /**
  * Function used to register a new user to the database and set token to local storage.
@@ -14,4 +14,6 @@ export async function registerUser(userData) {
   if (response?.data) {
     localStorage.setItem('user', JSON.stringify(response.data));
   }
+
+  return response?.data;
 }

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import createInputRows from 'functions/utils/createInputRows';
-import register, { reset } from 'features/auth/authSlice.js';
+import { register, reset } from 'features/auth/authSlice.js';
 import Loading from 'components/utils/Loading';
 
 /**
@@ -27,7 +27,9 @@ export default function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
+    (state) => {
+      return state.auth;
+    }
   );
 
   /**
@@ -44,7 +46,7 @@ export default function Register() {
     }
 
     dispatch(reset());
-  }, [user, isError, isSuccess, message]);
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   useEffect(() => {
     if (isLoading) {
@@ -68,6 +70,7 @@ export default function Register() {
       [e.target.name]: { ...prev[e.target.name], value: e?.target?.value },
     }));
   }
+
   /**
    * Function used submit the user's validated information for further validation.
    *
@@ -75,22 +78,21 @@ export default function Register() {
    * @since 6/26/2022
    * @param {Event} e  The user event.
    */
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (data?.password?.value !== data?.passwordVerify?.value) {
       toast.error('Passwords do not match.');
     } else {
       const userData = {
-        nme: data?.name,
-        email: data?.email,
-        password: data?.password,
+        name: data?.name?.value,
+        email: data?.email?.value,
+        password: data?.password?.value,
       };
+
       dispatch(register(userData));
     }
   }
-
-  console.log('jr data', data);
 
   return (
     <div className={styles.page}>
@@ -99,7 +101,6 @@ export default function Register() {
       ) : (
         <>
           <h1 className={styles.header}>Please create an account.</h1>
-
           <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
             {createInputRows(data, (e) => handleChange(e))}
             <button type="submit">Submit</button>

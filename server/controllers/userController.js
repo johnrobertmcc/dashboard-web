@@ -17,6 +17,11 @@ const { sign } = jwt;
  */
 export async function registerUser(req, res) {
   const { name = null, email = null, password = null } = req?.body;
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
 
   if (!name || !email || !password) {
     res.status(400);
@@ -46,8 +51,6 @@ export async function registerUser(req, res) {
     res.status(400);
     throw new Error('Invalid user data.');
   }
-
-  res.json({ message: 'Register User.' });
 }
 
 /**
