@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { registerUser, logOut } from './authService.js';
+import { registerUser, logOut, logIn } from './authService.js';
 
 /**
  * Feature used to authenticate a user as the owner of the DB budgetItems from local storage.
@@ -14,7 +14,7 @@ const initialState = {
   message: '',
 };
 
-// Register user
+// Register User.
 export const register = createAsyncThunk(
   'auth/register',
   async (user, thunkAPI) => {
@@ -27,7 +27,18 @@ export const register = createAsyncThunk(
     }
   }
 );
+// Log In User.
+export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
+  try {
+    return await logIn(user);
+  } catch (error) {
+    const message =
+      error?.response?.data?.message || error?.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
 
+//Log Out User.
 export const logout = createAsyncThunk('auth/logout', async () => {
   return await logOut();
 });
@@ -55,6 +66,20 @@ const authSlice = createSlice({
         state.user = action?.payload || null;
       })
       .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action?.payload || null;
+        state.user = null;
+      })
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action?.payload || null;
+      })
+      .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action?.payload || null;
