@@ -99,9 +99,7 @@ export async function loginUser(req, res) {
  * @param  {object} res  The response object.
  */
 export async function getUser(req, res) {
-  const { _id, name, email } = await User.findById(req?.user?.id);
-
-  res.status(200).json({ message: 'User Information.', name, email, id: _id });
+  res.status(200).json({ message: 'User Information.', user: req?.user });
 }
 
 /**

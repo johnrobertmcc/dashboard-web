@@ -42,6 +42,9 @@ export default function Header() {
           if (!user && link?.title === 'Log Out') {
             return null;
           }
+          if (!user && link?.title === 'Dashboard') {
+            return null;
+          }
 
           if (user && link?.title === 'Log Out') {
             return (

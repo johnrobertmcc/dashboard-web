@@ -1,4 +1,8 @@
 import styles from './Dashboard.module.css';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+
 /**
  * Renders the default view "/" to display the user's information.
  *
@@ -8,5 +12,18 @@ import styles from './Dashboard.module.css';
  * @return {Element}  The Dashboard view.
  */
 export default function Dashboard() {
-  return <p className={styles.string}>Dashboard</p>;
+  const navigate = useNavigate();
+
+  const { user = null } = useSelector((state) => state?.auth);
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
+  return (
+    <section>
+      <h1>Welcome {user && user?.name}</h1>
+      <h3>Expenditures</h3>
+    </section>
+  );
 }
