@@ -33,10 +33,10 @@ export default function Input({
   );
 }
 Input.propTypes = {
-  type: PropTypes.string,
+  type: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   id: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   placeHolder: PropTypes.string,
   callBack: PropTypes.func,
 };

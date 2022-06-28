@@ -10,7 +10,7 @@ import styles from './Loading.module.css';
 export default function Loading() {
   return (
     <div className={styles.wrapper}>
-      <img src="./spinner.gif" alt="loading" />
+      <img src="./spinner.gif" alt="loading" className={styles.loader} />
     </div>
   );
 }

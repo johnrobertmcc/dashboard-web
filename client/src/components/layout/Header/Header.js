@@ -48,7 +48,7 @@ export default function Header() {
 
           if (user && link?.title === 'Log Out') {
             return (
-              <li className={styles.logout}>
+              <li className={styles.logout} key={i}>
                 <button onClick={() => handleLogOut()}>{link.title}</button>
               </li>
             );
