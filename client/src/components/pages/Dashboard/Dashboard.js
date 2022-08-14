@@ -21,16 +21,16 @@ export default function Dashboard() {
 
   useEffect(() => {
     dispatch(getBudget());
-  }, [user]);
+  }, [user, dispatch]);
 
   return (
     <section>
       {user ? (
         <>
+          <Calendar />
           <PageHeading message={`Welcome ${user?.name}`} />
           <UserExpenses />
           <AddExpense />
-          <Calendar />
         </>
       ) : (
         <Loading />
