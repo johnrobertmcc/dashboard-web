@@ -1,0 +1,7 @@
+.form {
+  @apply flex flex-col justify-center items-center my-10;
+}
+
+.submit {
+  @apply border w-96;
+}

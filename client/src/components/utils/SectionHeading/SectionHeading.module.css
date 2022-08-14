@@ -1,0 +1,3 @@
+.subHead {
+  @apply font-bold text-lg border-b w-1/2 my-5;
+}

@@ -1,0 +1,13 @@
+.table {
+  @apply border w-full;
+}
+th {
+  @apply border border-black/10;
+}
+tr {
+  @apply text-center;
+}
+
+td {
+  @apply py-1 border-black/10 border;
+}
