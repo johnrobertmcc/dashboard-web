@@ -1,18 +1,11 @@
-import PropTypes from 'prop-types';
 import styles from './Calendar.module.css';
+import Calendar from 'react-calendar';
 /**
-* Renders the Calendar Component
-*
-* @param  {object}  props       The component as props.
-* @param  {string}  props.component The name of the component.
-* @return {Element}             The Calendar component.
-*/
-export default function Calendar({component}) {
-  return <p className={styles.string}>{component} component</p>;
+ * Renders a calendar view to see a User's expenses by date in a GUI.
+ * @see https://github.com/wojtekmaj/react-calendar
+ *
+ * @return {Element}  The Calendar component.
+ */
+export default function CalendarWrapper() {
+  return <Calendar onClickDay={(e) => console.log(e)} />;
 }
-Calendar.propTypes = {
-component: PropTypes.string
-};
-Calendar.defaultProps = {
-component: 'Calendar'
-};

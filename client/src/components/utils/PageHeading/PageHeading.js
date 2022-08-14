@@ -3,7 +3,7 @@ import styles from './PageHeading.module.css';
 import { createElement } from 'react';
 
 /**
- * Renders a heading for a section of the app.
+ * Renders a heading for a page in the app.
  *
  * @param  {object}  props         The component as props.
  * @param  {string}  props.tag     The proper html semantic tag.

@@ -27,8 +27,8 @@ export default function Dashboard() {
     <section>
       {user ? (
         <>
-          <Calendar />
           <PageHeading message={`Welcome ${user?.name}`} />
+          <Calendar />
           <UserExpenses />
           <AddExpense />
         </>
