@@ -43,4 +43,5 @@ export async function logIn(userData) {
  */
 export async function logOut() {
   localStorage.removeItem('user');
+  localStorage.removeItem('budget');
 }

@@ -28,7 +28,7 @@ export async function protect(req, res, next) {
 
       next();
     } catch (err) {
-      console.log(err.red.bold);
+      console.error(err);
       res.status(401);
       throw new Error('Not Authorized');
     }

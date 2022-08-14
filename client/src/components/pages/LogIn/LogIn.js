@@ -1,12 +1,10 @@
 import styles from './LogIn.module.css';
-import { useState, useEffect } from 'react';
-import { login } from 'features/auth/authSlice.js';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import createInputRows from 'functions/utils/createInputRows';
-import { register, reset } from 'features/auth/authSlice.js';
-import Loading from 'components/utils/Loading';
+import { reset, login } from 'features/auth/authSlice.js';
 
 /**
  * Renders the Login Page to log into one's own dashbord.
@@ -17,14 +15,8 @@ import Loading from 'components/utils/Loading';
  * @return {Element}    The LogIn component.
  */
 export default function LogIn() {
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => {
-      return state.auth;
-    }
-  );
   const defaultState = {
     email: { value: '', text: 'Enter your email.' },
     password: { value: '', text: 'Enter your password.' },

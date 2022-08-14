@@ -12,8 +12,14 @@
 
 .table {
   @apply border w-full;
+}
+th {
+  @apply border border-black/10;
+}
+tr {
+  @apply text-center;
+}
 
-  & > tr {
-    @apply hidden;
-  }
+td {
+  @apply py-1 border-black/10 border;
 }

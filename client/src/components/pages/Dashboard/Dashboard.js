@@ -30,7 +30,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     dispatch(getBudget());
-  }, []);
+  }, [user]);
 
   /**
    * Function used to update the input with user information.
@@ -61,54 +61,56 @@ export default function Dashboard() {
   }
   return (
     <section>
-      <h1>Welcome {user && user?.name}</h1>
-      <h2 className={styles.subHead}>Current Expenses</h2>
-      {items && items?.budget ? (
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Item</th>
-              <th>Amount</th>
-              <th>Event</th>
-              <th>Tag</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.budget.map((item, i) => {
+      {user && items && items?.budget ? (
+        <>
+          <h1>Welcome {user && user?.name}</h1>
+          <h2 className={styles.subHead}>Current Expenses</h2>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Item</th>
+                <th>Amount</th>
+                <th>Event</th>
+                <th>Tag</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.budget.map((item, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{new Date(item?.date).toLocaleDateString()}</td>
+                    <td>{item?.item || '-'}</td>
+                    <td>{item?.amount?.$numberDecimal || '-'}</td>
+                    <td>{item?.event || '-'}</td>
+                    <td>{item?.tag || '-'}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <h2 className={styles.subHead}>Add Expense</h2>
+          <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+            {Object.keys(data).map((input, i) => {
               return (
-                <tr key={i}>
-                  <td>{new Date(item?.date).toLocaleDateString()}</td>
-                  <td>{item?.item || '-'}</td>
-                  <td>{item?.amount?.$numberDecimal || '-'}</td>
-                  <td>{item?.event || '-'}</td>
-                  <td>{item?.tag || '-'}</td>
-                </tr>
+                <Input
+                  key={i}
+                  id={input}
+                  name={input}
+                  value={data[input]}
+                  placeHolder={input}
+                  callBack={(e) => handleChange(e)}
+                />
               );
             })}
-          </tbody>
-        </table>
+            <button type="submit" className={styles.submit}>
+              Submit
+            </button>
+          </form>
+        </>
       ) : (
         <Loading />
       )}
-      <h2 className={styles.subHead}>Add Expense</h2>
-      <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
-        {Object.keys(data).map((input, i) => {
-          return (
-            <Input
-              key={i}
-              id={input}
-              name={input}
-              value={data[input]}
-              placeHolder={input}
-              callBack={(e) => handleChange(e)}
-            />
-          );
-        })}
-        <button type="submit" className={styles.submit}>
-          Submit
-        </button>
-      </form>
     </section>
   );
 }
