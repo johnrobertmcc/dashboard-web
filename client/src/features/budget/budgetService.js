@@ -1,3 +1,4 @@
+import moment from 'moment';
 import axios from 'axios';
 const API_URL = 'http://localhost:5000/api/v1/budget/';
 
@@ -37,5 +38,30 @@ export async function getBudgetItems(token) {
 
   const response = await axios.get(API_URL, config);
 
-  return response?.data;
+  return {
+    raw: response?.data,
+    data: handleBudgetItems(response?.data),
+  };
+}
+
+/**
+ * Funciton used to structure the budget data as an object and by date.
+ *
+ * @param {object} obj The budget returned from MongoDB.
+ */
+function handleBudgetItems(obj) {
+  const { budget } = obj;
+  let fin = {};
+
+  budget.map((item) => {
+    const formattedDate = moment(item?.date).format('YYYY-MM-DD');
+
+    if (fin[formattedDate]) {
+      fin[formattedDate].push(item);
+    } else {
+      fin[formattedDate] = [item];
+    }
+  });
+
+  return fin;
 }

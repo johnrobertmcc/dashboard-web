@@ -1,20 +1,17 @@
 import styles from './UserExpenses.module.css';
-import { Fragment } from 'react';
 import SectionHeading from 'components/utils/SectionHeading';
-import { useSelector } from 'react-redux';
 import Loading from 'components/utils/Loading';
+import { PropTypes } from 'prop-types';
+import { Container } from 'layout';
+
 /**
  * Renders a component that allows the user to see their transactions.
  *
  * @return {Element} The UserExpenses component.
  */
-export default function UserExpenses() {
-  const { items = [] } = useSelector((state) => {
-    return state?.budget;
-  });
-
+export default function UserExpenses({ items }) {
   return (
-    <Fragment>
+    <Container>
       <SectionHeading message="Current Expenses" />
       {items?.budget ? (
         <table className={styles.table}>
@@ -44,6 +41,14 @@ export default function UserExpenses() {
       ) : (
         <Loading />
       )}
-    </Fragment>
+    </Container>
   );
 }
+
+UserExpenses.propTypes = {
+  items: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+};
+
+UserExpenses.propDoc = {
+  items: 'The budget items from the reducer, fulfilled in <Dashboard />.',
+};

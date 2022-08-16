@@ -18,6 +18,9 @@ import PageHeading from 'components/utils/PageHeading';
 export default function Dashboard() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state?.auth);
+  const { items = [] } = useSelector((state) => {
+    return state?.budget;
+  });
 
   useEffect(() => {
     dispatch(getBudget());
@@ -28,8 +31,8 @@ export default function Dashboard() {
       {user ? (
         <>
           <PageHeading message={`Welcome ${user?.name}`} />
-          <Calendar />
-          <UserExpenses />
+          <Calendar items={items?.data || {}} />
+          <UserExpenses items={items?.raw || {}} />
           <AddExpense />
         </>
       ) : (

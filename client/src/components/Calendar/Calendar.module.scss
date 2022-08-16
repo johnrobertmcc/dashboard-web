@@ -1,0 +1,7 @@
+.react-calendar__tile {
+  @apply flex flex-col border border-black/10 items-center h-36 overflow-hidden;
+
+  & abbr {
+    @apply font-bold;
+  }
+}
