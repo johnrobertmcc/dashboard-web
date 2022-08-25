@@ -1,0 +1,29 @@
+.tableDate {
+  @apply relative h-32;
+
+  & .tableInner {
+    @apply overflow-y-auto h-20;
+    & > h5 {
+      @apply font-bold absolute top-1 left-1;
+    }
+
+    & > ul {
+      & > li {
+        @apply text-sm capitalize;
+
+        &.test,
+        &.testing {
+          @apply text-red-300;
+        }
+
+        &.groceries {
+          @apply text-blue-500;
+        }
+
+        &.nonessential {
+          @apply text-red-700;
+        }
+      }
+    }
+  }
+}

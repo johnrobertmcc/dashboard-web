@@ -1,0 +1,3 @@
+.tableRow {
+  @apply max-h-full h-20;
+}

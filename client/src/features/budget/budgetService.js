@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import axios from 'axios';
 const API_URL = 'http://localhost:5000/api/v1/budget/';
 
@@ -54,7 +54,7 @@ function handleBudgetItems(obj) {
   let fin = {};
 
   budget.map((item) => {
-    const formattedDate = moment(item?.date).format('YYYY-MM-DD');
+    const formattedDate = dayjs(item?.date).format('YYYY-MM-DD');
 
     if (fin[formattedDate]) {
       fin[formattedDate].push(item);

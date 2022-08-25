@@ -4,3 +4,5 @@ export const LINKS = [
   { url: '/register', title: 'Register' },
   { url: '/', title: 'Log Out' },
 ];
+
+export const LOADING_DELAY = 450;

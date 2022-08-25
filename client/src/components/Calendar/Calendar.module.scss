@@ -1,7 +1,27 @@
-.react-calendar__tile {
-  @apply flex flex-col border border-black/10 items-center h-36 overflow-hidden;
+.calendarSection {
+  @apply max-w-full;
+  min-height: 950px;
 
-  & abbr {
-    @apply font-bold;
+  & .buttonContainer {
+    @apply w-full flex justify-between items-center mb-2 px-10;
+
+    & > button {
+      @apply border border-black/30 h-8 text-center px-4;
+    }
+    & > h3 {
+      @apply text-base;
+    }
+  }
+
+  & .tableWrap {
+    @apply relative mb-5 p-0;
+
+    & > div {
+      @apply w-full overflow-x-auto pb-1;
+
+      & > table {
+        @apply min-w-full;
+      }
+    }
   }
 }
