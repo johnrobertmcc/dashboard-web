@@ -9,6 +9,7 @@ import styles from './Container.module.css';
  * @author  John Robert McCann
  * @since   6/26/2022
  * @version 1.0.0
+ *
  * @param  {object}  props              Component props.
  * @param  {object}  props.children     Container children.
  * @param  {boolean} props.paddingTop   Should container render top padding.

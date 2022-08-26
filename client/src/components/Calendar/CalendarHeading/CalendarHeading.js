@@ -4,6 +4,10 @@ import styles from './CalendarHeading.module.css';
 /**
  * Renders a heading for a calendar of localized days of the week.
  *
+ * @author  John Robert McCann
+ * @since   8/26/2022
+ * @version 1.0.0
+ *
  * @param  {object}  props       The component as props.
  * @param  {Array}   props.data  The days of the week.
  * @return {Element}             The Calendar table header.

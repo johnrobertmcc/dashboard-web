@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
  * @author  John Robert McCann
  * @since   6/26/2022
  * @version 1.0.0
+ *
  * @return {Element} The Header component.
  */
 export default function Header() {

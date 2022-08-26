@@ -1,10 +1,15 @@
 import PropTypes from 'prop-types';
 import styles from './CalendarDate.module.scss';
 import { itemProps } from 'components/Calendar/Calendar.PropTypes';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useCalendarContext } from 'components/Calendar/CalendarData';
 
 /**
  * Renders a specific <td/> element for calendar days.
+ *
+ * @author  John Robert McCann
+ * @since   8/26/2022
+ * @version 1.0.0
  *
  * @param  {object}  props          The component as props.
  * @param  {object}  props.data     The user's data by specific date.
@@ -13,10 +18,17 @@ import { useState, useEffect } from 'react';
  */
 export default function CalendarDate({ data, dateNum }) {
   const [content, setContent] = useState(null);
+  const [total, setTotal] = useState(0);
+  const isMounted = useRef(false);
+
+  const { setModal } = useCalendarContext();
 
   useEffect(() => {
-    if (data) {
-      applyContents();
+    if (!isMounted.current) {
+      isMounted.current = true;
+      if (data) {
+        applyContents();
+      }
     }
   }, [data]);
 
@@ -25,9 +37,15 @@ export default function CalendarDate({ data, dateNum }) {
    */
   function applyContents() {
     let children = data?.map((item) => {
+      setTotal(
+        (prev) =>
+          (prev += parseFloat(
+            item?.amount?.$numberDecimal > 0 ? item?.amount?.$numberDecimal : 0
+          ))
+      );
       return (
         <li key={item?._id} className={styles[item?.tag]}>
-          {item?.item}
+          {item?.event || item?.item}
         </li>
       );
     });
@@ -36,9 +54,14 @@ export default function CalendarDate({ data, dateNum }) {
   }
 
   return (
-    <td className={styles.tableDate} key={dateNum}>
-      <div className={styles.tableInner} key={dateNum}>
-        <h5>{dateNum}</h5>
+    <td className={styles.tableDate} onClick={() => setModal(data)}>
+      <div className={styles.tableInner}>
+        {dateNum && (
+          <>
+            <h4>{dateNum}</h4>
+            <h5>{total.toFixed(2)}</h5>
+          </>
+        )}
         {content && <ul>{content}</ul>}
       </div>
     </td>
@@ -47,5 +70,5 @@ export default function CalendarDate({ data, dateNum }) {
 
 CalendarDate.propTypes = {
   data: itemProps,
-  numDays: PropTypes.string,
+  dateNum: PropTypes.string,
 };

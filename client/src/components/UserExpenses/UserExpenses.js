@@ -7,7 +7,12 @@ import { Container } from 'layout';
 /**
  * Renders a component that allows the user to see their transactions.
  *
- * @return {Element} The UserExpenses component.
+ * @author  John Robert McCann
+ * @since   8/26/2022
+ * @version 1.0.0
+ *
+ * @param  {Array}   items  The user's expenses from the reducer.
+ * @return {Element}        The UserExpenses component.
  */
 export default function UserExpenses({ items }) {
   return (

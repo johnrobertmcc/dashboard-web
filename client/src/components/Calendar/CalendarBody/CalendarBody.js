@@ -4,9 +4,14 @@ import { itemProps } from '../Calendar.PropTypes';
 import CalendarRow from './CalendarRow';
 import styles from './CalendarBody.module.css';
 import dayjs from 'dayjs';
+import { useCalendarContext } from '../CalendarData';
 
 /**
  * Renders the body of the calendar to both separate concerns by date and classify by item tag.
+ *
+ * @author  John Robert McCann
+ * @since   8/26/2022
+ * @version 1.0.0
  *
  * @param  {object}  props       The component as props.
  * @param  {string}  props.data  The data to render on each cell.
@@ -17,6 +22,10 @@ export default function CalendarBody({ data, date }) {
   const { year, month } = date;
   const { numDays, startOfMonth } = settleDate(year, month);
   const [cells, setCells] = useState([]);
+
+  const { test } = useCalendarContext();
+
+  console.log('jr test', test);
 
   useEffect(() => {
     setCells(() => declareRows());

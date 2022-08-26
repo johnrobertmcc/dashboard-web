@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LogIn, Register, Dashboard } from 'pages';
+import { LogIn, Register, Dashboard, Ledger } from 'pages';
 import { Header, Container } from 'layout';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,6 +21,7 @@ export default function App() {
         <Container>
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/ledger" element={<Ledger />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/register" element={<Register />} />
           </Routes>

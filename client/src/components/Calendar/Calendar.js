@@ -5,17 +5,25 @@ import { Container } from 'layout';
 import dayjs from 'dayjs';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import CalendarHeading from 'components/Calendar/CalendarHeading';
+import { CalendarData } from './CalendarData';
 import CalendarBody from './CalendarBody';
 import { LOADING_DELAY } from 'constants';
 import SectionHeading from 'components/utils/PageHeading';
 import { itemProps } from './Calendar.PropTypes';
+import { useCalendarContext } from './CalendarData/CalendarData';
 var localeData = require('dayjs/plugin/localeData');
 dayjs.extend(localeData);
 
 /**
  * Renders a calendar view to see a User's expenses by date in a GUI.
  *
- * @return {Element}  The Calendar component.
+ * @author  John Robert McCann
+ * @since   8/26/2022
+ * @version 1.0.0
+ *
+ * @param  {Array}   items  The items from the reducer.
+ * @param  {Element} loader The Loader to use, defaulted to a spinner.
+ * @return {Element}        The Calendar component.
  */
 export default function Calendar({ items, loader }) {
   const [loading, setLoading] = useState(true);
@@ -75,14 +83,16 @@ export default function Calendar({ items, loader }) {
       {loading || !isMounted.current ? (
         loader
       ) : (
-        <Container tag="div" className={styles.tableWrap} key={month}>
-          <div>
-            <table className={styles.tableCal}>
-              <CalendarHeading data={weeks} />
-              <CalendarBody data={items} date={date} />
-            </table>
-          </div>
-        </Container>
+        <CalendarData>
+          <Container tag="div" className={styles.tableWrap} key={month}>
+            <div>
+              <table className={styles.tableCal}>
+                <CalendarHeading data={weeks} />
+                <CalendarBody data={items} date={date} />
+              </table>
+            </div>
+          </Container>
+        </CalendarData>
       )}
     </Container>
   );

@@ -6,6 +6,10 @@ import { itemProps } from 'components/Calendar/Calendar.PropTypes';
 /**
  * Renders the rows of the calendar containing specified data.
  *
+ * @author  John Robert McCann
+ * @since   8/26/2022
+ * @version 1.0.0
+ *
  * @param  {object}   props         The component as props.
  * @param  {number}   props.start   Number [0-6] declaring the start of the month.
  * @param  {object}   props.data    The data fetched from MongoDB through Redux.
@@ -24,9 +28,9 @@ export default function CalendarRow({ start, data, row, numDays, date }) {
           const dateNum = row === 0 ? i + 1 - start : i + 1 - start + 7 * row;
           const dateString = `${year}-${
             month < 9 ? `0${month + 1}` : `${month + 1}`
-          }-${dateNum}`;
+          }-${dateNum <= 9 ? '0' + dateNum : dateNum}`;
 
-          let dateProps = { data: null, dateNum, key: i };
+          let dateProps = { data: null, dateNum, key: i, dateString };
           if (dateNum > numDays) {
             dateProps.dateNum = null;
           }

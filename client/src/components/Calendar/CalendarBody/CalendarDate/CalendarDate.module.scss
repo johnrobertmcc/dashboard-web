@@ -1,10 +1,14 @@
 .tableDate {
-  @apply relative h-32;
+  @apply relative h-32 cursor-pointer;
 
   & .tableInner {
     @apply overflow-y-auto h-20;
-    & > h5 {
+    & > h4 {
       @apply font-bold absolute top-1 left-1;
+    }
+
+    & > h5 {
+      @apply font-light absolute top-1 right-1;
     }
 
     & > ul {
