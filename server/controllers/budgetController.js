@@ -180,5 +180,6 @@ export async function deleteBudget(req, res) {
   res.status(200).json({
     version: process.env.VERSION,
     goal: `Delete Budget: ${req?.params?.id}`,
+    id: req?.params?.id,
   });
 }

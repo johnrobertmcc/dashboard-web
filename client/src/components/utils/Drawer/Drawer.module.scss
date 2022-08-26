@@ -8,7 +8,7 @@
 
     &.open {
       @apply translate-x-0 shadow-xl rounded-lg;
-      @apply w-full md:w-3/4;
+      @apply w-full sm:w-3/4 desktop:w-1/2;
     }
   }
 

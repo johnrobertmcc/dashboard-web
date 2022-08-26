@@ -1,18 +1,17 @@
 import Drawer from 'components/utils/Drawer';
 import PropTypes from 'prop-types';
-import { createContext, useContext, useState, useMemo } from 'react';
+import { useEffect, createContext, useContext, useState, useMemo } from 'react';
 import { disableScroll, enableScroll } from 'functions/utils/scroll.js';
 import CalendarDrawerContents from 'components/Calendar/CalendarDrawerContents';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import Calendar from 'components/Calendar';
 import { LOADING_DELAY } from 'constants';
 import Loading from 'components/utils/Loading';
-import { useEffect } from 'react';
-import { getBudget, reset } from 'features/budget/budgetSlice.js';
+import { handleBudgetItems, settleDate } from './CalendarData.utils.js';
 
 // Initialize context object.
-const CalendarModal = createContext();
+const CalendarProvider = createContext();
 
 /**
  * Export useContext Hook to call on any Calendar component.
@@ -20,11 +19,10 @@ const CalendarModal = createContext();
  * @author  John Robert McCann
  * @since   8/26/2022
  * @version 1.0.0
- *
  * @return {Function} Calendar context exported.
  */
 export function useCalendarContext() {
-  return useContext(CalendarModal);
+  return useContext(CalendarProvider);
 }
 
 /**
@@ -33,59 +31,65 @@ export function useCalendarContext() {
  * @author  John Robert McCann
  * @since   8/26/2022
  * @version 1.0.0
- *
  * @param  {Element|string} loader Customizable loader, defaulted to spinner.
  * @return {Element}               The Calendar context wrapper.
  */
 export default function CalendarData({ loader }) {
   const [open, setOpen] = useState(false);
-  const [modalData, setModalData] = useState({});
+  const [dayData, setDayData] = useState({});
 
-  const dispatch = useDispatch();
-  const { items = [] } = useSelector((state) => {
+  const {
+    items = null,
+    isLoading,
+    isSuccess,
+  } = useSelector((state) => {
     return state?.budget;
   });
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(isLoading);
   const [date, setDate] = useState({
     month: dayjs().month(),
     year: dayjs().year(),
   });
+
   const months = useMemo(() => dayjs.months(), [dayjs.locale()]);
   const weeks = useMemo(() => dayjs.weekdaysShort(), [dayjs.locale()]);
   const { numDays, startOfMonth } = settleDate(date?.year, date?.month);
+  const [data, setData] = useState({});
 
   useEffect(() => {
-    dispatch(getBudget());
-  }, [dispatch]);
+    if (!isLoading && isSuccess && items) {
+      setData(handleBudgetItems(items));
+    }
+  }, [isLoading, isSuccess, items]);
 
   /**
-   * Function used to open the modal and set the modal data.
+   * Function used to open the drawer and set the calendar data.
    * @author  John Robert McCann
    * @since   8/26/2022
    * @version 1.0.0
-   *
    * @param {object} dataString  The datestring of the selected date.
    */
-  function openModal(dateString) {
+  function openDrawer(dateString) {
     const modalStruc = {
       title: `Expenses for ${dateString}`,
       children: (
-        <CalendarDrawerContents items={items?.data?.[dateString] || null} />
+        <CalendarDrawerContents key={dateString} dateString={dateString} />
       ),
     };
     setOpen(true);
-    setModalData(modalStruc);
+    setDayData(modalStruc);
     disableScroll();
   }
 
   /**
-   * Function used to open the modal and set the modal data.
+   * Function used to open the drawer and reset the calendar data.
+   *
    * @author  John Robert McCann
    * @since   8/26/2022
    * @version 1.0.0
    */
-  function closeModal() {
+  function closeDrawer() {
     setOpen(false);
     enableScroll();
   }
@@ -93,6 +97,9 @@ export default function CalendarData({ loader }) {
   /**
    * Function used to increase or decrease the year and month.
    *
+   * @author  John Robert McCann
+   * @since   8/26/2022
+   * @version 1.0.0
    * @param {string} direction Declares 'next' or 'prev' for button handler.
    */
   function handleClick(direction = 'next') {
@@ -118,31 +125,10 @@ export default function CalendarData({ loader }) {
     }
   }
 
-  /**
-   * Function used to return the appropriate date as a string value.
-   *
-   * @author  John Robert McCann
-   * @since   8/25/2022
-   * @version 1.0.0
-   *
-   * @param {number|string} year  The year to interpret
-   * @param {number|string} month The month to mod by 12 and 10.
-   *
-   * @returns {string}  Returns the string of which the data will be queued under.
-   */
-  function settleDate(year, month) {
-    const dateString = `${year}-${
-      month < 9 ? `0${month + 1}` : `${month + 1}`
-    }-01`;
-    const numDays = dayjs(dateString).daysInMonth();
-    const startOfMonth = dayjs(dateString).startOf('month').day();
-    return { numDays, startOfMonth };
-  }
-
   const value = {
-    openModal,
-    dispatch,
+    openDrawer,
     items,
+    data,
     date,
     setDate,
     months,
@@ -155,15 +141,16 @@ export default function CalendarData({ loader }) {
     startOfMonth,
     settleDate,
     loader,
+    dayData,
+    closeDrawer,
+    open,
   };
 
   return (
-    <CalendarModal.Provider value={value}>
+    <CalendarProvider.Provider value={value}>
       <Calendar />
-      {modalData && (
-        <Drawer data={modalData} open={open} closeModal={closeModal} />
-      )}
-    </CalendarModal.Provider>
+      {dayData && <Drawer />}
+    </CalendarProvider.Provider>
   );
 }
 

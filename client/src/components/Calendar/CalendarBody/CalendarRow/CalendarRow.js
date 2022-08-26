@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import styles from './CalendarRow.module.css';
+import styles from './CalendarRow.module.scss';
 import CalendarDate from '../CalendarDate';
-import { itemProps } from 'components/Calendar/Calendar.PropTypes';
+import { useCalendarContext } from 'context/CalendarData';
 
 /**
  * Renders the rows of the calendar containing specified data.
@@ -9,37 +9,26 @@ import { itemProps } from 'components/Calendar/Calendar.PropTypes';
  * @author  John Robert McCann
  * @since   8/26/2022
  * @version 1.0.0
- *
  * @param  {object}   props         The component as props.
- * @param  {number}   props.start   Number [0-6] declaring the starting day of the month.
- * @param  {object}   props.data    The data fetched from MongoDB through Redux.
- * @param  {number}   props.row     The current week of the month.
- * @param  {number}   props.numDays The number of days in the month.
- *
+ * @param  {number}   props.row     The current week of the month .
  * @returns {Element}               The CalendarRow component.
  */
-export default function CalendarRow({ start, data, row, numDays, date }) {
-  const { year, month } = date;
+export default function CalendarRow({ row }) {
+  const { numDays, startOfMonth } = useCalendarContext();
   return (
     <tr key={numDays} className={styles.tableRow}>
       {Array(7)
         .fill()
         .map((_, i) => {
-          const dateNum = row === 0 ? i + 1 - start : i + 1 - start + 7 * row;
-          const dateString = `${year}-${
-            month < 9 ? `0${month + 1}` : `${month + 1}`
-          }-${dateNum <= 9 ? '0' + dateNum : dateNum}`;
+          const dateNum =
+            row === 0 ? i + 1 - startOfMonth : i + 1 - startOfMonth + 7 * row;
 
-          let dateProps = { data: null, dateNum, key: i, dateString };
+          let dateProps = { dateNum, key: i };
           if (dateNum > numDays) {
             dateProps.dateNum = null;
           }
-          if ((row === 0 && i < start) || dateNum > numDays) {
+          if ((row === 0 && i < startOfMonth) || dateNum > numDays) {
             dateProps.dateNum = null;
-          }
-
-          if (data?.[dateString]) {
-            dateProps.data = data?.[dateString];
           }
 
           return <CalendarDate {...dateProps} />;
@@ -48,8 +37,5 @@ export default function CalendarRow({ start, data, row, numDays, date }) {
   );
 }
 CalendarRow.propTypes = {
-  start: PropTypes.number,
-  data: PropTypes.oneOfType([itemProps, PropTypes.object]),
   row: PropTypes.number,
-  numDays: PropTypes.number,
 };

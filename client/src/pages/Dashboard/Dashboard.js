@@ -1,8 +1,10 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CalendarData from 'context/CalendarData';
 import Loading from 'components/utils/Loading';
 import AddExpense from 'components/AddExpense';
 import PageHeading from 'components/utils/PageHeading';
+import { getBudget } from 'features/budget/budgetSlice.js';
+import { useEffect } from 'react';
 
 /**
  * Renders the default view "/" to display the user's information.
@@ -14,6 +16,16 @@ import PageHeading from 'components/utils/PageHeading';
  */
 export default function Dashboard() {
   const { user } = useSelector((state) => state?.auth);
+  const dispatch = useDispatch();
+
+  /**
+   * React.useEffect used to fetch the budget of the user on successful validation.
+   */
+  useEffect(() => {
+    if (user) {
+      dispatch(getBudget());
+    }
+  }, [dispatch, user]);
 
   return (
     <section>

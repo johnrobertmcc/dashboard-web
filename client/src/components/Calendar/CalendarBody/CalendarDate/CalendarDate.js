@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import styles from './CalendarDate.module.scss';
 import { itemProps } from 'components/Calendar/Calendar.PropTypes';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useCalendarContext } from 'context/CalendarData';
+import { createDateString } from 'context/CalendarData/CalendarData.utils';
 
 /**
  * Renders a specific <td/> element for calendar days.
@@ -10,25 +11,22 @@ import { useCalendarContext } from 'context/CalendarData';
  * @author  John Robert McCann
  * @since   8/2/2022
  * @version 1.0.0
- *
  * @param  {object}  props          The component as props.
- * @param  {object}  props.data     The user's data by specific date.
- * @param  {number}  props.dateNum  The calendar date.
+ * @param  {number}  props.dateNum  The calendar date calculated from the matrix index.
  * @return {Element}                The CalendarDate component.
  */
-export default function CalendarDate({ data, dateNum, dateString }) {
+export default function CalendarDate({ dateNum }) {
+  const { openDrawer, data, date } = useCalendarContext();
   const [content, setContent] = useState(null);
   const [total, setTotal] = useState(0);
-  const isMounted = useRef(false);
-
-  const { openModal } = useCalendarContext();
+  const dateString = createDateString(date?.year, date?.month, dateNum);
 
   useEffect(() => {
-    if (!isMounted.current) {
-      isMounted.current = true;
-      if (data) {
-        applyContents();
-      }
+    if (data && dateString) {
+      applyContents();
+    }
+    if (!data?.[dateString]) {
+      setTotal(0);
     }
   }, [data]);
 
@@ -40,7 +38,7 @@ export default function CalendarDate({ data, dateNum, dateString }) {
    * @version 1.0.0
    */
   function applyContents() {
-    let children = data?.map((item) => {
+    let children = data?.[dateString]?.map((item) => {
       setTotal(
         (prev) =>
           (prev += parseFloat(
@@ -60,17 +58,17 @@ export default function CalendarDate({ data, dateNum, dateString }) {
   return (
     <td
       className={styles.tableDate}
-      onClick={() => dateNum && openModal(dateString)}
+      onClick={() => dateNum && openDrawer(dateString)}
       key={dateNum}
     >
-      <div className={styles.tableInner}>
+      <div className={styles.tableInner} key={dateNum}>
         {dateNum && (
           <>
             <h4>{dateNum}</h4>
             <h5>{total.toFixed(2)}</h5>
           </>
         )}
-        {content && <ul>{content}</ul>}
+        {content && <ul key={dateNum}>{content}</ul>}
       </div>
     </td>
   );

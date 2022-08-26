@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
 import { itemProps } from '../Calendar.PropTypes';
 import CalendarRow from './CalendarRow';
-import dayjs from 'dayjs';
 import { useCalendarContext } from 'context/CalendarData';
 
 /**
@@ -15,36 +13,18 @@ import { useCalendarContext } from 'context/CalendarData';
  * @return {Element}   The CalendarBody component.
  */
 export default function CalendarBody() {
-  const [cells, setCells] = useState([]);
-  const { items, date, numDays, startOfMonth } = useCalendarContext();
-  const { year = null, month = null } = date;
+  const { numDays, startOfMonth } = useCalendarContext();
+  const full = numDays + startOfMonth;
 
-  useEffect(() => {
-    setCells(() => declareRows());
-  }, [year, month, date]);
-
-  /**
-   * Function used to determine how many weeks per month and render the appropriate number of CalendarRow elements.
-   *
-   * @returns {Array} Returns a matrix of <tr/> elements based on length of month.
-   */
-  function declareRows() {
-    const full = numDays + startOfMonth;
-    return Array(Math.ceil(full / 7))
-      .fill()
-      .map((_, i) => (
-        <CalendarRow
-          key={i}
-          start={startOfMonth}
-          data={items?.data}
-          row={i}
-          numDays={numDays}
-          date={date}
-        />
-      ));
-  }
-
-  return <tbody>{cells}</tbody>;
+  return (
+    <tbody>
+      {Array(Math.ceil(full / 7))
+        .fill()
+        .map((_, i) => (
+          <CalendarRow key={i} row={i} />
+        ))}
+    </tbody>
+  );
 }
 
 CalendarBody.propTypes = {

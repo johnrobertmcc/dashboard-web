@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import styles from './Drawer.module.scss';
 import cn from 'classnames';
 import PageHeading from '../PageHeading';
+import { useCalendarContext } from 'context/CalendarData/CalendarData';
 
 /**
  * Renders a Drawer ith supplied children.
@@ -16,23 +17,23 @@ import PageHeading from '../PageHeading';
  * @param  {function} props.closeModal Function used to close the open modal.
  * @return {Element}                   The Drawer component.
  */
-export default function Drawer({ data, open, closeModal }) {
-  const { children = null, title = '' } = data;
+export default function Drawer() {
+  const { dayData, open, closeDrawer } = useCalendarContext();
+  const { children = null, title = '' } = dayData;
   return (
-    <div
+    <aside
       className={cn(styles.backDrop, !open && styles.closed)}
-      onClick={() => closeModal()}
-      id="CalendarModal"
+      onClick={() => closeDrawer()}
     >
       <div
         className={cn(styles.modal, open && styles.open)}
         onClick={(e) => e.stopPropagation()}
       >
-        <button onClick={() => closeModal()}>X</button>
+        <button onClick={() => closeDrawer()}>X</button>
         <PageHeading tag="h4" message={title} />
         {children}
       </div>
-    </div>
+    </aside>
   );
 }
 
@@ -42,7 +43,7 @@ Drawer.propTypes = {
     title: PropTypes.string,
   }),
   open: PropTypes.bool,
-  closeModal: PropTypes.func,
+  closeDrawer: PropTypes.func,
 };
 
 Drawer.defaultProps = {

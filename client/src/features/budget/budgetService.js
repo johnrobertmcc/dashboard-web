@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import axios from 'axios';
 const API_URL = 'http://localhost:5000/api/v1/budget/';
 
@@ -38,32 +37,7 @@ export async function getBudgetItems(token) {
 
   const response = await axios.get(API_URL, config);
 
-  return {
-    raw: response?.data,
-    data: handleBudgetItems(response?.data),
-  };
-}
-
-/**
- * Funciton used to structure the budget data as an object and by date.
- *
- * @param {object} obj The budget returned from MongoDB.
- */
-function handleBudgetItems(obj) {
-  const { budget } = obj;
-  let fin = {};
-
-  budget.map((item) => {
-    const formattedDate = dayjs(item?.date).format('YYYY-MM-DD');
-
-    if (fin[formattedDate]) {
-      fin[formattedDate].push(item);
-    } else {
-      fin[formattedDate] = [item];
-    }
-  });
-
-  return fin;
+  return response?.data;
 }
 
 /**
@@ -85,13 +59,12 @@ async function deleteBudgetItem(goalId, token) {
 
   const response = await axios.delete(API_URL + goalId, config);
 
-  return response.data;
+  return response?.data;
 }
 
 const budgetService = {
   sendItemToDB,
   getBudgetItems,
-  handleBudgetItems,
   deleteBudgetItem,
 };
 

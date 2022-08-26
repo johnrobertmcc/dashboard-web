@@ -29,7 +29,6 @@ export default function DeleteButton({ item }) {
     dispatch(deleteGoal(item?._id));
   }
 
-  console.log('jr item', item);
   return <button onClick={(e) => handleSubmit(e)}>delete</button>;
 }
 DeleteButton.propTypes = {

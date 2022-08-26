@@ -3,9 +3,11 @@ import ResponsiveTable from 'components/utils/ResponsiveTable';
 import PropTypes from 'prop-types';
 import styles from './CalendarDrawerContents.module.scss';
 import DeleteButton from 'components/utils/DeleteButton';
+import { useSelector } from 'react-redux';
+import { useCalendarContext } from 'context/CalendarData/CalendarData';
 
 /**
- * Renders the contents of the CalendarDrawer to display inside of <Modal />.
+ * Renders the contents of the CalendarDrawer to display inside of <Drawer />.
  *
  * @author John Robert McCann
  * @since 8/26/2022
@@ -15,14 +17,16 @@ import DeleteButton from 'components/utils/DeleteButton';
  * @param  {Array}   props.items The itemized list of the day to sort.
  * @return {Element}             The CalendarDrawerContents component.
  */
-export default function CalendarDrawerContents({ items }) {
-  if (!items) {
+export default function CalendarDrawerContents({ dateString }) {
+  const { data } = useCalendarContext();
+
+  if (!data?.[dateString]) {
     return <p>No expenses yet!</p>;
   }
 
   return (
-    <ResponsiveTable>
-      <table className={styles.calendarDrawer}>
+    <ResponsiveTable key={dateString}>
+      <table className={styles.calendarDrawer} key={dateString}>
         <thead>
           <tr>
             <th>Amount</th>
@@ -34,7 +38,7 @@ export default function CalendarDrawerContents({ items }) {
           </tr>
         </thead>
         <tbody>
-          {items?.map((item, i) => {
+          {data?.[dateString]?.map((item, i) => {
             return (
               <tr key={i}>
                 <td>{parseFloat(item?.amount?.$numberDecimal).toFixed(2)}</td>

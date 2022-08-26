@@ -71,8 +71,7 @@ export const budgetSlice = createSlice({
       .addCase(publishItem.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.items.raw.budget.push(action?.payload?.budget);
-        state.items.data = budgetService.handleBudgetItems(state.items.raw);
+        state.items.budget.push(action?.payload?.budget);
       })
       .addCase(publishItem.rejected, (state, action) => {
         state.isLoading = false;
@@ -98,8 +97,8 @@ export const budgetSlice = createSlice({
       .addCase(deleteGoal.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.goals = state.goals.filter(
-          (goal) => goal._id !== action.payload.id
+        state.items.budget = state.items.budget.filter(
+          (item) => item._id !== action.payload.id
         );
       })
       .addCase(deleteGoal.rejected, (state, action) => {

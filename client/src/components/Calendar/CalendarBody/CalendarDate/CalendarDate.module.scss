@@ -1,19 +1,19 @@
 .tableDate {
-  @apply relative h-32 cursor-pointer;
+  @apply relative h-12 tablet:h-32 cursor-pointer;
 
   & .tableInner {
-    @apply overflow-y-auto h-20;
+    @apply overflow-y-auto h-10 sm:h-16 tablet:h-28;
     & > h4 {
-      @apply font-bold absolute top-1 left-1;
+      @apply font-bold text-10 sm:text-12 md:text-16 absolute top-1 left-1;
     }
 
     & > h5 {
-      @apply font-light absolute top-1 right-1;
+      @apply font-light text-11 sm:text-12 absolute bottom-1 left-1 sm:top-1 sm:right-1 sm:bottom-auto sm:left-auto;
     }
 
     & > ul {
       & > li {
-        @apply text-sm capitalize;
+        @apply text-sm capitalize hidden sm:static;
 
         &.test,
         &.testing {
