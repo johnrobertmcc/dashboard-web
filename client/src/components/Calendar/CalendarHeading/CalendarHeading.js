@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import styles from './CalendarHeading.module.css';
+import styles from './CalendarHeading.module.scss';
+import { useCalendarContext } from 'context/CalendarData';
 
 /**
  * Renders a heading for a calendar of localized days of the week.
@@ -8,15 +9,15 @@ import styles from './CalendarHeading.module.css';
  * @since   8/26/2022
  * @version 1.0.0
  *
- * @param  {object}  props       The component as props.
- * @param  {Array}   props.data  The days of the week.
  * @return {Element}             The Calendar table header.
  */
-export default function CalendarHeading({ data }) {
+export default function CalendarHeading() {
+  const { weeks } = useCalendarContext();
+
   return (
     <thead className={styles.tableHeader}>
       <tr>
-        {data?.map((weekday, key) => {
+        {weeks?.map((weekday, key) => {
           return (
             <th className={styles.weekDay} key={key}>
               {weekday}
@@ -27,14 +28,3 @@ export default function CalendarHeading({ data }) {
     </thead>
   );
 }
-CalendarHeading.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.string),
-};
-
-CalendarHeading.defaultProps = {
-  data: ['Su', 'M', 'T', 'W', 'Th', 'F', 'Sa'],
-};
-
-CalendarHeading.propDocs = {
-  data: 'Localized days of the week to display in the heading.',
-};

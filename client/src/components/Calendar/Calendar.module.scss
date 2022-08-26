@@ -1,5 +1,5 @@
 .calendarSection {
-  @apply max-w-full;
+  @apply max-w-full static;
   min-height: 750px;
 
   & .buttonContainer {
@@ -10,18 +10,6 @@
     }
     & > h3 {
       @apply text-base;
-    }
-  }
-
-  & .tableWrap {
-    @apply relative mb-5 p-0;
-
-    & > div {
-      @apply w-full overflow-x-auto pb-1;
-
-      & > table {
-        @apply min-w-full;
-      }
     }
   }
 }

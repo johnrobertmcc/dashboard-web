@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import styles from './CalendarDate.module.scss';
 import { itemProps } from 'components/Calendar/Calendar.PropTypes';
 import { useState, useEffect, useRef } from 'react';
-import { useCalendarContext } from 'components/Calendar/CalendarData';
+import { useCalendarContext } from 'context/CalendarData';
 
 /**
  * Renders a specific <td/> element for calendar days.
  *
  * @author  John Robert McCann
- * @since   8/26/2022
+ * @since   8/2/2022
  * @version 1.0.0
  *
  * @param  {object}  props          The component as props.
@@ -16,12 +16,12 @@ import { useCalendarContext } from 'components/Calendar/CalendarData';
  * @param  {number}  props.dateNum  The calendar date.
  * @return {Element}                The CalendarDate component.
  */
-export default function CalendarDate({ data, dateNum }) {
+export default function CalendarDate({ data, dateNum, dateString }) {
   const [content, setContent] = useState(null);
   const [total, setTotal] = useState(0);
   const isMounted = useRef(false);
 
-  const { setModal } = useCalendarContext();
+  const { openModal } = useCalendarContext();
 
   useEffect(() => {
     if (!isMounted.current) {
@@ -34,6 +34,10 @@ export default function CalendarDate({ data, dateNum }) {
 
   /**
    * Function used to apply the appropriate content to each table cell.
+   *
+   * @author  John Robert McCann
+   * @since   8/25/2022
+   * @version 1.0.0
    */
   function applyContents() {
     let children = data?.map((item) => {
@@ -54,7 +58,11 @@ export default function CalendarDate({ data, dateNum }) {
   }
 
   return (
-    <td className={styles.tableDate} onClick={() => setModal(data)}>
+    <td
+      className={styles.tableDate}
+      onClick={() => dateNum && openModal(dateString)}
+      key={dateNum}
+    >
       <div className={styles.tableInner}>
         {dateNum && (
           <>
@@ -70,5 +78,5 @@ export default function CalendarDate({ data, dateNum }) {
 
 CalendarDate.propTypes = {
   data: itemProps,
-  dateNum: PropTypes.string,
+  dateNum: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };

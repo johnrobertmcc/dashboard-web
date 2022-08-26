@@ -11,7 +11,7 @@ import { itemProps } from 'components/Calendar/Calendar.PropTypes';
  * @version 1.0.0
  *
  * @param  {object}   props         The component as props.
- * @param  {number}   props.start   Number [0-6] declaring the start of the month.
+ * @param  {number}   props.start   Number [0-6] declaring the starting day of the month.
  * @param  {object}   props.data    The data fetched from MongoDB through Redux.
  * @param  {number}   props.row     The current week of the month.
  * @param  {number}   props.numDays The number of days in the month.
@@ -34,7 +34,7 @@ export default function CalendarRow({ start, data, row, numDays, date }) {
           if (dateNum > numDays) {
             dateProps.dateNum = null;
           }
-          if (row === 0 && i < start) {
+          if ((row === 0 && i < start) || dateNum > numDays) {
             dateProps.dateNum = null;
           }
 

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { sendItemToDB, getBudgetItems } from './budgetService';
+import budgetService from './budgetService';
 
 const initialState = {
   items: [],
@@ -14,7 +14,7 @@ export const publishItem = createAsyncThunk(
   async (budgetItem, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await sendItemToDB(budgetItem, token);
+      return await budgetService.sendItemToDB(budgetItem, token);
     } catch (error) {
       const message =
         error?.response?.data?.message || error?.message || error.toString();
@@ -30,7 +30,7 @@ export const getBudget = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await getBudgetItems(token);
+      return await budgetService.getBudgetItems(token);
     } catch (error) {
       const message =
         error?.response?.data?.message || error?.message || error.toString();
@@ -40,10 +40,29 @@ export const getBudget = createAsyncThunk(
   }
 );
 
+// Delete user goal
+export const deleteGoal = createAsyncThunk(
+  'budget/delete',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await budgetService.deleteBudgetItem(id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const budgetSlice = createSlice({
   name: 'budgetItem',
   initialState,
-  reducers: (state) => initialState,
+  reducers: { reset: () => initialState },
   extraReducers: (builder) => {
     builder
       .addCase(publishItem.pending, (state) => {
@@ -52,7 +71,8 @@ export const budgetSlice = createSlice({
       .addCase(publishItem.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.items.budget.push(action.payload.budget);
+        state.items.raw.budget.push(action?.payload?.budget);
+        state.items.data = budgetService.handleBudgetItems(state.items.raw);
       })
       .addCase(publishItem.rejected, (state, action) => {
         state.isLoading = false;
@@ -68,6 +88,21 @@ export const budgetSlice = createSlice({
         state.items = action.payload;
       })
       .addCase(getBudget.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteGoal.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteGoal.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.goals = state.goals.filter(
+          (goal) => goal._id !== action.payload.id
+        );
+      })
+      .addCase(deleteGoal.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

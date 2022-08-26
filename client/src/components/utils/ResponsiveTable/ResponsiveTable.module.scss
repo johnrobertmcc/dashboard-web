@@ -1,0 +1,11 @@
+.tableWrap {
+  @apply relative mb-5 p-0;
+
+  & > div {
+    @apply w-full overflow-x-auto pb-1;
+
+    & > table {
+      @apply min-w-full;
+    }
+  }
+}
