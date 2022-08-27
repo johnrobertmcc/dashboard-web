@@ -21,6 +21,10 @@
     @apply bg-red-50;
   }
 
+  &.immediate {
+    @apply bg-red-300;
+  }
+
   &.adjoining {
     @apply bg-transparent;
   }

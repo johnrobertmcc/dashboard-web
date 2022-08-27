@@ -65,6 +65,7 @@ export default function CalendarDate({ dateNum }) {
         total <= 10 && styles.success,
         total > 10 && total < 50 && styles.acceptable,
         total > 50 && total < 100 && styles.warning,
+        total > 500 && styles.immediate,
         !dateNum && styles.adjoining
       )}
       onClick={() => dateNum && openDrawer(dateString)}
