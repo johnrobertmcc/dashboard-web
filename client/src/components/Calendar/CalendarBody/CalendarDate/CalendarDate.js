@@ -38,19 +38,19 @@ export default function CalendarDate({ dateNum }) {
    * @version 1.0.0
    */
   function applyContents() {
+    let sum = 0;
     let children = data?.[dateString]?.map((item) => {
-      setTotal(
-        (prev) =>
-          (prev += parseFloat(
-            item?.amount?.$numberDecimal > 0 ? item?.amount?.$numberDecimal : 0
-          ))
+      sum += parseFloat(
+        item?.amount?.$numberDecimal > 0 ? item?.amount?.$numberDecimal : 0
       );
       return (
         <li key={item?._id} className={styles[item?.tag]}>
-          {item?.event || item?.item}
+          <p>{item?.event || item?.item}</p>
         </li>
       );
     });
+
+    setTotal(sum);
 
     setContent(children);
   }

@@ -6,7 +6,7 @@
     @apply w-full flex justify-between items-center mb-2 px-10;
 
     & > button {
-      @apply border border-black/30 h-8 text-center px-4;
+      @apply border border-black/30 h-8 text-center text-12 px-2 md:px-4;
     }
     & > h3 {
       @apply text-base;
