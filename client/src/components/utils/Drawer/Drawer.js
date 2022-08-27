@@ -10,11 +10,6 @@ import { useCalendarContext } from 'context/CalendarData/CalendarData';
  * @author  John Robert McCann
  * @since   8/26/2022
  * @version 1.0.0
- *
- * @param  {object}   props            The component as props.
- * @param  {object}   props.data       The title and children to render.
- * @param  {boolean}  props.open       Declares if the modal is open.
- * @param  {function} props.closeModal Function used to close the open modal.
  * @return {Element}                   The Drawer component.
  */
 export default function Drawer() {
@@ -36,18 +31,3 @@ export default function Drawer() {
     </aside>
   );
 }
-
-Drawer.propTypes = {
-  data: PropTypes.shape({
-    children: PropTypes.object,
-    title: PropTypes.string,
-  }),
-  open: PropTypes.bool,
-  closeDrawer: PropTypes.func,
-};
-
-Drawer.defaultProps = {
-  data: {},
-  open: true,
-  closeModal: () => {},
-};

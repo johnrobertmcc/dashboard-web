@@ -102,7 +102,7 @@ export async function setBudget(req, res) {
  *
  * @author John Robert McCann
  * @since 6/19/2022
- * @route PATCH /api/v1/budget.
+ * @route PATCH /api/v1/budget/:itemId
  * @access Private
  * @param {object} req  The request object.
  * @param {object} res  The response object.
@@ -134,24 +134,22 @@ export async function updateBudget(req, res) {
   if (tag) {
     updateParams.tag = tag;
   }
-  const user = await User.findById(req?.user?.id);
+  const user = await User.findById(req?.user?._id);
 
-  if (!user) {
-    res.status(401);
-    throw new Error('User not Found.');
-  }
-
-  if (id !== user?.id) {
+  if (!user?._id) {
     res.status(401);
     throw new Error('User not authorized.');
   }
 
   const budget = await Budget.updateOne({ _id: id }, updateParams);
+  const updated = await Budget.findOne({ _id: id });
 
   return res.status(200).json({
     version: process.env.VERSION,
     goal: `Update Budget: ${id}`,
     budget,
+    id,
+    updated,
   });
 }
 
@@ -160,7 +158,7 @@ export async function updateBudget(req, res) {
  *
  * @author John Robert McCann
  * @since 6/19/2022
- * @route DELETE /api/v1/budget/:goalId
+ * @route DELETE /api/v1/budget/:itemId
  * @version 1.0.0
  * @param {object} req  The request object.
  * @param {object} res  The response object.

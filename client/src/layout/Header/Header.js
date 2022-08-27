@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
  * @author  John Robert McCann
  * @since   6/26/2022
  * @version 1.0.0
- *
  * @return {Element} The Header component.
  */
 export default function Header() {
@@ -34,19 +33,16 @@ export default function Header() {
       <img src="./favicon.webp" alt="J.R. Inc" className={styles.logoImg} />
       <ul className={styles.list}>
         {LINKS.map((link, i) => {
-          if (!!user && link?.title === 'Register') {
-            return null;
-          }
-          if (!!user && link?.title === 'Log In') {
-            return null;
-          }
-          if (!user && link?.title === 'Log Out') {
-            return null;
-          }
-          if (!user && link?.title === 'Dashboard') {
+          if (link?.protected && !user) {
             return null;
           }
 
+          if (!link?.protected && user) {
+            return null;
+          }
+
+          if (!link?.protected) {
+          }
           if (user && link?.title === 'Log Out') {
             return (
               <li className={styles.logout} key={i}>

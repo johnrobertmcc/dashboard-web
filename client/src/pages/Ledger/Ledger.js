@@ -29,7 +29,7 @@ export default function Ledger() {
       {user ? (
         <>
           <PageHeading message="Daily Ledger" />
-          <UserExpenses items={items?.raw || {}} />
+          <UserExpenses items={items || {}} />
         </>
       ) : (
         <Loading />

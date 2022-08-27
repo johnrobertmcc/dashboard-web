@@ -4,6 +4,7 @@ import { itemProps } from 'components/Calendar/Calendar.PropTypes';
 import { useState, useEffect } from 'react';
 import { useCalendarContext } from 'context/CalendarData';
 import { createDateString } from 'context/CalendarData/CalendarData.utils';
+import cn from 'classnames';
 
 /**
  * Renders a specific <td/> element for calendar days.
@@ -57,7 +58,16 @@ export default function CalendarDate({ dateNum }) {
 
   return (
     <td
-      className={styles.tableDate}
+      className={cn(
+        styles.tableDate,
+        total >= 100 && styles.over,
+        total >= 200 && styles['not-allowed'],
+        total <= 10 && styles.success,
+        total > 10 && total < 50 && styles.acceptable,
+        total > 50 && total < 100 && styles.warning,
+        total > 500 && styles.immediate,
+        !dateNum && styles.adjoining
+      )}
       onClick={() => dateNum && openDrawer(dateString)}
       key={dateNum}
     >

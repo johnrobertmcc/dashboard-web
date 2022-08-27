@@ -3,8 +3,12 @@ import ResponsiveTable from 'components/utils/ResponsiveTable';
 import PropTypes from 'prop-types';
 import styles from './CalendarDrawerContents.module.scss';
 import DeleteButton from 'components/utils/DeleteButton';
-import { useSelector } from 'react-redux';
 import { useCalendarContext } from 'context/CalendarData/CalendarData';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { editBudgetItem } from 'features/budget/budgetSlice';
+import { Input } from 'components/utils';
+import CalendarDrawerRow from './CalendarDrawerRow';
 
 /**
  * Renders the contents of the CalendarDrawer to display inside of <Drawer />.
@@ -12,16 +16,16 @@ import { useCalendarContext } from 'context/CalendarData/CalendarData';
  * @author John Robert McCann
  * @since 8/26/2022
  * @version 1.0.0
- *
- * @param  {object}  props       The component as props.
- * @param  {Array}   props.items The itemized list of the day to sort.
- * @return {Element}             The CalendarDrawerContents component.
+ * @param  {object}  props            The component as props.
+ * @param  {string}  props.dateString The string of the current date to display.
+ * @return {Element}                  The CalendarDrawerContents component.
  */
 export default function CalendarDrawerContents({ dateString }) {
   const { data } = useCalendarContext();
+  const fields = ['tag', 'item', 'event', 'amount'];
 
   if (!data?.[dateString]) {
-    return <p>No expenses yet!</p>;
+    return <p className={styles.empty}>No expenses yet!</p>;
   }
 
   return (
@@ -29,29 +33,20 @@ export default function CalendarDrawerContents({ dateString }) {
       <table className={styles.calendarDrawer} key={dateString}>
         <thead>
           <tr>
-            <th>Amount</th>
-            <th>Tag</th>
-            <th>Item</th>
-            <th>Event</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            {[...fields, 'edit', 'delete'].map((field, i) => {
+              return <th key={i}>{field}</th>;
+            })}
           </tr>
         </thead>
         <tbody>
           {data?.[dateString]?.map((item, i) => {
             return (
-              <tr key={i}>
-                <td>{parseFloat(item?.amount?.$numberDecimal).toFixed(2)}</td>
-                <td>{item?.tag}</td>
-                <td>{item?.item}</td>
-                <td>{item?.event}</td>
-                <td>
-                  <EditButton item={item} />
-                </td>
-                <td>
-                  <DeleteButton item={item} />
-                </td>
-              </tr>
+              <CalendarDrawerRow
+                item={item}
+                key={i}
+                dateString={dateString}
+                fields={fields}
+              />
             );
           })}
         </tbody>
