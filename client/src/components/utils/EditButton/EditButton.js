@@ -1,8 +1,5 @@
 import PropTypes from 'prop-types';
 import styles from './EditButton.module.scss';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { editBudgetItem } from 'features/budget/budgetSlice';
 
 /**
  * Function used to take in an object and send a PUT request to MongoDB.
@@ -14,14 +11,8 @@ import { editBudgetItem } from 'features/budget/budgetSlice';
  * @param  {object}  props.updateParams The item to request to edit.
  * @return {Element}                    The EditButton component.
  */
-export default function EditButton({ updateParams }) {
-  const dispatch = useDispatch();
-
-  function handleEdit(e) {
-    e.preventDefault();
-    dispatch(editBudgetItem(updateParams));
-  }
-  return <button onClick={(e) => handleEdit(e)}>edit</button>;
+export default function EditButton({ onClick }) {
+  return <button onClick={(e) => onClick(e)}>edit</button>;
 }
 EditButton.propTypes = {
   updateParams: PropTypes.shape({

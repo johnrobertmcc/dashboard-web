@@ -1,6 +1,30 @@
 .tableDate {
   @apply relative h-16 tablet:h-32 cursor-pointer;
 
+  &.over {
+    @apply bg-red-100/60;
+  }
+
+  &.not-allowed {
+    @apply bg-red-200;
+  }
+
+  &.success {
+    @apply bg-green-50;
+  }
+
+  &.acceptable {
+    @apply bg-yellow-100/20;
+  }
+
+  &.warning {
+    @apply bg-red-50;
+  }
+
+  &.adjoining {
+    @apply bg-transparent;
+  }
+
   & .tableInner {
     @apply overflow-y-auto h-10 sm:h-16 tablet:h-28 w-10 sm:w-16 tablet:w-full;
     & > h4 {

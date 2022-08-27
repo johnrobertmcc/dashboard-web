@@ -19,11 +19,12 @@ export default function Input({
   value,
   placeHolder,
   callBack,
+  className,
 }) {
   return (
     <input
       type={type}
-      className={styles.input}
+      className={className || styles.input}
       id={id}
       name={name}
       value={value}
@@ -39,6 +40,7 @@ Input.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   placeHolder: PropTypes.string,
   callBack: PropTypes.func,
+  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 Input.defaultProps = {
   type: 'text',
@@ -48,4 +50,5 @@ Input.defaultProps = {
   placeHolder: 'Enter Input Details Here.',
   callBack: () =>
     console.log('Please remember to add a function as a declaration.'),
+  className: null,
 };

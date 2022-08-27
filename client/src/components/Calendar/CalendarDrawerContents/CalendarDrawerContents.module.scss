@@ -1,7 +1,11 @@
 .calendarDrawer {
   @apply w-full;
 
-  tr {
-    @apply w-36 overflow-hidden text-sm;
+  & > thead {
+    @apply capitalize text-12;
   }
+}
+
+.empty {
+  @apply text-center w-full text-12;
 }

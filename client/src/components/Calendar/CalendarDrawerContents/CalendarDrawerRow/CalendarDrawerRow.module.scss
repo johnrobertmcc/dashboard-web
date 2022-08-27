@@ -1,0 +1,19 @@
+.row {
+  @apply w-36 overflow-hidden text-11 cursor-pointer;
+
+  .editInput {
+    @apply w-full text-center;
+  }
+
+  &.updating {
+    @apply bg-gray-100;
+
+    input {
+      @apply italic bg-gray-100;
+    }
+  }
+
+  .submit {
+    @apply font-black p-1;
+  }
+}
