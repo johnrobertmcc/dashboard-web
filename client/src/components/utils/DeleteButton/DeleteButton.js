@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import styles from './DeleteButton.module.scss';
 import { useDispatch } from 'react-redux';
-import { deleteGoal } from 'features/budget/budgetSlice';
+import { deleteBudgetItem } from 'features/budget/budgetSlice';
 
 /**
  * Function used to take in an object and send a DELETE request to MongoDB.
@@ -26,7 +26,7 @@ export default function DeleteButton({ item }) {
    */
   async function handleSubmit(e) {
     e.preventDefault();
-    dispatch(deleteGoal(item?._id));
+    dispatch(deleteBudgetItem(item?._id));
   }
 
   return <button onClick={(e) => handleSubmit(e)}>delete</button>;

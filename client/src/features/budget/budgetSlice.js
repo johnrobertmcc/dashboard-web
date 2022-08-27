@@ -40,13 +40,32 @@ export const getBudget = createAsyncThunk(
   }
 );
 
-// Delete user goal
-export const deleteGoal = createAsyncThunk(
+// Delete a budget item
+export const deleteBudgetItem = createAsyncThunk(
   'budget/delete',
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await budgetService.deleteBudgetItem(id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Edit a budget item.
+export const editBudgetItem = createAsyncThunk(
+  'budget/edit',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await budgetService.editBudgetItem(id, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -91,17 +110,36 @@ export const budgetSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
-      .addCase(deleteGoal.pending, (state) => {
+      .addCase(deleteBudgetItem.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteGoal.fulfilled, (state, action) => {
+      .addCase(deleteBudgetItem.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.items.budget = state.items.budget.filter(
           (item) => item._id !== action.payload.id
         );
       })
-      .addCase(deleteGoal.rejected, (state, action) => {
+      .addCase(deleteBudgetItem.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(editBudgetItem.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editBudgetItem.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.items.budget = state.items.budget.map((item) => {
+          if (item?._id === action.payload.id) {
+            return action.payload.updated;
+          } else {
+            return item;
+          }
+        });
+      })
+      .addCase(editBudgetItem.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
