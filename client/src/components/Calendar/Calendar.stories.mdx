@@ -1,0 +1,67 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+
+import Calendar from './';
+
+<Meta title="components/Calendar" component={Calendar} />
+
+# Calendar
+
+The Calendar component redners an accessible calendar with easily populated dates.
+
+export const Template = (args) => <Calendar {...args} />;
+
+<Story
+  name="Component"
+  args={{
+    items: {
+      '2022-08-11': [
+        {
+          _id: '62f5bb9676becbf832d7258d',
+          user: '62f5b3859dddedaeee6e2839',
+          item: 'car seat covers',
+          event: 'amazon',
+          amount: {
+            $numberDecimal: '25',
+          },
+          date: '2022-08-11T04:00:00.000Z',
+          tag: 'nonessential',
+          createdAt: '2022-08-12T02:31:50.150Z',
+          updatedAt: '2022-08-12T02:31:50.150Z',
+          __v: 0,
+        },
+      ],
+      '2022-08-14': [
+        {
+          _id: '62f9763803d8cc53863d76c5',
+          user: '62f5b3859dddedaeee6e2839',
+          item: 'test',
+          event: 'testing',
+          amount: {
+            $numberDecimal: '3',
+          },
+          date: '2022-08-14T04:00:00.000Z',
+          tag: 'testing',
+          createdAt: '2022-08-14T22:24:56.646Z',
+          updatedAt: '2022-08-14T22:24:56.646Z',
+          __v: 0,
+        },
+        {
+          _id: '62f97a4f2013e6ce73b388e9',
+          user: '62f5b3859dddedaeee6e2839',
+          item: 'Testing',
+          event: 'Testing',
+          amount: {
+            $numberDecimal: '100',
+          },
+          date: '2022-08-14T04:00:00.000Z',
+          tag: 'Testing',
+          createdAt: '2022-08-14T22:42:23.798Z',
+          updatedAt: '2022-08-14T22:42:23.798Z',
+          __v: 0,
+        },
+      ],
+    },
+  }}
+>
+  {Template.bind({})}
+</Story>

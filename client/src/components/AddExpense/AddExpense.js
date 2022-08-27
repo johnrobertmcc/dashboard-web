@@ -1,9 +1,10 @@
 import styles from './AddExpense.module.css';
 import { Input } from 'components/utils';
 import { publishItem } from 'features/budget/budgetSlice.js';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { defaultState } from './AddExpense.utils.js';
 import { useDispatch } from 'react-redux';
+import { Container } from 'layout';
 import SectionHeading from 'components/utils/SectionHeading';
 /**
  * Renders a form which allows a user to add a new expense.
@@ -43,7 +44,7 @@ export default function AddExpense() {
   }
 
   return (
-    <Fragment>
+    <Container>
       <SectionHeading message="Add Expense" />
       <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
         {Object.keys(data).map((input, i) => {
@@ -62,6 +63,6 @@ export default function AddExpense() {
           Submit
         </button>
       </form>
-    </Fragment>
+    </Container>
   );
 }

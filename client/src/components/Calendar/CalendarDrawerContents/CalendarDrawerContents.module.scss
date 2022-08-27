@@ -1,0 +1,7 @@
+.calendarDrawer {
+  @apply w-full;
+
+  tr {
+    @apply w-36 overflow-hidden text-sm;
+  }
+}

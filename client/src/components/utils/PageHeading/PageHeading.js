@@ -5,6 +5,10 @@ import { createElement } from 'react';
 /**
  * Renders a heading for a page in the app.
  *
+ * @author  John Robert McCann
+ * @since   8/26/2022
+ * @version 1.0.0
+ *
  * @param  {object}  props         The component as props.
  * @param  {string}  props.tag     The proper html semantic tag.
  * @param  {string}  props.message The message to display.

@@ -1,0 +1,18 @@
+.backDrop {
+  @apply fixed top-0 left-0 w-full h-full bg-black/20 z-30;
+
+  & .modal {
+    @apply absolute h-full w-full transition-all overflow-y-auto;
+    @apply top-0 right-0 bg-white p-10 h-full;
+    @apply translate-x-full ease-in-out duration-700;
+
+    &.open {
+      @apply translate-x-0 shadow-xl rounded-lg;
+      @apply w-full sm:w-3/4 desktop:w-1/2;
+    }
+  }
+
+  &.closed {
+    @apply invisible;
+  }
+}

@@ -1,0 +1,38 @@
+.tableDate {
+  @apply relative h-16 tablet:h-32 cursor-pointer;
+
+  & .tableInner {
+    @apply overflow-y-auto h-10 sm:h-16 tablet:h-28 w-10 sm:w-16 tablet:w-full;
+    & > h4 {
+      @apply font-bold text-10 sm:text-12 md:text-16 absolute top-1 left-1;
+    }
+
+    & > h5 {
+      @apply font-light text-11 sm:text-12 absolute bottom-1 left-1 sm:top-1 sm:right-1 sm:bottom-auto sm:left-auto;
+    }
+
+    & > ul {
+      @apply hidden mt-6 tablet:block;
+      & > li {
+        @apply text-11 capitalize;
+
+        & p {
+          @apply line-clamp-1 text-left;
+        }
+
+        &.test,
+        &.testing {
+          @apply text-red-300;
+        }
+
+        &.groceries {
+          @apply text-blue-500;
+        }
+
+        &.nonessential {
+          @apply text-red-700;
+        }
+      }
+    }
+  }
+}

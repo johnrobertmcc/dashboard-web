@@ -160,7 +160,7 @@ export async function updateBudget(req, res) {
  *
  * @author John Robert McCann
  * @since 6/19/2022
- * @route DELETE /api/v1/budget.
+ * @route DELETE /api/v1/budget/:goalId
  * @version 1.0.0
  * @param {object} req  The request object.
  * @param {object} res  The response object.
@@ -168,14 +168,9 @@ export async function updateBudget(req, res) {
 export async function deleteBudget(req, res) {
   const { id } = req?.params;
 
-  const user = await User.findById(req?.user?.id);
+  const user = await User.findById(req?.user?._id);
 
-  if (!user) {
-    res.status(401);
-    throw new Error('User not Found.');
-  }
-
-  if (id !== user?.id) {
+  if (!user?._id) {
     res.status(401);
     throw new Error('User not authorized.');
   }
@@ -185,5 +180,6 @@ export async function deleteBudget(req, res) {
   res.status(200).json({
     version: process.env.VERSION,
     goal: `Delete Budget: ${req?.params?.id}`,
+    id: req?.params?.id,
   });
 }
