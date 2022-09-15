@@ -2,11 +2,13 @@ import PropTypes from 'prop-types';
 import styles from './CalendarDrawerRow.module.scss';
 import EditButton from 'components/utils/EditButton';
 import DeleteButton from 'components/utils/DeleteButton';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { editBudgetItem } from 'features/budget/budgetSlice';
 import { Input } from 'components/utils';
+import useKeyPress from 'functions/hooks/useKeyPress.js';
 import cn from 'classnames';
+
 /**
  * Renders the CalendarDrawerRow Component
  *
@@ -18,16 +20,22 @@ export default function CalendarDrawerRow({ item, fields }) {
   const [updateParams, setUpdateParams] = useState({});
   const [updating, setUpdating] = useState(false);
   const dispatch = useDispatch();
+  const submitPress = useKeyPress('Enter');
+  const cancelPress = useKeyPress('Escape');
+
+  useEffect(() => {
+    if (updating && submitPress) {
+      return handleSubmit();
+    }
+  }, [updating, submitPress]);
 
   /**
    * Function used to submit an edit through redux to MongoDB.
    *
    * @author John Robert McCann
    * @since 8/26/2022
-   * @param {Event} e The HTML event.
    */
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSubmit() {
     dispatch(editBudgetItem(updateParams));
     setUpdating(false);
   }
@@ -65,7 +73,11 @@ export default function CalendarDrawerRow({ item, fields }) {
   }
 
   return (
-    <tr key={item?._id} className={cn(styles.row, updating && styles.updating)}>
+    <tr
+      key={item?._id}
+      className={cn(styles.row, updating && styles.updating)}
+      onKeyPress={(e) => e.stopPropagation()}
+    >
       {updating
         ? fields?.map((field, i) => {
             return (
@@ -86,13 +98,13 @@ export default function CalendarDrawerRow({ item, fields }) {
         : fields?.map((field, i) => {
             if (field === 'amount') {
               return (
-                <td onClick={(e) => handleEdit(e, item)} key={i}>
+                <td onClick={(e, i) => handleEdit(e, item)} key={i}>
                   {parseFloat(item?.[field]?.$numberDecimal)}
                 </td>
               );
             }
             return (
-              <td key={i} onClick={(e) => handleEdit(e, item)}>
+              <td key={i} onClick={(e, i) => handleEdit(e, item)}>
                 {item?.[field]}
               </td>
             );

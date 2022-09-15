@@ -149,7 +149,9 @@ export default function CalendarData({ loader }) {
   return (
     <CalendarProvider.Provider value={value}>
       <Calendar />
-      {dayData && <Drawer />}
+      {dayData && (
+        <Drawer data={dayData} open={open} closeDrawer={closeDrawer} />
+      )}
     </CalendarProvider.Provider>
   );
 }

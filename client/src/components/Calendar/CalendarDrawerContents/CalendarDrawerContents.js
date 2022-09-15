@@ -1,13 +1,7 @@
-import EditButton from 'components/utils/EditButton';
 import ResponsiveTable from 'components/utils/ResponsiveTable';
 import PropTypes from 'prop-types';
 import styles from './CalendarDrawerContents.module.scss';
-import DeleteButton from 'components/utils/DeleteButton';
 import { useCalendarContext } from 'context/CalendarData/CalendarData';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { editBudgetItem } from 'features/budget/budgetSlice';
-import { Input } from 'components/utils';
 import CalendarDrawerRow from './CalendarDrawerRow';
 
 /**

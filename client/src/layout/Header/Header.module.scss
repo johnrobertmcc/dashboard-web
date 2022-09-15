@@ -1,0 +1,12 @@
+.header {
+  @apply relative;
+  .logoImg {
+    @apply h-12;
+  }
+
+  @apply h-16 border flex justify-between items-center;
+
+  .openMenu {
+    @apply tablet:hidden;
+  }
+}
