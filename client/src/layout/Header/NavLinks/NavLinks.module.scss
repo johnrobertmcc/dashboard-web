@@ -1,0 +1,9 @@
+.list {
+  @apply tablet:flex justify-between items-center hidden;
+  .link {
+    @apply px-3 font-bold hover:underline;
+    &.logOut {
+      @apply border p-1 font-thin;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 .backDrop {
-  @apply fixed top-0 left-0 w-full h-full bg-black/20 z-30;
+  @apply fixed top-0 left-0 w-full h-full bg-black/20 z-30 transition-all;
 
   & .modal {
     @apply absolute h-full w-full transition-all overflow-y-auto;
