@@ -23,6 +23,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.0",
     "node-fetch": "^3.2.6",
+    "papaparse": "^5.3.2",
+    "react-dropzone": "^14.2.2",
     "ttab": "^0.7.2"
   },
   "devDependencies": {

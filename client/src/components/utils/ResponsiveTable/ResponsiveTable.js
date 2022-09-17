@@ -3,7 +3,7 @@ import styles from './ResponsiveTable.module.scss';
 import { Container } from 'layout';
 
 /**
- * Renders a rapper for table that becomes responive below 700px.
+ * Renders a wrapper for table that becomes responsive below 700px.
  *
  * @author John Robert McCann
  * @since 8/26/2022
@@ -11,7 +11,7 @@ import { Container } from 'layout';
  *
  * @param  {object}  props          The component as props.
  * @param  {object}  props.children The table to wrap.
- * @param  {object}  props.tableKey      The tableKey to help ith re-rendering.
+ * @param  {object}  props.tableKey The tableKey to help with re-rendering.
  * @return {Element}                The ResponsiveTable component.
  */
 export default function ResponsiveTable({ children, tableKey }) {

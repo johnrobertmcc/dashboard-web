@@ -28,8 +28,6 @@ export default function NavLinks({ user, handleLogOut, className }) {
           return null;
         }
 
-        if (!link?.protected) {
-        }
         if (user && link?.title === 'Log Out') {
           return (
             <li className={cn(styles.link, styles.logOut)} key={i}>
