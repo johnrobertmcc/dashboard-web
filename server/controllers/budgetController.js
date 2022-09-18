@@ -60,7 +60,7 @@ export async function getBudget(req, res) {
 }
 
 /**
- * Function used to set a budget to MongoDb.
+ * Function used to set a single budget item to MongoDb.
  *
  * @author John Robert McCann
  * @since 6/19/2022
