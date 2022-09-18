@@ -12,7 +12,6 @@ const initialState = {
 export const publishItem = createAsyncThunk(
   'budget/create',
   async (budgetItem, thunkAPI) => {
-    console.log('jr budgetItem', budgetItem);
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await budgetService.sendItemToDB(budgetItem, token);
@@ -67,6 +66,44 @@ export const editBudgetItem = createAsyncThunk(
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await budgetService.editBudgetItem(id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Delete an entire budget.
+export const deleteUserBudget = createAsyncThunk(
+  '/budget/deleteAll',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await budgetService.deleteEntireBudget(id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Add multiple items to DB.
+export const uploadItems = createAsyncThunk(
+  '/budget/id',
+  async (data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await budgetService.sendMultipleItems(data, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -141,6 +178,30 @@ export const budgetSlice = createSlice({
         });
       })
       .addCase(editBudgetItem.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteUserBudget.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteUserBudget.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(deleteUserBudget.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(uploadItems.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(uploadItems.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(uploadItems.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

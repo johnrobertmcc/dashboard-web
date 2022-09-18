@@ -4,10 +4,20 @@ import {
   setBudget,
   updateBudget,
   deleteBudget,
+  deleteAll,
+  addManyItems,
 } from '../controllers/budgetController.js';
 import { protect } from '../middleware/authMiddleware.js';
 const router = Router();
-router.route('/').get(protect, getBudget).post(protect, setBudget);
-router.route('/:id').put(protect, updateBudget).delete(protect, deleteBudget);
+router
+  .route('/')
+  .get(protect, getBudget)
+  .post(protect, setBudget)
+  .delete(protect, deleteAll);
+router
+  .route('/:id')
+  .put(protect, updateBudget)
+  .delete(protect, deleteBudget)
+  .post(protect, addManyItems);
 
 export default router;

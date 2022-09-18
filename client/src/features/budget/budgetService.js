@@ -63,6 +63,30 @@ async function deleteBudgetItem(itemId, token) {
 }
 
 /**
+ * Function used to delete all budget items from MongoDb.
+ *
+ * @author John Robert McCann
+ * @since  8/29/2022
+ * @route  DELETE /api/v1/budget.
+ * @access Private
+ * @param  {string} userId  The id of the user's budget to delete.
+ * @param  {string} token   The user's token from local storage.
+ */
+async function deleteEntireBudget(userId, token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const url = API_URL;
+
+  const response = await axios.delete(url, config);
+
+  return response?.data;
+}
+
+/**
  * Function used to delete a singular budget item from MongoDb.
  *
  * @author John Robert McCann
@@ -84,11 +108,35 @@ async function editBudgetItem(item, token) {
   return response?.data;
 }
 
+/**
+ * Function used to send multiple items to the DB.
+ *
+ * @author John Robert McCann
+ * @since 09/18/2022
+ * @param {object} budgetData The data of the user.
+ * @param {string} token      The user's token.
+ */
+async function sendMultipleItems(budgetData, token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const { id } = budgetData;
+
+  const url = API_URL + id;
+  const response = await axios.post(url, budgetData, config);
+
+  return response?.data;
+}
+
 const budgetService = {
   sendItemToDB,
   getBudgetItems,
   deleteBudgetItem,
   editBudgetItem,
+  deleteEntireBudget,
+  sendMultipleItems,
 };
 
 export default budgetService;

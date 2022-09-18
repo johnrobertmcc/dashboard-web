@@ -1,4 +1,4 @@
-import DeleteDatabase from './DeleteDatabase';
+import DeleteDatabase from './DeleteDatabaseLink';
 import ReadFileLink from './ReadFileLink';
 import styles from './Settings.module.scss';
 

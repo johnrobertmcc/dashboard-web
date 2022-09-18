@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import ResponsiveTable from 'components/utils/ResponsiveTable';
 import PropTypes from 'prop-types';
 import styles from './ConfirmTransactions.module.scss';
-import { useDispatch } from 'react-redux';
-import { publishItem } from 'features/budget/budgetSlice.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { uploadItems } from 'features/budget/budgetSlice.js';
 import Loading from 'components/utils/Loading';
 import { LOADING_DELAY } from 'constants';
 import { useSettingsContext } from 'context/SettingsData/SettingsData';
@@ -29,6 +29,7 @@ export default function ConfirmTransactions({ data, structure }) {
   const isMounted = useRef(null);
   const dispatch = useDispatch();
   const { closeModal } = useSettingsContext();
+  const { user } = useSelector((state) => state?.auth);
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
@@ -74,11 +75,7 @@ export default function ConfirmTransactions({ data, structure }) {
    * Function used to commit all confirmed data objects to the database.
    */
   async function commitToDB() {
-    return await Promise.all(
-      confirmedData.map((data) => {
-        dispatch(publishItem(data));
-      })
-    );
+    dispatch(uploadItems({ id: user?._id, data: confirmedData }));
   }
 
   /**
