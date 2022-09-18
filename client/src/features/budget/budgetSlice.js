@@ -12,6 +12,7 @@ const initialState = {
 export const publishItem = createAsyncThunk(
   'budget/create',
   async (budgetItem, thunkAPI) => {
+    console.log('jr budgetItem', budgetItem);
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await budgetService.sendItemToDB(budgetItem, token);

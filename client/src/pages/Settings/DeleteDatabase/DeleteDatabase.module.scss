@@ -1,0 +1,12 @@
+.deleteDatabase {
+  @apply flex items-center w-full justify-between mt-5;
+
+  .delete {
+    @apply p-3 border border-red-900;
+    @apply text-red-900;
+  }
+
+  .description {
+    @apply text-red-900;
+  }
+}

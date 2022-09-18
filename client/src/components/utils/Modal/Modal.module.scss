@@ -1,0 +1,24 @@
+.backDrop {
+  @apply fixed top-0 left-0 w-full h-full bg-black/20 z-30 transition-all;
+
+  & .modal {
+    @apply absolute transition-opacity overflow-y-auto;
+    @apply top-20 bg-white p-10;
+    @apply duration-700 opacity-0;
+
+    left: 0;
+    @screen tablet {
+      left: 12%;
+    }
+
+    &.open {
+      @apply shadow-xl rounded-lg opacity-100;
+      @apply w-full tablet:w-3/4 h-1/2;
+    }
+  }
+  &.closed {
+    @apply top-20 left-52 bg-white p-10 h-1/2;
+    @apply duration-500 opacity-0;
+    @apply invisible w-full opacity-0;
+  }
+}

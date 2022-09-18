@@ -41,7 +41,7 @@ export default function Drawer({ data, open, closeDrawer, className }) {
         onClick={(e) => e.stopPropagation()}
       >
         <button onClick={() => closeDrawer()}>X</button>
-        {data?.title && <PageHeading tag="h4" message={title} />}
+        {title && <PageHeading tag="h4" message={title} />}
         {children}
       </div>
     </aside>

@@ -3,6 +3,7 @@ export const LINKS = [
   { url: '/ledger', title: 'Ledger', protected: true },
   { url: '/login', title: 'Log In', protected: false },
   { url: '/register', title: 'Register', protected: false },
+  { url: '/settings', title: 'Settings', protected: true },
   { url: '/', title: 'Log Out', protected: true },
 ];
 

@@ -1,0 +1,36 @@
+.message {
+  @apply text-center font-black my-5;
+}
+
+.confirmTable,
+.proposedTable {
+  @apply text-12;
+
+  thead {
+    @apply font-thin;
+  }
+
+  tbody {
+    tr {
+      td {
+        @apply h-36;
+        @apply w-52 px-2;
+
+        &.clickable {
+          @apply cursor-pointer;
+          &:hover,
+          &:active {
+            @apply font-bold;
+          }
+        }
+        & > button {
+          @apply h-full w-full flex justify-center items-center;
+        }
+      }
+    }
+  }
+}
+
+.invalid {
+  @apply border w-36 mx-5 my-1 font-bold text-16 uppercase;
+}
