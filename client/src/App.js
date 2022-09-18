@@ -4,6 +4,7 @@ import { LogIn, Register, Dashboard, Ledger } from 'pages';
 import { Header, Container } from 'layout';
 import 'react-toastify/dist/ReactToastify.css';
 import SettingsData from 'context/SettingsData';
+import Settings from 'pages/Settings';
 
 /**
  * The default Layout of the application.
@@ -16,16 +17,18 @@ import SettingsData from 'context/SettingsData';
 export default function App() {
   return (
     <Router>
-      <Header />
-      <Container>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/ledger" element={<Ledger />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/settings" element={<SettingsData />} />
-        </Routes>
-      </Container>
+      <SettingsData>
+        <Header />
+        <Container>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/ledger" element={<Ledger />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </Container>
+      </SettingsData>
     </Router>
   );
 }
