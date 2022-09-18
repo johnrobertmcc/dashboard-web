@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
 import { useSettingsContext } from 'context/SettingsData/SettingsData';
-import styles from './DeleteDatabase.module.scss';
-import { DELETE_DATABASE_DESCRIPTION } from './DeleteDatabase.utils';
+import styles from './DeleteDatabaseLink.module.scss';
+import { DELETE_DATABASE_DESCRIPTION } from './DeleteDatabaseLink.utils';
+import DeleteDatabase from 'components/DeleteDatabase/DeleteDatabase';
 
 /**
  * Renders the option to delete all transactions.
@@ -9,15 +9,15 @@ import { DELETE_DATABASE_DESCRIPTION } from './DeleteDatabase.utils';
  * @author  John Robert McCann
  * @since   09/16/2022
  * @version 1.0.0
- * @return  {Element}  The DeleteDatabase component.
+ * @return  {Element}  The DeleteDatabase link.
  */
-export default function DeleteDatabase({ component }) {
+export default function DeleteDatabaseLink() {
   const { openModal } = useSettingsContext();
   return (
     <li className={styles.deleteDatabase}>
       <button
         className={styles.delete}
-        onClick={() => openModal(<p>delete database</p>)}
+        onClick={() => openModal(<DeleteDatabase />)}
       >
         Delete Database
       </button>

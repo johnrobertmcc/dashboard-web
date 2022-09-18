@@ -181,3 +181,31 @@ export async function deleteBudget(req, res) {
     id: req?.params?.id,
   });
 }
+
+/**
+ * Function used to delete every budget item of a user from MongoDb.
+ *
+ * @author John Robert McCann
+ * @since 9/18/2022
+ * @route DELETE /api/v1/budget
+ * @version 1.0.0
+ * @param {object} req  The request object.
+ * @param {object} res  The response object.
+ */
+export async function deleteAll(req, res) {
+  const user = await User.findById(req?.user?._id);
+
+  console.log('jr user', user);
+
+  if (!user?._id) {
+    res.status(401);
+    throw new Error('User not authorized.');
+  }
+  Budget.deleteMany({ user: user?._id }).then((response) =>
+    console.log(`Successfully deleted all items.`, response)
+  );
+  res.status(200).json({
+    version: process.env.VERSION,
+    goal: `Delete All Items`,
+  });
+}

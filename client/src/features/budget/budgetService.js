@@ -63,6 +63,32 @@ async function deleteBudgetItem(itemId, token) {
 }
 
 /**
+ * Function used to delete all budget items from MongoDb.
+ *
+ * @author John Robert McCann
+ * @since  8/29/2022
+ * @route  DELETE /api/v1/budget.
+ * @access Private
+ * @param  {string} userId  The id of the user's budget to delete.
+ * @param  {string} token   The user's token from local storage.
+ */
+async function deleteEntireBudget(userId, token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const url = API_URL;
+
+  console.log('jr url', url);
+
+  const response = await axios.delete(url, config);
+
+  return response?.data;
+}
+
+/**
  * Function used to delete a singular budget item from MongoDb.
  *
  * @author John Robert McCann
@@ -89,6 +115,7 @@ const budgetService = {
   getBudgetItems,
   deleteBudgetItem,
   editBudgetItem,
+  deleteEntireBudget,
 };
 
 export default budgetService;

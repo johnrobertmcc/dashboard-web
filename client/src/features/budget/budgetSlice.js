@@ -12,7 +12,6 @@ const initialState = {
 export const publishItem = createAsyncThunk(
   'budget/create',
   async (budgetItem, thunkAPI) => {
-    console.log('jr budgetItem', budgetItem);
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await budgetService.sendItemToDB(budgetItem, token);
@@ -67,6 +66,24 @@ export const editBudgetItem = createAsyncThunk(
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await budgetService.editBudgetItem(id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const deleteUserBudget = createAsyncThunk(
+  '/budget/deleteAll',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await budgetService.deleteEntireBudget(id, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -141,6 +158,19 @@ export const budgetSlice = createSlice({
         });
       })
       .addCase(editBudgetItem.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteUserBudget.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteUserBudget.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        console.log('jr', { action });
+      })
+      .addCase(deleteUserBudget.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
