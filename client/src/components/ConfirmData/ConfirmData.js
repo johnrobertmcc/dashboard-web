@@ -112,7 +112,7 @@ export default function ConfirmData({ data }) {
             <tbody>
               <tr>
                 {Object.values(data[0]).map((value, i) => (
-                  <td key={i} className={styles[value]}>
+                  <td key={i} className={cn(styles[value], styles.clickable)}>
                     <button onClick={() => clickNext(Object.keys(data[0])[i])}>
                       {value}
                     </button>

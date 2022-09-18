@@ -2,7 +2,8 @@
   @apply text-center font-black my-5;
 }
 
-.confirmTable {
+.confirmTable,
+.proposedTable {
   @apply text-12;
 
   thead {
@@ -13,13 +14,15 @@
     tr {
       td {
         @apply h-36;
-        @apply cursor-pointer;
         @apply w-52 px-2;
-        &:hover,
-        &:active {
-          @apply font-bold;
-        }
 
+        &.clickable {
+          @apply cursor-pointer;
+          &:hover,
+          &:active {
+            @apply font-bold;
+          }
+        }
         & > button {
           @apply h-full w-full flex justify-center items-center;
         }

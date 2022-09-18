@@ -1,3 +1,31 @@
-.string{
-  font-weight: 900;
+.confirmTransactions {
+  @apply text-12;
+
+  thead {
+    tr {
+      th {
+        @apply font-bold uppercase;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        @apply h-36;
+        @apply w-52 px-2;
+
+        &.clickable {
+          @apply cursor-pointer;
+          &:hover,
+          &:active {
+            @apply font-bold;
+          }
+        }
+        & > button {
+          @apply h-full w-full flex justify-center items-center;
+        }
+      }
+    }
+  }
 }
