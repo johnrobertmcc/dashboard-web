@@ -81,8 +81,6 @@ async function deleteEntireBudget(userId, token) {
 
   const url = API_URL;
 
-  console.log('jr url', url);
-
   const response = await axios.delete(url, config);
 
   return response?.data;
@@ -110,12 +108,35 @@ async function editBudgetItem(item, token) {
   return response?.data;
 }
 
+/**
+ * Function used to send multiple items to the DB.
+ *
+ * @author John Robert McCann
+ * @since 09/18/2022
+ * @param {object} budgetData The data of the user.
+ * @param {string} token      The user's token.
+ */
+async function sendMultipleItems(budgetData, token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const { id } = budgetData;
+
+  const url = API_URL + id;
+  const response = await axios.post(url, budgetData, config);
+
+  return response?.data;
+}
+
 const budgetService = {
   sendItemToDB,
   getBudgetItems,
   deleteBudgetItem,
   editBudgetItem,
   deleteEntireBudget,
+  sendMultipleItems,
 };
 
 export default budgetService;

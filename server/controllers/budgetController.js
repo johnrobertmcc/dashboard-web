@@ -195,8 +195,6 @@ export async function deleteBudget(req, res) {
 export async function deleteAll(req, res) {
   const user = await User.findById(req?.user?._id);
 
-  console.log('jr user', user);
-
   if (!user?._id) {
     res.status(401);
     throw new Error('User not authorized.');
@@ -208,4 +206,42 @@ export async function deleteAll(req, res) {
     version: process.env.VERSION,
     goal: `Delete All Items`,
   });
+}
+
+/**
+ * Function used to add items from an uploaded file.
+ *
+ * @author John Robert McCann
+ * @since 9/18/2022
+ * @route POST /api/v1/budget
+ * @version 1.0.0
+ * @param {object} req  The request object.
+ * @param {object} res  The response object.
+ */
+export async function addManyItems(req, res) {
+  const items = req?.body?.data;
+
+  const insertion = items?.map((budgetItem) => {
+    const {
+      item = 'nonessential.',
+      event = null,
+      amount = '0',
+      date = new Date().toDateString(),
+      tag = null,
+      user = req?.body?.id || null,
+    } = budgetItem;
+
+    return {
+      item,
+      amount,
+      event,
+      date,
+      tag,
+      user,
+    };
+  });
+
+  Budget.insertMany(insertion).then((res) => console.log({ res }));
+
+  return res.status(200).json({ version: process.env.VERSION, insertion });
 }
