@@ -4,7 +4,10 @@ import { itemProps } from 'components/Calendar/Calendar.PropTypes';
 import { useState, useEffect } from 'react';
 import { useCalendarContext } from 'context/CalendarData';
 import { createDateString } from 'context/CalendarData/CalendarData.utils';
+import dayjs from 'dayjs';
 import cn from 'classnames';
+var isToday = require('dayjs/plugin/isToday');
+dayjs.extend(isToday);
 
 /**
  * Renders a specific <td/> element for calendar days.
@@ -68,7 +71,10 @@ export default function CalendarDate({ dateNum }) {
         total > 10 && total < 50 && styles.acceptable,
         total > 50 && total < 100 && styles.warning,
         total > 500 && styles.immediate,
-        !dateNum && styles.adjoining
+        !dateNum && styles.adjoining,
+        dayjs(dateString).isBefore(dayjs().format('l')) && styles.pastDate,
+        !dayjs(dateString).isValid() && styles.connectingDate,
+        dayjs(dateString).isToday() && styles.today
       )}
       onClick={() => dateNum && openDrawer(dateString)}
       key={dateNum}
@@ -77,7 +83,11 @@ export default function CalendarDate({ dateNum }) {
         {dateNum && (
           <>
             <h4>{dateNum}</h4>
-            <h5>{total.toFixed(2)}</h5>
+            <h5
+              className={cn(total <= 0 && styles.nonSpent)}
+            >
+              {total.toFixed(2)}
+            </h5>
           </>
         )}
         {content && <ul key={dateNum}>{content}</ul>}

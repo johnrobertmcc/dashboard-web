@@ -29,14 +29,38 @@
     @apply bg-transparent;
   }
 
+  &.pastDate {
+    & h4 {
+      @apply opacity-50;
+      @apply line-through;
+    }
+  }
+
+  &.connectingDate {
+    @apply opacity-30;
+    background-image: repeating-linear-gradient(
+      45deg,
+      #eee 10px,
+      #eee 12px,
+      transparent 12px,
+      transparent 20px
+    );
+  }
+
   & .tableInner {
     @apply overflow-y-auto h-10 sm:h-16 tablet:h-28 w-10 sm:w-16 tablet:w-full;
     & > h4 {
       @apply font-bold text-10 sm:text-12 md:text-16 absolute top-1 left-1;
+      @apply text-inherit;
     }
 
     & > h5 {
       @apply font-light text-11 sm:text-12 absolute bottom-1 left-1 sm:top-1 sm:right-1 sm:bottom-auto sm:left-auto;
+      @apply text-inherit;
+
+      &.nonSpent {
+        @apply opacity-50;
+      }
     }
 
     & > ul {
