@@ -35,9 +35,8 @@ export default function SettingsData({ children }) {
   const { user } = useSelector((state) => state?.auth);
 
   useEffect(() => {
-    if (!isLoaded.current) {
+    if (!isLoaded.current && user) {
       isLoaded.current = true;
-      console.log('jr user', user);
       const { tags = null } = user;
 
       if (!tags) {
@@ -46,7 +45,7 @@ export default function SettingsData({ children }) {
         setTags(tags);
       }
     }
-  }, []);
+  }, [user]);
 
   /**
    * Function used to open the global modal with setting specific data.
@@ -66,7 +65,11 @@ export default function SettingsData({ children }) {
     setTimeout(() => setModalChildren(null), LOADING_DELAY);
   }
 
-  const value = { closeModal, openModal, openSettings, tags };
+  const value = { closeModal, openModal, openSettings, tags, setTags };
+
+  if (!user) {
+    return children;
+  }
   return (
     <SettingsProvider.Provider value={value}>
       {children}

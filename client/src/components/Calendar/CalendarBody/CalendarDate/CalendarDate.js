@@ -40,13 +40,15 @@ export default function CalendarDate({ dateNum }) {
    */
   function applyContents() {
     let sum = 0;
-    let children = data?.[dateString]?.map((item) => {
-      sum += parseFloat(
-        item?.amount?.$numberDecimal > 0 ? item?.amount?.$numberDecimal : 0
-      );
+    const children = data?.[dateString]?.map((item, i) => {
+      const parsedAmount =
+        typeof item?.amount === 'number'
+          ? item?.amount
+          : item?.amount?.$numberDecimal;
+      sum += parseFloat(parsedAmount);
       return (
-        <li key={item?._id} className={styles[item?.tag]}>
-          <p>{item?.event || item?.item}</p>
+        <li key={item?._id || i} className={styles[item?.tag]}>
+          <p>{item?.item || item?.event}</p>
         </li>
       );
     });
