@@ -2,6 +2,7 @@ import styles from './UserExpenses.module.css';
 import SectionHeading from 'components/utils/SectionHeading';
 import Loading from 'components/utils/Loading';
 import { PropTypes } from 'prop-types';
+import dayjs from 'dayjs';
 import { Container } from 'layout';
 
 /**
@@ -33,7 +34,7 @@ export default function UserExpenses({ items }) {
             {items?.budget.map((item, i) => {
               return (
                 <tr key={i}>
-                  <td>{new Date(item?.date).toLocaleDateString()}</td>
+                  <td>{dayjs(item?.date).format('YYYY-MM-DD')}</td>
                   <td>{item?.item || '-'}</td>
                   <td>{item?.amount?.$numberDecimal || '-'}</td>
                   <td>{item?.event || '-'}</td>

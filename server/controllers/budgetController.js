@@ -85,14 +85,16 @@ export async function setBudget(req, res) {
     throw new Error('Please add an item field');
   }
 
-  const budget = await Budget.create({
+  const budget = {
     item,
     amount,
     event,
     date,
     tag,
     user,
-  });
+  };
+
+  await Budget.create(budget);
 
   return res.status(200).json({ version: process.env.VERSION, budget });
 }
@@ -241,7 +243,7 @@ export async function addManyItems(req, res) {
     };
   });
 
-  Budget.insertMany(insertion).then((res) => console.log({ res }));
+  await Budget.insertMany(insertion);
 
   return res.status(200).json({ version: process.env.VERSION, insertion });
 }

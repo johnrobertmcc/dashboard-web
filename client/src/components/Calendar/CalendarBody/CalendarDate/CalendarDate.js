@@ -4,7 +4,10 @@ import { itemProps } from 'components/Calendar/Calendar.PropTypes';
 import { useState, useEffect } from 'react';
 import { useCalendarContext } from 'context/CalendarData';
 import { createDateString } from 'context/CalendarData/CalendarData.utils';
+import dayjs from 'dayjs';
 import cn from 'classnames';
+var isToday = require('dayjs/plugin/isToday');
+dayjs.extend(isToday);
 
 /**
  * Renders a specific <td/> element for calendar days.
@@ -40,13 +43,15 @@ export default function CalendarDate({ dateNum }) {
    */
   function applyContents() {
     let sum = 0;
-    let children = data?.[dateString]?.map((item) => {
-      sum += parseFloat(
-        item?.amount?.$numberDecimal > 0 ? item?.amount?.$numberDecimal : 0
-      );
+    const children = data?.[dateString]?.map((item, i) => {
+      const parsedAmount =
+        typeof item?.amount === 'number'
+          ? item?.amount
+          : item?.amount?.$numberDecimal;
+      sum += parseFloat(parsedAmount);
       return (
-        <li key={item?._id} className={styles[item?.tag]}>
-          <p>{item?.event || item?.item}</p>
+        <li key={item?._id || i} className={styles[item?.tag]}>
+          <p>{item?.item || item?.event}</p>
         </li>
       );
     });
@@ -66,7 +71,10 @@ export default function CalendarDate({ dateNum }) {
         total > 10 && total < 50 && styles.acceptable,
         total > 50 && total < 100 && styles.warning,
         total > 500 && styles.immediate,
-        !dateNum && styles.adjoining
+        !dateNum && styles.adjoining,
+        dayjs(dateString).isBefore(dayjs().format('l')) && styles.pastDate,
+        !dayjs(dateString).isValid() && styles.connectingDate,
+        dayjs(dateString).isToday() && styles.today
       )}
       onClick={() => dateNum && openDrawer(dateString)}
       key={dateNum}
@@ -75,7 +83,11 @@ export default function CalendarDate({ dateNum }) {
         {dateNum && (
           <>
             <h4>{dateNum}</h4>
-            <h5>{total.toFixed(2)}</h5>
+            <h5
+              className={cn(total <= 0 && styles.nonSpent)}
+            >
+              {total.toFixed(2)}
+            </h5>
           </>
         )}
         {content && <ul key={dateNum}>{content}</ul>}

@@ -1,3 +1,5 @@
+import { Input, Select } from 'components/utils';
+
 export const LINKS = [
   { url: '/', title: 'Dashboard', protected: true },
   { url: '/ledger', title: 'Ledger', protected: true },
@@ -8,3 +10,8 @@ export const LINKS = [
 ];
 
 export const LOADING_DELAY = 450;
+
+export const TAG_MAPPING = {
+  select: Select,
+  input: Input,
+};

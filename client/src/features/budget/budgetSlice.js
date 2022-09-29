@@ -8,7 +8,7 @@ const initialState = {
   isLoading: false,
   message: '',
 };
-// Register User.
+// Publish a single item to the budget.
 export const publishItem = createAsyncThunk(
   'budget/create',
   async (budgetItem, thunkAPI) => {
@@ -24,7 +24,7 @@ export const publishItem = createAsyncThunk(
   }
 );
 
-// Get all goals by UserId.
+// Get all budget items by UserId.
 export const getBudget = createAsyncThunk(
   'budget/getAll',
   async (_, thunkAPI) => {
@@ -128,6 +128,7 @@ export const budgetSlice = createSlice({
       .addCase(publishItem.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        console.log('jr single', { state, action });
         state.items.budget.push(action?.payload?.budget);
       })
       .addCase(publishItem.rejected, (state, action) => {
@@ -200,6 +201,8 @@ export const budgetSlice = createSlice({
       .addCase(uploadItems.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        console.log('jr many', { state, action });
+        state.items.budget.push(...action.payload.insertion);
       })
       .addCase(uploadItems.rejected, (state, action) => {
         state.isLoading = false;

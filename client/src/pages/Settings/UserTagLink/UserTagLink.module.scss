@@ -1,0 +1,7 @@
+.readFile {
+  @apply flex items-center w-full justify-between my-5;
+
+  .upload {
+    @apply p-3 border border-black;
+  }
+}

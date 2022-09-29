@@ -1,0 +1,18 @@
+.list {
+  .listItem {
+    @apply flex w-1/2 justify-between;
+    @apply border-b h-10 items-center;
+
+    & > button {
+      @apply border-x h-full w-20;
+    }
+
+    & > input {
+      @apply h-full w-auto;
+    }
+  }
+
+  & > li.listItem:first-child {
+    @apply border-t mt-3;
+  }
+}
