@@ -1,5 +1,5 @@
 .header {
-  @apply relative;
+  @apply relative border-none;
   .logoImg {
     @apply h-12;
   }
@@ -8,5 +8,15 @@
 
   .openMenu {
     @apply tablet:hidden;
+  }
+
+  &.dark {
+    @apply bg-dark-primary;
+
+    @apply text-dark-secondary;
+  }
+
+  &.light {
+    @apply bg-light-tertiary;
   }
 }

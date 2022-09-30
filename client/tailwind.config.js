@@ -24,6 +24,22 @@ module.exports = {
         12: '12px',
         16: '16px',
       },
+      colors: {
+        dark: {
+          primary: '#2f2f2f',
+          secondary: '#e8e5da',
+          tertiary: '#3f93ca',
+          warning: '#cdc392',
+          error: '#281c4a',
+        },
+        light: {
+          primary: '#fff',
+          secondary: '#3335555',
+          tertiary: '#bbbb',
+          warning: '#23444',
+          error: '#bd3230',
+        },
+      },
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],

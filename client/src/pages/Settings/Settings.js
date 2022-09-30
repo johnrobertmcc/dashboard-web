@@ -1,6 +1,7 @@
 import DeleteDatabaseLink from './DeleteDatabaseLink';
 import ReadFileLink from './ReadFileLink';
 import styles from './Settings.module.scss';
+import ThemeSettingsLink from './ThemeSettingsLink';
 import UserTagLink from './UserTagLink';
 
 /**
@@ -17,6 +18,7 @@ export default function Settings() {
       <ul>
         <UserTagLink />
         <ReadFileLink />
+        <ThemeSettingsLink />
         <DeleteDatabaseLink />
       </ul>
     </section>
