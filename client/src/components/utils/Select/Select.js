@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import styles from './Select.module.scss';
+import cn from 'classnames';
+
 /**
  * Renders a <select /> with <option />s.
  *
@@ -24,17 +26,19 @@ export default function Select({
   placeHolder,
   callBack,
   className,
+  defaultOption,
 }) {
   return (
     <select
       type={type}
-      className={className || styles.select}
+      className={cn(styles.select, className && className)}
       id={id}
       name={name}
       value={value}
       placeholder={placeHolder}
       onChange={(e) => callBack(e)}
     >
+      {defaultOption && <option>{defaultOption}</option>}
       {options?.map((opt, i) => (
         <option key={i}>{opt}</option>
       ))}

@@ -2,7 +2,7 @@ import { useEffect, createContext, useContext, useState, useRef } from 'react';
 import Modal from 'components/utils/Modal';
 import { LOADING_DELAY } from 'constants';
 import { useSelector } from 'react-redux';
-import { DEFAULT_TAGS } from './SettingsData.utils';
+import { DEFAULT_TAGS, DEFAULT_THEME, THEMES } from './SettingsData.utils';
 
 // Initialize context object.
 const SettingsProvider = createContext();
@@ -31,6 +31,7 @@ export default function SettingsData({ children }) {
   const [openSettings, setOpenSettings] = useState(false);
   const [modalChildren, setModalChildren] = useState(null);
   const [tags, setTags] = useState(null);
+  const [theme, setTheme] = useState(THEMES[DEFAULT_THEME]);
   const isLoaded = useRef(null);
   const { user } = useSelector((state) => state?.auth);
 
@@ -65,11 +66,19 @@ export default function SettingsData({ children }) {
     setTimeout(() => setModalChildren(null), LOADING_DELAY);
   }
 
-  const value = { closeModal, openModal, openSettings, tags, setTags };
+  console.log('jr theme', theme);
 
-  if (!user) {
-    return children;
-  }
+  const value = {
+    closeModal,
+    openModal,
+    openSettings,
+    tags,
+    setTags,
+    theme,
+    setTheme,
+    availableThemes: Object.values(THEMES),
+  };
+
   return (
     <SettingsProvider.Provider value={value}>
       {children}

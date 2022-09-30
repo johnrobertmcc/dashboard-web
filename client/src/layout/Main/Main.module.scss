@@ -1,0 +1,9 @@
+.main {
+  @apply min-h-screen;
+  &.dark {
+    * {
+      @apply bg-dark-primary;
+      @apply text-dark-secondary;
+    }
+  }
+}

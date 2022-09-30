@@ -7,6 +7,8 @@ import NavLinks from './NavLinks';
 import NavMenu from './NavMenu';
 import { useState } from 'react';
 import { disableScroll, enableScroll } from 'functions/utils/scroll';
+import { useSettingsContext } from 'context/SettingsData/SettingsData';
+import cn from 'classnames';
 
 /**
  * Renders the Global Header Component.
@@ -21,6 +23,7 @@ export default function Header() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [openMenu, setOpenMenu] = useState(false);
+  const { theme } = useSettingsContext();
 
   /**
    * Function to handle logging out the user from the browser by dispatching async Action.
@@ -28,7 +31,7 @@ export default function Header() {
    * @author  John Robert McCann
    * @since   8/26/2022
    * @version 1.0.0
-   * */
+   */
   function handleLogOut() {
     dispatch(logout());
     dispatch(reset());
@@ -60,7 +63,11 @@ export default function Header() {
   }
 
   return (
-    <Container layout="nav" tag={'header'} className={styles.header}>
+    <Container
+      layout="nav"
+      tag={'header'}
+      className={cn(styles.header, styles[theme])}
+    >
       <img src="./favicon.webp" alt="J.R. Inc" className={styles.logoImg} />
       <NavLinks user={user} handleLogOut={handleLogOut} />
       <button onClick={() => openDrawer()} className={styles.openMenu}>
