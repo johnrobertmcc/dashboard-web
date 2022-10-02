@@ -11,6 +11,8 @@ export const LINKS = [
 
 export const LOADING_DELAY = 450;
 
+export const LOADING = 'loading';
+
 export const TAG_MAPPING = {
   select: Select,
   input: Input,

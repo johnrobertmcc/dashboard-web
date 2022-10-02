@@ -1,7 +1,7 @@
 import { useSettingsContext } from 'context/SettingsData/SettingsData';
 import styles from './DeleteDatabaseLink.module.scss';
 import { DELETE_DATABASE_DESCRIPTION } from './DeleteDatabaseLink.utils';
-import DeleteDatabase from 'components/DeleteDatabase/DeleteDatabase';
+import DeleteDatabase from 'components/settings/DeleteDatabase/DeleteDatabase';
 
 /**
  * Renders the option to delete all transactions.

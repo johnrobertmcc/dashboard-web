@@ -11,7 +11,7 @@ import {
   CONFIRM_EVENT_STATE,
   CONFIRM_ITEM_STATE,
 } from './ConfirmData.utils';
-import ConfirmTransactions from 'components/ConfirmTransactions';
+import ConfirmTransactions from 'components/upload/ConfirmTransactions';
 import cn from 'classnames';
 import ResponsiveTable from 'components/utils/ResponsiveTable';
 

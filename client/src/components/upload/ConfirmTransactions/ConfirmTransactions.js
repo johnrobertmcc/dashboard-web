@@ -11,6 +11,7 @@ import {
   CONFIRMATION_MESSAGE,
   ERROR_MESSAGE,
 } from './ConfirmTransactions.utils';
+import dayjs from 'dayjs';
 
 /**
  * Renders a list of transactions to confirm before submition to MongoDB.
@@ -49,7 +50,7 @@ export default function ConfirmTransactions({ data, structure }) {
 
           return {
             amount: parseFloat(row?.[amount]),
-            date: row?.[date] || null,
+            date: dayjs(row?.[date]).format('l') || null,
             event: row?.[event] || null,
             item: row?.[item] || null,
             tag: row?.[tag] || null,

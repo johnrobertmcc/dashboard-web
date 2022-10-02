@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux';
 import CalendarData from 'context/CalendarData';
 import Loading from 'components/utils/Loading';
-import AddExpense from 'components/AddExpense';
 import PageHeading from 'components/utils/PageHeading';
 import { getBudget } from 'features/budget/budgetSlice.js';
 import { useEffect } from 'react';
-import Userinformation from 'components/Userinformation';
-import AddRecurringExpenses from 'components/AddRecurringExpenses';
+import AddRecurringExpenses from 'components/expenses/AddRecurringExpenses';
+import Calendar from 'components/calendar/Calendar';
+import CardList from './CardList';
 
 /**
  * Renders the default view "/" to display the user's information.
@@ -34,9 +34,11 @@ export default function Dashboard() {
       {user ? (
         <>
           <PageHeading message={`Welcome ${user?.name}`} />
-          <Userinformation />
-          <CalendarData />
-          <AddRecurringExpenses />
+          <CalendarData>
+            <CardList />
+            <Calendar />
+            <AddRecurringExpenses />
+          </CalendarData>
         </>
       ) : (
         <Loading />

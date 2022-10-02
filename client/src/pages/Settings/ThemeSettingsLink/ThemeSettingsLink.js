@@ -1,4 +1,4 @@
-import ThemeSettings from 'components/ThemeSettings';
+import ThemeSettings from 'components/settings/ThemeSettings';
 import styles from './ThemeSettingsLink.module.scss';
 import { THEME_SETTINGS_DESCRIPTION } from './ThemeSettings.utils';
 

@@ -1,0 +1,7 @@
+.formattedString {
+  @apply font-bold;
+}
+
+.loadingWrapper {
+  @apply inline-block w-10 h-7 opacity-50;
+}

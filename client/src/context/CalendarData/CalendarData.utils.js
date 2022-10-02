@@ -55,3 +55,52 @@ export function createDateString(year, month, dateNum) {
     dateNum <= 9 ? '0' + dateNum : dateNum
   }`;
 }
+
+/**
+ * Function used to seperate the data by month and year.
+ *
+ * @author  John Robert McCann
+ * @since   10/01/2022
+ * @version 1.0.0
+ * @param   {object} data The data structure from MongoDB.
+ * @returns {object}      Returns an object structured: {<year>: {<month>: <num> } }
+ */
+export function seperateTotalsByMonth(data) {
+  if (!Object.keys(data).length) {
+    return null;
+  }
+  let totals = {};
+
+  Object.keys(data).forEach((date) => {
+    const options = date.split('-');
+    const { [options?.[0]]: year = {} } = totals;
+    const prevAmount = totals?.[options[0]]?.[options[1]] ?? 0.0;
+    totals[options[0]] = {
+      ...year,
+      [options?.[1]]: prevAmount + findAllAmountsInDay(data[date]),
+    };
+  });
+
+  return totals;
+}
+
+/**
+ * Function used to sum up the total amounts of each day.
+ *
+ * @author  John Robert McCann
+ * @since   10/01/2022
+ * @version 1.0.0
+ * @param   {Array}  array The amounts of each item from this particular day.
+ * @returns {number}       Returns the sum of one particular day's expenses.
+ */
+function findAllAmountsInDay(array) {
+  let sum = 0;
+  array.map((item) => {
+    const parsedAmount =
+      typeof item?.amount === 'number'
+        ? item?.amount
+        : item?.amount?.$numberDecimal;
+    sum += parseFloat(parsedAmount);
+  });
+  return sum;
+}

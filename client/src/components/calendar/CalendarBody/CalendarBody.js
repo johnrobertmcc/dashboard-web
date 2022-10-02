@@ -9,7 +9,6 @@ import { useCalendarContext } from 'context/CalendarData';
  * @author  John Robert McCann
  * @since   8/26/2022
  * @version 1.0.0
- *
  * @return {Element}   The CalendarBody component.
  */
 export default function CalendarBody() {

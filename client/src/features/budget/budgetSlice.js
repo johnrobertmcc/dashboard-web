@@ -128,7 +128,6 @@ export const budgetSlice = createSlice({
       .addCase(publishItem.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        console.log('jr single', { state, action });
         state.items.budget.push(action?.payload?.budget);
       })
       .addCase(publishItem.rejected, (state, action) => {
@@ -201,7 +200,6 @@ export const budgetSlice = createSlice({
       .addCase(uploadItems.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        console.log('jr many', { state, action });
         state.items.budget.push(...action.payload.insertion);
       })
       .addCase(uploadItems.rejected, (state, action) => {

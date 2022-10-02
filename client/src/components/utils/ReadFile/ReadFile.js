@@ -1,7 +1,7 @@
 import styles from './ReadFile.module.scss';
 import Papa from 'papaparse';
 import { useSettingsContext } from 'context/SettingsData/SettingsData';
-import ConfirmData from 'components/ConfirmData';
+import ConfirmData from 'components/upload/ConfirmData';
 
 /**
  * Creates the ability to drop files into a specified zone and convert csv to json.

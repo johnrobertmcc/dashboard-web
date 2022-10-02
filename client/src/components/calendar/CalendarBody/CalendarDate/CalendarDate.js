@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styles from './CalendarDate.module.scss';
-import { itemProps } from 'components/Calendar/Calendar.PropTypes';
+import { itemProps } from 'components/calendar/Calendar.PropTypes';
 import { useState, useEffect } from 'react';
 import { useCalendarContext } from 'context/CalendarData';
 import { createDateString } from 'context/CalendarData/CalendarData.utils';
@@ -20,19 +20,22 @@ dayjs.extend(isToday);
  * @return {Element}                The CalendarDate component.
  */
 export default function CalendarDate({ dateNum }) {
-  const { openDrawer, data, date } = useCalendarContext();
+  const { openDrawer, data, date = null } = useCalendarContext();
   const [content, setContent] = useState(null);
   const [total, setTotal] = useState(0);
   const dateString = createDateString(date?.year, date?.month, dateNum);
 
   useEffect(() => {
+    if (!date) {
+      return null;
+    }
     if (data && dateString) {
       applyContents();
     }
     if (!data?.[dateString]) {
       setTotal(0);
     }
-  }, [data]);
+  }, [data, date]);
 
   /**
    * Function used to apply the appropriate content to each table cell.
@@ -57,7 +60,6 @@ export default function CalendarDate({ dateNum }) {
     });
 
     setTotal(sum);
-
     setContent(children);
   }
 
@@ -83,9 +85,7 @@ export default function CalendarDate({ dateNum }) {
         {dateNum && (
           <>
             <h4>{dateNum}</h4>
-            <h5
-              className={cn(total <= 0 && styles.nonSpent)}
-            >
+            <h5 className={cn(total <= 0 && styles.nonSpent)}>
               {total.toFixed(2)}
             </h5>
           </>
