@@ -1,8 +1,7 @@
 .drawer {
-  @apply tablet:hidden w-full;
+  @apply w-full;
 
   div {
-    // @apply w-1/4;
     > button {
       @apply bottom-0;
     }
@@ -10,9 +9,5 @@
 
   .menuDrawer {
     @apply flex flex-col items-end h-full;
-
-    & > li {
-      // @apply py-3 font-bold;
-    }
   }
 }

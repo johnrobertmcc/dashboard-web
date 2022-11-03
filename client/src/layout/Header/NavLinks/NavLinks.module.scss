@@ -1,9 +1,14 @@
 .list {
-  @apply tablet:flex justify-between items-center hidden;
+  @apply tablet:flex justify-between items-center;
+
   .link {
     @apply px-3 font-bold hover:underline;
     &.logOut {
-      @apply border p-1 font-thin;
+      @apply py-5 px-1 text-dark-primary/60;
     }
   }
+}
+
+.currentPath {
+  @apply bg-white;
 }

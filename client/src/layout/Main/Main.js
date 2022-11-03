@@ -1,7 +1,6 @@
 import styles from './Main.module.scss';
 import React from 'react';
 import { Container } from 'layout';
-import 'react-toastify/dist/ReactToastify.css';
 import cn from 'classnames';
 import { useSettingsContext } from 'context/SettingsData/SettingsData';
 

@@ -16,8 +16,6 @@ export default function UserTags() {
   const { tags, setTags } = useSettingsContext();
   const [newTag, setNewTag] = useState('');
 
-  console.log('jr tags', tags);
-
   /**
    * Function used to add a new tag to the user's global state.
    *

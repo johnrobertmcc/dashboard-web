@@ -5,3 +5,7 @@
 .no-scroll {
   @apply overflow-hidden;
 }
+
+body {
+  @apply bg-dark-primary;
+}

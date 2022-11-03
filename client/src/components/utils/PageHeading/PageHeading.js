@@ -22,5 +22,5 @@ SectionHeading.propTypes = {
   message: PropTypes.string,
 };
 SectionHeading.defaultProps = {
-  tag: 'h1',
+  tag: 'h2',
 };

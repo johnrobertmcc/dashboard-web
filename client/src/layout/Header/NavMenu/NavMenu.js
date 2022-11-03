@@ -2,6 +2,7 @@ import Drawer from 'components/utils/Drawer';
 import PropTypes from 'prop-types';
 import NavLinks from '../NavLinks';
 import styles from './NavMenu.module.scss';
+import { useSettingsContext } from '../../../context/SettingsData/SettingsData';
 
 /**
  * Renders the NavMenu Component
@@ -15,7 +16,8 @@ import styles from './NavMenu.module.scss';
  * @param   {boolean}  props.open         Boolean to declare open or not.
  * @return  {Element}                     The NavMenu component.
  */
-export default function NavMenu({ user, handleLogOut, open, closeDrawer }) {
+export default function NavMenu({ user, handleLogOut }) {
+  const { openMenu: open, handleClick } = useSettingsContext();
   return (
     <Drawer
       data={{
@@ -28,8 +30,8 @@ export default function NavMenu({ user, handleLogOut, open, closeDrawer }) {
           />
         ),
       }}
-      open={open}
-      closeDrawer={closeDrawer}
+      open={open['right']}
+      closeDrawer={() => handleClick('right')}
       className={styles.drawer}
     />
   );

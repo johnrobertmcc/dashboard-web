@@ -13,8 +13,6 @@ import styles from './ThemeSettings.module.scss';
 export default function ThemeSettings() {
   const { setTheme, availableThemes = null } = useSettingsContext();
 
-  console.log('jr availableThemes', availableThemes);
-
   /**
    * Function used to handle the onchange event of the ThemeSettings <select />.
    */

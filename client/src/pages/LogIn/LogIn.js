@@ -1,10 +1,14 @@
 import styles from './LogIn.module.css';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import createInputRows from 'functions/utils/createInputRows';
 import { reset, login } from 'features/auth/authSlice.js';
+import { INVALID_LOGIN } from 'errors';
+import { LOADING_DELAY } from 'constants';
+import Loading from 'components/utils/Loading';
+import { Container } from 'layout';
+import { enableScroll } from 'functions/utils/scroll';
 
 /**
  * Renders the Login Page to log into one's own dashbord.
@@ -22,6 +26,8 @@ export default function LogIn() {
     password: { value: '', text: 'Enter your password.' },
   };
   const [data, setData] = useState(defaultState);
+  const [loading, setLoading] = useState(false);
+  const { user = null } = useSelector((state) => state?.auth);
 
   /**
    * Function used to updte the input with user information.
@@ -47,6 +53,7 @@ export default function LogIn() {
    */
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
     try {
       const userData = {
         email: data?.email?.value,
@@ -55,20 +62,30 @@ export default function LogIn() {
 
       dispatch(login(userData));
       dispatch(reset());
-      navigate('/');
     } catch (e) {
-      toast.error('Invalid Login.');
+      console.error(INVALID_LOGIN);
     }
   }
 
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+      enableScroll();
+    }
+  }, [user]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
-    <div className={styles.page}>
-      <h1 className={styles.header}>Login to see your dashboard.</h1>
+    <Container tag="section" className={styles.page}>
+      <h2 className={styles.header}>Login to see your dashboard.</h2>
 
       <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
         {createInputRows(data, (e) => handleChange(e))}
         <button type="submit">Submit</button>
       </form>
-    </div>
+    </Container>
   );
 }
