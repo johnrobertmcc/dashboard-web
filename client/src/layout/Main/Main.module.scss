@@ -1,9 +1,5 @@
 .main {
-  @apply min-h-screen;
-  &.dark {
-    * {
-      @apply bg-dark-primary;
-      @apply text-dark-secondary;
-    }
-  }
+  @apply h-auto my-5 rounded-lg mx-4;
+  @apply bg-gray-400;
+  @apply tablet:ml-28 tablet:mr-5;
 }

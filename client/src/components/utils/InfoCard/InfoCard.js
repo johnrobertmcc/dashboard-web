@@ -20,5 +20,5 @@ export default function InfoCard({ children }) {
   );
 }
 InfoCard.propTypes = {
-  children: PropTypes.object,
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };

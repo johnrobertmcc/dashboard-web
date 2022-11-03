@@ -1,0 +1,26 @@
+.aside {
+  @apply bg-dark-secondary mt-5 rounded-lg py-20;
+  @apply fixed top-24 left-0 transform transition-all w-0 tablet:w-24;
+  @apply z-10 invisible tablet:visible text-opacity-0 tablet:text-opacity-100 duration-150;
+  & ul {
+    @apply invisible tablet:visible;
+  }
+
+  &.open {
+    @apply w-24 visible text-opacity-100;
+    & ul {
+      @apply visible;
+    }
+  }
+  .menuDrawer {
+    @apply flex flex-col h-full;
+
+    & li {
+      @apply w-full py-5 text-right pr-2;
+
+      &:first-child {
+        @apply mt-10;
+      }
+    }
+  }
+}

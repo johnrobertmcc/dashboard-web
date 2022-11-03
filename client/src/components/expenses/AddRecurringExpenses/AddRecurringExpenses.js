@@ -72,8 +72,6 @@ export default function AddRecurringExpenses() {
     const { months = null } = data;
     const publishableData = structureData(data);
 
-    console.log('jr publishableData', publishableData);
-
     if (months) {
       const monthData = createRecurringExpense(months?.value, publishableData);
       dispatch(uploadItems({ id: user?._id, data: monthData }));

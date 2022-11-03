@@ -22,15 +22,20 @@ export default function Input({
   className,
 }) {
   return (
-    <input
-      type={type}
-      className={className || styles.input}
-      id={id}
-      name={name}
-      value={value}
-      placeholder={placeHolder}
-      onChange={(e) => callBack(e)}
-    />
+    <>
+      <label htmlFor={name} className="sr-only">
+        {name}
+      </label>
+      <input
+        type={type}
+        className={className || styles.input}
+        id={id}
+        name={name}
+        value={value}
+        placeholder={placeHolder}
+        onChange={(e) => callBack(e)}
+      />
+    </>
   );
 }
 Input.propTypes = {

@@ -1,14 +1,13 @@
 .header {
   @apply relative border-none;
+  @apply h-24 flex justify-between items-center;
   .logoImg {
     @apply h-12;
   }
 
-  @apply h-16 border flex justify-between items-center;
-
-  .openMenu {
-    @apply tablet:hidden;
-  }
+  // .openMenu {
+  //   @apply tablet:hidden;
+  // }
 
   &.dark {
     @apply bg-dark-primary;
@@ -18,5 +17,9 @@
 
   &.light {
     @apply bg-light-tertiary;
+  }
+
+  .unauthenticated {
+    @apply hidden;
   }
 }

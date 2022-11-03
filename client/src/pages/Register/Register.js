@@ -2,10 +2,11 @@ import styles from './Register.module.css';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import createInputRows from 'functions/utils/createInputRows';
 import { register, reset } from 'features/auth/authSlice.js';
 import Loading from 'components/utils/Loading';
+import { PASSWORD_ERROR } from 'errors';
+import { Container } from 'layout';
 
 /**
  * Renders the Register Page to register a new user.
@@ -37,7 +38,7 @@ export default function Register() {
    */
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      console.error(message);
     }
 
     if (isSuccess || user) {
@@ -82,7 +83,7 @@ export default function Register() {
     e.preventDefault();
 
     if (data?.password?.value !== data?.passwordVerify?.value) {
-      toast.error('Passwords do not match.');
+      console.error(PASSWORD_ERROR);
     } else {
       const userData = {
         name: data?.name?.value,
@@ -95,18 +96,18 @@ export default function Register() {
   }
 
   return (
-    <div className={styles.page}>
+    <Container tag="section" className={styles.page}>
       {loading ? (
         <Loading />
       ) : (
         <>
-          <h1 className={styles.header}>Please create an account.</h1>
+          <h2 className={styles.header}>Please create an account.</h2>
           <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
             {createInputRows(data, (e) => handleChange(e))}
             <button type="submit">Submit</button>
           </form>
         </>
       )}
-    </div>
+    </Container>
   );
 }

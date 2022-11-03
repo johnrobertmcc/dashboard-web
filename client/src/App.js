@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LogIn, Register, Dashboard, Ledger } from 'pages';
 import { Header, Container } from 'layout';
-import 'react-toastify/dist/ReactToastify.css';
 import SettingsData from 'context/SettingsData';
-import Settings from 'pages/Settings';
 import styles from './App.module.scss';
-import cn from 'classnames';
 import Main from 'layout/Main';
+import MainAside from 'layout/BodyAside';
+import { ROUTES } from 'constants';
 
 /**
  * The default Layout of the application.
@@ -22,15 +20,19 @@ export default function App() {
     <SettingsData>
       <Router>
         <Header />
-        <Main>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/ledger" element={<Ledger />} />
-            <Route path="/login" element={<LogIn />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/settings" element={<Settings />} />
-          </Routes>
-        </Main>
+        <Container tag="article" layout="nav" className={styles.article}>
+          <MainAside />
+          <Main>
+            <Routes>
+              {ROUTES?.map((route, i) => {
+                const { path, element } = route;
+                return (
+                  <Route path={path} element={createElement(element)} key={i} />
+                );
+              })}
+            </Routes>
+          </Main>
+        </Container>
       </Router>
     </SettingsData>
   );

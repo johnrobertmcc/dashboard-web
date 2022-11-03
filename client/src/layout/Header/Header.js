@@ -9,6 +9,9 @@ import { useState } from 'react';
 import { disableScroll, enableScroll } from 'functions/utils/scroll';
 import { useSettingsContext } from 'context/SettingsData/SettingsData';
 import cn from 'classnames';
+import { NAV_LINKS } from 'constants';
+import { ACCESSIBLE_HEADER } from 'constants';
+import { RIGHT, LEFT } from './Header.utils';
 
 /**
  * Renders the Global Header Component.
@@ -19,48 +22,8 @@ import cn from 'classnames';
  * @return {Element} The Header component.
  */
 export default function Header() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const [openMenu, setOpenMenu] = useState(false);
-  const { theme } = useSettingsContext();
-
-  /**
-   * Function to handle logging out the user from the browser by dispatching async Action.
-   *
-   * @author  John Robert McCann
-   * @since   8/26/2022
-   * @version 1.0.0
-   */
-  function handleLogOut() {
-    dispatch(logout());
-    dispatch(reset());
-    navigate('/login');
-  }
-
-  /**
-   * Function used to open the drawer and set the calendar data.
-   *
-   * @author  John Robert McCann
-   * @since   8/28/2022
-   * @version 1.0.0
-   */
-  function openDrawer() {
-    setOpenMenu(!openMenu);
-    disableScroll();
-  }
-
-  /**
-   * Function used to open the drawer and reset the calendar data.
-   *
-   * @author  John Robert McCann
-   * @since   8/28/2022
-   * @version 1.0.0
-   */
-  function closeDrawer() {
-    setOpenMenu(false);
-    enableScroll();
-  }
+  const { theme, openMenu, handleClick } = useSettingsContext();
 
   return (
     <Container
@@ -68,17 +31,26 @@ export default function Header() {
       tag={'header'}
       className={cn(styles.header, styles[theme])}
     >
-      <img src="./favicon.webp" alt="J.R. Inc" className={styles.logoImg} />
-      <NavLinks user={user} handleLogOut={handleLogOut} />
-      <button onClick={() => openDrawer()} className={styles.openMenu}>
-        Menu
+      <h1 className="sr-only">{ACCESSIBLE_HEADER}</h1>
+      <button onClick={() => handleClick(LEFT)}>
+        <img src="./favicon.webp" alt="J.R. Inc" className={styles.logoImg} />
       </button>
-      <NavMenu
-        user={user}
-        handleLogOut={handleLogOut}
-        open={openMenu}
-        closeDrawer={() => closeDrawer()}
-      />
+      <NavLinks user={user} className={!user && styles.unauthenticated} />
+      {!user && (
+        <>
+          <button
+            onClick={() => handleClick(RIGHT)}
+            className={styles.openMenu}
+          >
+            Menu
+          </button>
+          <NavMenu
+            user={user}
+            open={openMenu}
+            closeDrawer={() => handleClick(RIGHT)}
+          />
+        </>
+      )}
     </Container>
   );
 }

@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import AddRecurringExpenses from 'components/expenses/AddRecurringExpenses';
 import Calendar from 'components/calendar/Calendar';
 import CardList from './CardList';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Renders the default view "/" to display the user's information.
@@ -19,6 +20,7 @@ import CardList from './CardList';
 export default function Dashboard() {
   const { user } = useSelector((state) => state?.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   /**
    * React.useEffect used to fetch the budget of the user on successful validation.
@@ -26,6 +28,8 @@ export default function Dashboard() {
   useEffect(() => {
     if (user) {
       dispatch(getBudget());
+    } else {
+      navigate('/login');
     }
   }, [dispatch, user]);
 
@@ -33,7 +37,6 @@ export default function Dashboard() {
     <section>
       {user ? (
         <>
-          <PageHeading message={`Welcome ${user?.name}`} />
           <CalendarData>
             <CardList />
             <Calendar />

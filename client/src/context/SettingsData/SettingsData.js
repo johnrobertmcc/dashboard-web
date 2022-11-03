@@ -3,6 +3,7 @@ import Modal from 'components/utils/Modal';
 import { LOADING_DELAY } from 'constants';
 import { useSelector } from 'react-redux';
 import { DEFAULT_TAGS, DEFAULT_THEME, THEMES } from './SettingsData.utils';
+import useKeyPress from 'functions/hooks/useKeyPress.js';
 
 // Initialize context object.
 const SettingsProvider = createContext();
@@ -31,9 +32,21 @@ export default function SettingsData({ children }) {
   const [openSettings, setOpenSettings] = useState(false);
   const [modalChildren, setModalChildren] = useState(null);
   const [tags, setTags] = useState(null);
+  const [openMenu, setOpenMenu] = useState({ left: false, right: false });
   const [theme, setTheme] = useState(THEMES[DEFAULT_THEME]);
   const isLoaded = useRef(null);
   const { user } = useSelector((state) => state?.auth);
+  const leftMenu = useKeyPress('[');
+  const rightMenu = useKeyPress(']');
+
+  useEffect(() => {
+    if (leftMenu) {
+      setOpenMenu((prev) => ({ ...prev, left: !prev.left }));
+    }
+    if (rightMenu) {
+      setOpenMenu((prev) => ({ ...prev, right: !prev.right }));
+    }
+  }, [leftMenu]);
 
   useEffect(() => {
     if (!isLoaded.current && user) {
@@ -66,7 +79,18 @@ export default function SettingsData({ children }) {
     setTimeout(() => setModalChildren(null), LOADING_DELAY);
   }
 
-  console.log('jr theme', theme);
+  /**
+   * Function used to open or clsoe the drawer dependant on position.
+   *
+   * @author  John Robert McCann
+   * @since   8/28/2022
+   * @version 1.0.0
+   */
+  function handleClick(direction) {
+    setOpenMenu((prev) => ({ ...prev, [direction]: !prev?.[direction] }));
+  }
+
+  console.log('jr openMenu', openMenu);
 
   const value = {
     closeModal,
@@ -76,6 +100,8 @@ export default function SettingsData({ children }) {
     setTags,
     theme,
     setTheme,
+    openMenu,
+    handleClick,
     availableThemes: Object.values(THEMES),
   };
 
