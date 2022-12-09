@@ -21,6 +21,8 @@ async function sendItemToDB(budgetData, token) {
   return response?.data;
 }
 
+
+
 /**
  * Function used to register a new user to the database and set token to local storage.
  *

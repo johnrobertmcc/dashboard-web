@@ -78,7 +78,11 @@ NavLinks.propTypes = {
     token: PropTypes.string,
   }),
   handleLogOut: PropTypes.func,
-  className: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  className: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string,
+    PropTypes.bool,
+  ]),
   links: PropTypes.arrayOf(
     PropTypes.shape({
       url: PropTypes.string,
