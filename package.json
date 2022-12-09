@@ -5,11 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "project": "npm-run-all --parallel tab:*",
-    "server": "nodemon server/server.js",
-    "tab:server": "ttab -t 'Server' nodemon server/server.js",
-    "tab:client": "ttab -t 'Client' npm start --prefix client",
-    "tab:echo": "echo 'Starting project...'"
+    "start": "ttab -t 'Client' npm start --prefix client"
   },
   "author": "J.R. McCann",
   "license": "ISC",

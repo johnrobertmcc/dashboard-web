@@ -45,3 +45,61 @@ export async function logOut() {
   localStorage.removeItem('user');
   localStorage.removeItem('budget');
 }
+
+/**
+ * Function used to edit a user's information.
+ *
+ * @author John Robert McCann
+ * @since  11/02/2022
+ * @route  PATCH /api/v1/user/id.
+ * @access Private
+ * @param  {string} user    The information of the user to edit.
+ * @param  {string} token   The user's token from local storage.
+ */
+export async function editUser(user, token) {
+  const { _id: id = null } = user?.arg;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    if (id) {
+      const response = await axios.put(API_URL + id, user, config);
+      if (response?.data) {
+        return true;
+      }
+    }
+  } catch (e) {
+    console.error('Error processing editUser', e);
+  }
+}
+
+/**
+ * Function used to return a user's information.
+ *
+ * @author John Robert McCann
+ * @since  11/02/2022
+ * @route  GET /api/v1/user/id.
+ * @access Private
+ * @param  {string} user    The information of the user to edit.
+ * @param  {string} token   The user's token from local storage.
+ */
+export async function fetchUser(user, token) {
+  const { _id: id = null } = user;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    if (id) {
+      const response = await axios.get(API_URL + 'me', user, config);
+      return response?.user || null;
+    }
+  } catch (e) {
+    console.error('Error fetching User', e);
+  }
+}

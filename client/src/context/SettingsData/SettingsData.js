@@ -1,9 +1,11 @@
 import { useEffect, createContext, useContext, useState, useRef } from 'react';
 import Modal from 'components/utils/Modal';
 import { LOADING_DELAY } from 'constants';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { DEFAULT_TAGS, DEFAULT_THEME, THEMES } from './SettingsData.utils';
 import useKeyPress from 'functions/hooks/useKeyPress.js';
+import { editUser } from 'features/auth/authService';
+import { edit, getInfo } from 'features/auth/authSlice';
 
 // Initialize context object.
 const SettingsProvider = createContext();
@@ -38,6 +40,12 @@ export default function SettingsData({ children }) {
   const { user } = useSelector((state) => state?.auth);
   const leftMenu = useKeyPress('[');
   const rightMenu = useKeyPress(']');
+  const dispatch = useDispatch();
+  // dispatch(edit(updatedUser));
+
+  useEffect(() => {
+    dispatch(getInfo(user));
+  }, []);
 
   useEffect(() => {
     if (leftMenu) {
@@ -51,13 +59,9 @@ export default function SettingsData({ children }) {
   useEffect(() => {
     if (!isLoaded.current && user) {
       isLoaded.current = true;
-      const { tags = null } = user;
+      const { tags: userTags = DEFAULT_TAGS } = user;
 
-      if (!tags) {
-        setTags(DEFAULT_TAGS);
-      } else {
-        setTags(tags);
-      }
+      setTags(userTags);
     }
   }, [user]);
 
@@ -89,8 +93,6 @@ export default function SettingsData({ children }) {
   function handleClick(direction) {
     setOpenMenu((prev) => ({ ...prev, [direction]: !prev?.[direction] }));
   }
-
-  console.log('jr openMenu', openMenu);
 
   const value = {
     closeModal,

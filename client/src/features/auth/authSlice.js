@@ -1,5 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { registerUser, logOut, logIn } from './authService.js';
+import {
+  registerUser,
+  logOut,
+  logIn,
+  editUser,
+  fetchUser,
+} from './authService.js';
 
 /**
  * Feature used to authenticate a user as the owner of the DB budgetItems from local storage.
@@ -42,6 +48,45 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 export const logout = createAsyncThunk('auth/logout', async () => {
   return await logOut();
 });
+
+// Edit User
+export const edit = createAsyncThunk(
+  'auth/editUser',
+  async (user, thunkApi) => {
+    try {
+      const token = thunkApi.getState().auth.user.token;
+      await editUser(user, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+
+//Fetch User
+export const getInfo = createAsyncThunk(
+  'auth/fetchUser',
+  async (user, thunkApi) => {
+    try {
+      const token = thunkApi.getState().auth.user.token;
+      const fetchedUser = await fetchUser(user, token);
+      console.log('jr fetchedUser', fetchedUser);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: 'auth',
@@ -86,6 +131,35 @@ const authSlice = createSlice({
         state.user = null;
       })
       .addCase(logout.fulfilled, (state) => {
+        state.user = null;
+      })
+      .addCase(edit.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(edit.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        debugger;
+        state.user = action?.payload ? action?.meta?.arg : null;
+      })
+      .addCase(edit.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action?.payload || null;
+        // state.user = null;
+      })
+      .addCase(getInfo.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getInfo.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action?.payload ? action?.meta?.arg : null;
+      })
+      .addCase(getInfo.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action?.payload || null;
         state.user = null;
       });
   },
