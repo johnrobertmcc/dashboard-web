@@ -87,19 +87,28 @@ export async function editUser(user, token) {
  * @param  {string} token   The user's token from local storage.
  */
 export async function fetchUser(user, token) {
-  const { _id: id = null } = user;
+  const { _id: id = null, email = null } = user;
+  console.log('jr user', user);
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    data: {
+      email,
+    },
   };
 
-  try {
-    if (id) {
-      const response = await axios.get(API_URL + 'me', user, config);
-      return response?.user || null;
-    }
-  } catch (e) {
-    console.error('Error fetching User', e);
-  }
+  const url = API_URL + 'me';
+  console.log('jr url', url, config);
+  const response = await axios.get(url, config);
+  console.log('jr response', response);
+
+  return response?.user || null;
+
+  // try {
+  //   if (id) {
+  //   }
+  // } catch (e) {
+  //   console.error('Error fetching User', e);
+  // }
 }

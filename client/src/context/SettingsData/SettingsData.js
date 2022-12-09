@@ -4,7 +4,6 @@ import { LOADING_DELAY } from 'constants';
 import { useSelector, useDispatch } from 'react-redux';
 import { DEFAULT_TAGS, DEFAULT_THEME, THEMES } from './SettingsData.utils';
 import useKeyPress from 'functions/hooks/useKeyPress.js';
-import { editUser } from 'features/auth/authService';
 import { edit, getInfo } from 'features/auth/authSlice';
 
 // Initialize context object.
@@ -40,12 +39,13 @@ export default function SettingsData({ children }) {
   const { user } = useSelector((state) => state?.auth);
   const leftMenu = useKeyPress('[');
   const rightMenu = useKeyPress(']');
-  const dispatch = useDispatch();
-  // dispatch(edit(updatedUser));
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getInfo(user));
-  }, []);
+  // useEffect(() => {
+  //   if (user) {
+  //     dispatch(getInfo(user));
+  //   }
+  // }, [user]);
 
   useEffect(() => {
     if (leftMenu) {
