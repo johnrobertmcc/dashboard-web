@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import InfoCard from '../InfoCard';
-import styles from './EventInfo.module.scss';
 import { LOADING } from 'constants';
 import delayedRender from 'functions/utils/delayedRender';
 

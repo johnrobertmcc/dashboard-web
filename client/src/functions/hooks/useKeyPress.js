@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 /**
+ * Function used to create event listeners for key presses.
+ *
  * @see https://usehooks.com/useKeyPress/
  * @since 08/27/2022
  * @version 1.0.0

@@ -97,7 +97,6 @@ const authSlice = createSlice({
       state.isError = false;
       state.message = '';
       state.isLoading = false;
-      // setTimeout(() => (), 10000);
     },
   },
   extraReducers: (builder) => {

@@ -3,15 +3,18 @@ import PropTypes from 'prop-types';
 import { useEffect, createContext, useContext, useState, useMemo } from 'react';
 import { disableScroll, enableScroll } from 'functions/utils/scroll.js';
 import CalendarDrawerContents from 'components/calendar/CalendarDrawerContents';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import dayjs from 'dayjs';
 import { LOADING_DELAY } from 'constants';
 import Loading from 'components/utils/Loading';
 import {
   handleBudgetItems,
-  seperateTotalsByMonth,
   settleDate,
 } from './CalendarData.utils.js';
+import {
+  fetchMonthTotal,
+  fetchUpcomingItems,
+} from 'features/budget/budgetSlice.js';
 
 // Initialize context object.
 const CalendarProvider = createContext();
@@ -41,6 +44,11 @@ export default function CalendarData({ loader, children }) {
   const [open, setOpen] = useState(false);
   const [dayData, setDayData] = useState({});
   const [data, setData] = useState({});
+  const { user } = useSelector((state) => state?.auth);
+  const { monthTotal = 0, upcoming = null } = useSelector(
+    (state) => state?.budget
+  );
+  const dispatch = useDispatch();
 
   const {
     items = null,
@@ -58,11 +66,6 @@ export default function CalendarData({ loader, children }) {
 
   const months = useMemo(() => dayjs.months(), [dayjs.locale()]);
   const weeks = useMemo(() => dayjs.weekdaysShort(), [dayjs.locale()]);
-  const monthTotal = useMemo(() => {
-    if (data) {
-      return seperateTotalsByMonth(data);
-    }
-  }, [data]);
   const { numDays, startOfMonth } = settleDate(date?.year, date?.month);
 
   useEffect(() => {
@@ -135,6 +138,17 @@ export default function CalendarData({ loader, children }) {
     setDate({ month: newMonth, year: newYear });
   }
 
+  useEffect(() => {
+    if (date && user && numDays) {
+      try {
+        dispatch(fetchMonthTotal({ ...date, numDays }));
+        dispatch(fetchUpcomingItems(5));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }, [date]);
+
   const value = {
     openDrawer,
     items,
@@ -155,6 +169,7 @@ export default function CalendarData({ loader, children }) {
     closeDrawer,
     open,
     monthTotal,
+    upcoming,
   };
 
   return (

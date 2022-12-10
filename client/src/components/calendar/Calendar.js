@@ -1,6 +1,4 @@
 import styles from './Calendar.module.scss';
-import Loading from 'components/utils/Loading';
-import PropTypes from 'prop-types';
 import { Container } from 'layout';
 import dayjs from 'dayjs';
 import { useEffect, useRef } from 'react';

@@ -49,7 +49,7 @@ export default function ConfirmTransactions({ data, structure }) {
           } = structure;
 
           return {
-            amount: parseFloat(row?.[amount]),
+            amount: parseFloat(row?.[amount].replace(/\$/g, '')),
             date: dayjs(row?.[date]).format('l') || null,
             event: row?.[event] || null,
             item: row?.[item] || null,
@@ -60,9 +60,10 @@ export default function ConfirmTransactions({ data, structure }) {
     }
     if (!isMounted.current) {
       isMounted.current = true;
-      setConfirmedData(parseData());
       setTimeout(() => setLoading(false), LOADING_DELAY * 2);
     }
+    const parsedData = parseData();
+    setConfirmedData(parsedData);
   }, []);
 
   /**

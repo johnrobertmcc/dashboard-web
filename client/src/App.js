@@ -8,7 +8,7 @@ import MainAside from 'layout/BodyAside';
 import { ROUTES } from 'constants';
 
 /**
- * The default Layout of the application.
+ * A webview application designed to help view budget tiems, events, and other daily necessities.
  *
  * @author  John Robert McCann
  * @since   6/25/2022

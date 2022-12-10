@@ -1,4 +1,4 @@
-import styles from './UserExpenses.module.css';
+import styles from './UserExpenses.module.scss';
 import SectionHeading from 'components/utils/SectionHeading';
 import Loading from 'components/utils/Loading';
 import { PropTypes } from 'prop-types';

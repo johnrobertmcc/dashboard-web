@@ -1,0 +1,10 @@
+.title {
+  @apply text-12 font-bold pb-2;
+}
+.list {
+  @apply w-full;
+
+  & > li {
+    @apply grid grid-cols-3 text-center text-11;
+  }
+}

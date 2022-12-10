@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import styles from './AddRecurringExpenses.module.scss';
 import { useSettingsContext } from 'context/SettingsData/SettingsData';
 import { useState, useEffect } from 'react';

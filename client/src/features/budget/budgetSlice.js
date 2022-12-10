@@ -7,7 +7,10 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: '',
+  monthTotal: 0,
+  upcoming: null,
 };
+
 // Publish a single item to the budget.
 export const publishItem = createAsyncThunk(
   'budget/create',
@@ -116,6 +119,44 @@ export const uploadItems = createAsyncThunk(
   }
 );
 
+// Fetch totals and expenses per month.
+export const fetchMonthTotal = createAsyncThunk(
+  '/budget/total',
+  async (data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await budgetService.getMonthTotal(data, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Fetch totals and expenses per month.
+export const fetchUpcomingItems = createAsyncThunk(
+  '/budget/upcoming',
+  async (number, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await budgetService.getUpcomingExpenses(number, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const budgetSlice = createSlice({
   name: 'budgetItem',
   initialState,
@@ -203,6 +244,32 @@ export const budgetSlice = createSlice({
         state.items.budget.push(...action.payload.insertion);
       })
       .addCase(uploadItems.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(fetchMonthTotal.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchMonthTotal.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.monthTotal = action.payload;
+      })
+      .addCase(fetchMonthTotal.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(fetchUpcomingItems.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchUpcomingItems.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.upcoming = action.payload;
+      })
+      .addCase(fetchUpcomingItems.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

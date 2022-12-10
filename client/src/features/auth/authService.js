@@ -88,7 +88,6 @@ export async function editUser(user, token) {
  */
 export async function fetchUser(user, token) {
   const { _id: id = null, email = null } = user;
-  console.log('jr user', user);
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -99,16 +98,7 @@ export async function fetchUser(user, token) {
   };
 
   const url = API_URL + 'me';
-  console.log('jr url', url, config);
   const response = await axios.get(url, config);
-  console.log('jr response', response);
 
   return response?.user || null;
-
-  // try {
-  //   if (id) {
-  //   }
-  // } catch (e) {
-  //   console.error('Error fetching User', e);
-  // }
 }

@@ -2,10 +2,10 @@ import Drawer from 'components/utils/Drawer';
 import PropTypes from 'prop-types';
 import NavLinks from '../NavLinks';
 import styles from './NavMenu.module.scss';
-import { useSettingsContext } from '../../../context/SettingsData/SettingsData';
+import { useSettingsContext } from 'context/SettingsData/SettingsData';
 
 /**
- * Renders the NavMenu Component
+ * Renders the global nav bar.
  *
  * @author  John Robert McCann
  * @since   08/27/2022

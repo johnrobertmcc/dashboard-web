@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import styles from './kCalInfo.module.scss';
 import InfoCard from '../InfoCard';
 import delayedRender from 'functions/utils/delayedRender';
 import { LOADING } from 'constants';

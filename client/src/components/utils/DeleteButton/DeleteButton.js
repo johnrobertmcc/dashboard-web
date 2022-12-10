@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import styles from './DeleteButton.module.scss';
 import { useDispatch } from 'react-redux';
 import { deleteBudgetItem } from 'features/budget/budgetSlice';
 

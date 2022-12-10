@@ -1,7 +1,7 @@
 import Loading from 'components/utils/Loading';
 import { LOADING } from 'constants';
 import cn from 'classnames';
-import defaultStyles from './delayedrender.module.css';
+import defaultStyles from './delayedrender.module.scss';
 /**
  * Function used to display loader if no value exists.
  *

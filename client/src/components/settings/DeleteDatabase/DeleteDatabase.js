@@ -1,4 +1,3 @@
-import styles from './DeleteDatabase.module.scss';
 import { createElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CONFIRMATION, TOP_WARNING, BTN_TEXT } from './DeleteDatabase.utils';

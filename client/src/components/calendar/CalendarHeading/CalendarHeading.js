@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import styles from './CalendarHeading.module.scss';
 import { useCalendarContext } from 'context/CalendarData';
 

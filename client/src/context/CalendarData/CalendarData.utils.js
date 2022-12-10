@@ -6,10 +6,8 @@ import dayjs from 'dayjs';
  * @author  John Robert McCann
  * @since   8/25/2022
  * @version 1.0.0
- *
  * @param {number|string} year  The year to interpret
  * @param {number|string} month The month to mod by 12 and 10.
- *
  * @returns {string}  Returns the string of which the data will be queued under.
  */
 export function settleDate(year, month) {
@@ -27,8 +25,8 @@ export function settleDate(year, month) {
  * @author  John Robert McCann
  * @since   8/25/2022
  * @version 1.0.0
- *
- * @param {object} obj The budget returned from MongoDB.
+ * @param   {object} obj The budget returned from MongoDB.
+ * @returns {object}     Returns the budget items structured.
  */
 export function handleBudgetItems(obj) {
   const { budget = [] } = obj;
@@ -49,6 +47,14 @@ export function handleBudgetItems(obj) {
 
 /**
  * Function used to create the correct date string based on the current date.
+ *
+ * @author  John Robert McCann
+ * @since   8/25/2022
+ * @version 1.0.0
+ * @param   {string} year    The year to record.
+ * @param   {string} month   The month to record.
+ * @param   {string} dateNum The date 1-31.
+ * @returns {object}         Returns the budget items structured.
  */
 export function createDateString(year, month, dateNum) {
   return `${year}-${month < 9 ? `0${month + 1}` : `${month + 1}`}-${
@@ -57,6 +63,7 @@ export function createDateString(year, month, dateNum) {
 }
 
 /**
+ * DEPRECATED - LOGIC MOVED INTO MONGO QUERY
  * Function used to seperate the data by month and year.
  *
  * @author  John Robert McCann

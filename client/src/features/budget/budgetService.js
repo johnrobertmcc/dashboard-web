@@ -21,8 +21,6 @@ async function sendItemToDB(budgetData, token) {
   return response?.data;
 }
 
-
-
 /**
  * Function used to register a new user to the database and set token to local storage.
  *
@@ -132,6 +130,51 @@ async function sendMultipleItems(budgetData, token) {
   return response?.data;
 }
 
+/**
+ * Function used to get a month's total expenses.
+ *
+ * @author John Robert McCann
+ * @since 12/09/2022
+ * @param {object} date  The date structured as {month, year}.
+ * @param {string} token The user's token.
+ */
+async function getMonthTotal(date, token) {
+  const { month, year, numDays } = date;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    params: { month, year, numDays },
+  };
+
+  const url = API_URL + 'total';
+  const response = await axios.get(url, config);
+
+  return response?.data;
+}
+
+/**
+ * Function used to get upcoming items.
+ *
+ * @author John Robert McCann
+ * @since 12/09/2022
+ * @param {string} number The number of items to fetch.
+ * @param {string} token  The user's token.
+ */
+async function getUpcomingExpenses(number, token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    params: { number },
+  };
+
+  const url = API_URL + 'upcoming';
+  const response = await axios.get(url, config);
+
+  return response?.data;
+}
+
 const budgetService = {
   sendItemToDB,
   getBudgetItems,
@@ -139,6 +182,8 @@ const budgetService = {
   editBudgetItem,
   deleteEntireBudget,
   sendMultipleItems,
+  getMonthTotal,
+  getUpcomingExpenses,
 };
 
 export default budgetService;

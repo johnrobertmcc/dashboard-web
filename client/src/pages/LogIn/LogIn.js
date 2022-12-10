@@ -1,11 +1,10 @@
-import styles from './LogIn.module.css';
+import styles from './LogIn.module.scss';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import createInputRows from 'functions/utils/createInputRows';
 import { reset, login } from 'features/auth/authSlice.js';
 import { INVALID_LOGIN } from 'errors';
-import { LOADING_DELAY } from 'constants';
 import Loading from 'components/utils/Loading';
 import { Container } from 'layout';
 import { enableScroll } from 'functions/utils/scroll';

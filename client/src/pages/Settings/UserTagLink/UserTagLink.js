@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import styles from './UserTagLink.module.scss';
 import { useSettingsContext } from 'context/SettingsData/SettingsData';
 import UserTags from 'components/settings/UserTags';

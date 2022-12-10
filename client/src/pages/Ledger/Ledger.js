@@ -4,14 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import Loading from 'components/utils/Loading';
 import UserExpenses from 'components/expenses/UserExpenses';
 import PageHeading from 'components/utils/PageHeading';
-import styles from './Ledger.module.scss';
 
 /**
- * Renders the Ledger Component
- *
- * @param  {object}  props       The component as props.
- * @param  {string}  props.component The name of the component.
- * @return {Element}             The Ledger component.
+ * Renders a ledger with individual budget items.
+ * @author John Robert McCann
+ * @since 6/19/2022
+ * @return {Element}   The Ledger component.
  */
 export default function Ledger() {
   const dispatch = useDispatch();

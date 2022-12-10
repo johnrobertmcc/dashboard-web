@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
-import styles from './Input.module.css';
+import styles from './Input.module.scss';
 /**
  * Renders a default stylized input component.
+ *
  * @author John Robert McCann
  * @since 6/26/2022
  * @param  {object}  props       The component as props.

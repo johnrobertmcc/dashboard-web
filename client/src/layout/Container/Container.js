@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import { createElement } from 'react';
-import styles from './Container.module.css';
+import styles from './Container.module.scss';
 
 /**
  * Renders a container to be used as an element to limit the children's width.

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import styles from './PageHeading.module.css';
+import styles from './PageHeading.module.scss';
 import { createElement } from 'react';
 
 /**

@@ -1,4 +1,4 @@
-import styles from './Register.module.css';
+import styles from './Register.module.scss';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';

@@ -1,10 +1,9 @@
 import { useEffect, createContext, useContext, useState, useRef } from 'react';
 import Modal from 'components/utils/Modal';
 import { LOADING_DELAY } from 'constants';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { DEFAULT_TAGS, DEFAULT_THEME, THEMES } from './SettingsData.utils';
 import useKeyPress from 'functions/hooks/useKeyPress.js';
-import { edit, getInfo } from 'features/auth/authSlice';
 
 // Initialize context object.
 const SettingsProvider = createContext();
@@ -27,7 +26,8 @@ export function useSettingsContext() {
  * @author  John Robert McCann
  * @since   09/14/2022
  * @version 1.0.0
- * @return  {Element}     The SettingsData component.
+ * @param   {children} children The children of the app
+ * @return  {Element}           The SettingsData component.
  */
 export default function SettingsData({ children }) {
   const [openSettings, setOpenSettings] = useState(false);
@@ -39,13 +39,6 @@ export default function SettingsData({ children }) {
   const { user } = useSelector((state) => state?.auth);
   const leftMenu = useKeyPress('[');
   const rightMenu = useKeyPress(']');
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   if (user) {
-  //     dispatch(getInfo(user));
-  //   }
-  // }, [user]);
 
   useEffect(() => {
     if (leftMenu) {
@@ -68,7 +61,7 @@ export default function SettingsData({ children }) {
   /**
    * Function used to open the global modal with setting specific data.
    *
-   * @param {node} children  The children to render inside of the modal.
+   * @param {Node} children  The children to render inside of the modal.
    */
   function openModal(children) {
     setOpenSettings(true);
@@ -89,6 +82,7 @@ export default function SettingsData({ children }) {
    * @author  John Robert McCann
    * @since   8/28/2022
    * @version 1.0.0
+   * @param {string} direction The direction to slide, const LEFT or RIGHT.
    */
   function handleClick(direction) {
     setOpenMenu((prev) => ({ ...prev, [direction]: !prev?.[direction] }));

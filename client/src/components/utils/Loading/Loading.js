@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import styles from './Loading.module.css';
+import styles from './Loading.module.scss';
 
 /**
  * Renders a spinner for loading state.

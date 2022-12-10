@@ -5,12 +5,13 @@ import { useEffect } from 'react';
 import cn from 'classnames';
 
 /**
- * Renders the Modal Component
+ * Renders a global modal component with dynamic children.
  *
  * @author  John Robert McCann
  * @since   09/14/2022
  * @version 1.0.0
- * @return  {Element}                 The Modal component.
+ * @param   {object}  children The children of the modal to render.
+ * @return  {Element}          The Modal component.
  */
 export default function Modal({ children }) {
   const { closeModal, openSettings } = useSettingsContext();
