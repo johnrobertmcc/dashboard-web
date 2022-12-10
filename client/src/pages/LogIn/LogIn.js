@@ -71,7 +71,7 @@ export default function LogIn() {
       navigate('/');
       enableScroll();
     }
-  }, [user]);
+  }, [user, navigate]);
 
   if (loading) {
     return <Loading />;

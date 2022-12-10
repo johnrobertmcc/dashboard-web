@@ -1,4 +1,4 @@
-import { createElement, useEffect, useState } from 'react';
+import { createElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CONFIRMATION, TOP_WARNING, BTN_TEXT } from './DeleteDatabase.utils';
 import { deleteUserBudget } from 'features/budget/budgetSlice';

@@ -21,7 +21,7 @@ export default function Modal({ children }) {
     if (openSettings && escapePress) {
       closeModal();
     }
-  }, [escapePress, openSettings]);
+  }, [escapePress, openSettings, closeModal]);
   return (
     <dialog
       open={true}

@@ -7,10 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import dayjs from 'dayjs';
 import { LOADING_DELAY } from 'constants';
 import Loading from 'components/utils/Loading';
-import {
-  handleBudgetItems,
-  settleDate,
-} from './CalendarData.utils.js';
+import { handleBudgetItems, settleDate } from './CalendarData.utils.js';
 import {
   fetchMonthTotal,
   fetchUpcomingItems,
@@ -64,8 +61,8 @@ export default function CalendarData({ loader, children }) {
     year: dayjs().year(),
   });
 
-  const months = useMemo(() => dayjs.months(), [dayjs.locale()]);
-  const weeks = useMemo(() => dayjs.weekdaysShort(), [dayjs.locale()]);
+  const months = useMemo(() => dayjs.months(), []);
+  const weeks = useMemo(() => dayjs.weekdaysShort(), []);
   const { numDays, startOfMonth } = settleDate(date?.year, date?.month);
 
   useEffect(() => {
@@ -73,13 +70,6 @@ export default function CalendarData({ loader, children }) {
       setData(handleBudgetItems(items));
     }
   }, [isLoading, isSuccess, items]);
-
-  // useEffect(() => {
-  //   if (Object.keys(data).length) {
-  //     const seperatedTotals = seperateTotalsByMonth(data);
-  //     setMonthTotal(seperatedTotals);
-  //   }
-  // }, [data]);
 
   /**
    * Function used to open the drawer and set the calendar data.
@@ -147,7 +137,7 @@ export default function CalendarData({ loader, children }) {
         console.error(e);
       }
     }
-  }, [date]);
+  }, [date, dispatch, numDays, user]);
 
   const value = {
     openDrawer,

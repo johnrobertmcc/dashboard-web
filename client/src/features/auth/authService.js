@@ -87,7 +87,7 @@ export async function editUser(user, token) {
  * @param  {string} token   The user's token from local storage.
  */
 export async function fetchUser(user, token) {
-  const { _id: id = null, email = null } = user;
+  const { email = null } = user;
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,

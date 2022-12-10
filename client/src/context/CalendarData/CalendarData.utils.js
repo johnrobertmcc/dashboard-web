@@ -32,7 +32,7 @@ export function handleBudgetItems(obj) {
   const { budget = [] } = obj;
   let fin = {};
 
-  budget.map((item) => {
+  budget.forEach((item) => {
     const formattedDate = dayjs(item?.date).format('YYYY-MM-DD');
 
     if (fin[formattedDate]) {
@@ -102,7 +102,7 @@ export function seperateTotalsByMonth(data) {
  */
 function findAllAmountsInDay(array) {
   let sum = 0;
-  array.map((item) => {
+  array.forEach((item) => {
     const parsedAmount =
       typeof item?.amount === 'number'
         ? item?.amount

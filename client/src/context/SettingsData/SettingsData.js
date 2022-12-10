@@ -47,7 +47,7 @@ export default function SettingsData({ children }) {
     if (rightMenu) {
       setOpenMenu((prev) => ({ ...prev, right: !prev.right }));
     }
-  }, [leftMenu]);
+  }, [leftMenu, rightMenu]);
 
   useEffect(() => {
     if (!isLoaded.current && user) {

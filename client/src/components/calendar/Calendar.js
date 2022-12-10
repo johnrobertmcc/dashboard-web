@@ -38,7 +38,7 @@ export default function Calendar() {
         setLoading(false);
       }, LOADING_DELAY);
     }
-  }, []);
+  }, [LOADING_DELAY, setLoading]);
 
   return (
     <Container tag="section" className={styles.calendarSection}>

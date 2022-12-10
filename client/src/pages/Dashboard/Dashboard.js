@@ -30,7 +30,7 @@ export default function Dashboard() {
     } else {
       navigate('/login');
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, navigate]);
 
   return (
     <section>
