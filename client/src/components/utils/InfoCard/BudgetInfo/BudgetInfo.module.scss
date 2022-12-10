@@ -1,3 +1,7 @@
 .userInfoWrapper {
-  @apply py-5 border flex flex-col items-center w-96 rounded-lg shadow-xl;
+  @apply flex flex-col justify-around h-full md:w-3/4;
+  .total,
+  .transactions {
+    @apply text-12 flex justify-between;
+  }
 }
