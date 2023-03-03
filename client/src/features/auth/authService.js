@@ -57,18 +57,21 @@ export async function logOut() {
  * @param  {string} token   The user's token from local storage.
  */
 export async function editUser(user, token) {
-  const { _id: id = null } = user?.arg;
+  const { _id: id = null } = user;
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    data: user,
   };
+
+  console.log('jr user', user);
 
   try {
     if (id) {
-      const response = await axios.put(API_URL + id, user, config);
+      const response = await axios.put(API_URL + id, config);
       if (response?.data) {
-        return true;
+        return response.data;
       }
     }
   } catch (e) {

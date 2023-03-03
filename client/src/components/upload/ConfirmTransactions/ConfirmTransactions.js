@@ -33,6 +33,8 @@ export default function ConfirmTransactions({ data, structure }) {
   const { user } = useSelector((state) => state?.auth);
   const [message, setMessage] = useState(null);
 
+  console.log('jr', confirmedData);
+
   useEffect(() => {
     /**
      * Function used to parse string values into appropriate data fields for MongoDB.
@@ -52,7 +54,7 @@ export default function ConfirmTransactions({ data, structure }) {
             amount: parseFloat(row?.[amount].replace(/\$/g, '')),
             date: dayjs(row?.[date]).format('l') || null,
             event: row?.[event] || null,
-            item: row?.[item] || null,
+            item: row?.[item] || 'n/a',
             tag: row?.[tag] || null,
           };
         })

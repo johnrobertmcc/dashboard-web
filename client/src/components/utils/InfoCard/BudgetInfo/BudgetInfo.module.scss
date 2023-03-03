@@ -1,5 +1,5 @@
 .userInfoWrapper {
-  @apply flex flex-col justify-around h-full md:w-3/4;
+  @apply flex flex-col justify-around h-full md:w-3/4 px-10;
   .total,
   .transactions {
     @apply text-12 flex justify-between;

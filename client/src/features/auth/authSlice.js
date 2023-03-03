@@ -75,7 +75,6 @@ export const getInfo = createAsyncThunk(
     try {
       const token = thunkApi.getState().auth.user.token;
       const fetchedUser = await fetchUser(user, token);
-      console.log('jr fetchedUser', fetchedUser);
     } catch (error) {
       const message =
         (error.response &&
@@ -138,28 +137,32 @@ const authSlice = createSlice({
       .addCase(edit.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        debugger;
-        state.user = action?.payload ? action?.meta?.arg : null;
+        state.user = action?.meta?.arg;
+        console.log('jr edit fulfilled action', action)
+        console.log('jr edit fulfilled user', state.user)
       })
       .addCase(edit.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action?.payload || null;
-        // state.user = null;
+
       })
-      .addCase(getInfo.pending, (state) => {
+      .addCase(getInfo.pending, (state, action) => {
         state.isLoading = true;
+        console.log('jr getInfo action', action)
       })
       .addCase(getInfo.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action?.payload ? action?.meta?.arg : null;
+        console.log('jr getInfo fulfilled', action)
       })
       .addCase(getInfo.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action?.payload || null;
         state.user = null;
+        console.log('jr getInfo rejected', action)
       });
   },
 });

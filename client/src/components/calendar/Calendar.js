@@ -30,6 +30,8 @@ export default function Calendar() {
   } = useCalendarContext();
   const { month, year } = date;
   const isMounted = useRef(false);
+  const prevBtn = useRef();
+  const nextBtn = useRef();
 
   useEffect(() => {
     if (!isMounted.current) {
@@ -43,9 +45,9 @@ export default function Calendar() {
   return (
     <Container tag="section" className={styles.calendarSection}>
       <div className={styles.buttonContainer}>
-        <button onClick={() => handleClick('prev')}>prev</button>
+        <button onClick={() => handleClick('prev')} ref={prevBtn}>prev</button>
         <SectionHeading tag="h3" message={`${months[month]} ${year}`} />
-        <button onClick={() => handleClick('next')}>next</button>
+        <button onClick={() => handleClick('next')} ref={nextBtn}>next</button>
       </div>
       {loading || !isMounted.current ? (
         loader
@@ -53,7 +55,7 @@ export default function Calendar() {
         <ResponsiveTable tableKey={month}>
           <table className={styles.tableCal}>
             <CalendarHeading />
-            <CalendarBody />
+            <CalendarBody prevBtn={prevBtn} nextBtn={nextBtn} />
           </table>
         </ResponsiveTable>
       )}

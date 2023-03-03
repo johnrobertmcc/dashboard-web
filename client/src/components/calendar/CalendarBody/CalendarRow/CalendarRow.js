@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import styles from './CalendarRow.module.scss';
 import CalendarDate from '../CalendarDate';
 import { useCalendarContext } from 'context/CalendarData';
+import useKeyPress from 'functions/hooks/useKeyPress';
+import { useEffect, useState } from 'react';
 
 /**
  * Renders the rows of the calendar containing specified data.
@@ -13,8 +15,41 @@ import { useCalendarContext } from 'context/CalendarData';
  * @param  {number}   props.row     The current week of the month .
  * @returns {Element}               The CalendarRow component.
  */
-export default function CalendarRow({ row }) {
+export default function CalendarRow({ row, nextBtn, prevBtn }) {
   const { numDays, startOfMonth } = useCalendarContext();
+  const [focusedDay, setFocusedDay] = useState(0);
+  const upKey = useKeyPress('ArrowUp');
+  const rightKey = useKeyPress('ArrowRight');
+  const downKey = useKeyPress('ArrowDown');
+  const leftKey = useKeyPress("ArrowLeft");
+  const dKey = useKeyPress("d");
+  const aKey = useKeyPress("a");
+
+  useEffect(() => {
+    if(upKey){
+      setFocusedDay(prev => prev -= 7);
+    }else if(downKey){
+      setFocusedDay(prev => prev += 7);
+    }else if(leftKey){
+      setFocusedDay(prev => prev -= 1);
+    }else if(rightKey){
+      setFocusedDay(prev => prev += 1);
+    }else if(dKey){
+      nextBtn.current.click();
+    } else if(aKey){
+      prevBtn.current.click();
+    }
+  }, [upKey, downKey, leftKey, rightKey, dKey, aKey]);
+
+  useEffect(() => {
+    if(focusedDay <= 0){
+      prevBtn.current.focus();
+    }
+    if(focusedDay > 31){
+      nextBtn.current.focus();
+    }
+  }, [focusedDay]);
+
   return (
     <tr key={numDays} className={styles.tableRow}>
       {Array(7)
@@ -31,7 +66,7 @@ export default function CalendarRow({ row }) {
             dateProps.dateNum = null;
           }
 
-          return <CalendarDate {...dateProps} />;
+          return <CalendarDate {...dateProps} focusedKey={focusedDay} idx={dateProps.dateNum} />;
         })}
     </tr>
   );

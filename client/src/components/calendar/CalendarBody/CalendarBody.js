@@ -11,7 +11,7 @@ import { useCalendarContext } from 'context/CalendarData';
  * @version 1.0.0
  * @return {Element}   The CalendarBody component.
  */
-export default function CalendarBody() {
+export default function CalendarBody({nextBtn, prevBtn}) {
   const { numDays, startOfMonth } = useCalendarContext();
   const full = numDays + startOfMonth;
 
@@ -20,7 +20,7 @@ export default function CalendarBody() {
       {Array(Math.ceil(full / 7))
         .fill()
         .map((_, i) => (
-          <CalendarRow key={i} row={i} />
+          <CalendarRow key={i} row={i} nextBtn={nextBtn} prevBtn={prevBtn}/>
         ))}
     </tbody>
   );

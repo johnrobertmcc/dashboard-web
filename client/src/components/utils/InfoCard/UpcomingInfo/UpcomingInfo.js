@@ -26,13 +26,13 @@ export default function UpcomingInfo() {
       <h3 className={styles.title}> Upcoming Expenses</h3>
       <ul className={styles.list}>
         {upcoming?.expenses.map((expense, i) => {
-          const { amount, date, event, _id = i } = expense;
+          const { amount, date, item, _id = i } = expense;
 
           return (
             <li key={_id}>
               <p>{dayjs(date).format('L')}</p>
               <p>${amount?.$numberDecimal}</p>
-              <p>{event}</p>
+              <p>{item}</p>
             </li>
           );
         })}
