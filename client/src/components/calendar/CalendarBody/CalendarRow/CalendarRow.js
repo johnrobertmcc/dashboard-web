@@ -16,36 +16,38 @@ import { useEffect, useState } from 'react';
  * @returns {Element}               The CalendarRow component.
  */
 export default function CalendarRow({ row, nextBtn, prevBtn }) {
-  const { numDays, startOfMonth } = useCalendarContext();
+  const { numDays, startOfMonth, open } = useCalendarContext();
   const [focusedDay, setFocusedDay] = useState(0);
   const upKey = useKeyPress('ArrowUp');
   const rightKey = useKeyPress('ArrowRight');
   const downKey = useKeyPress('ArrowDown');
-  const leftKey = useKeyPress("ArrowLeft");
-  const dKey = useKeyPress("d");
-  const aKey = useKeyPress("a");
+  const leftKey = useKeyPress('ArrowLeft');
+  const dKey = useKeyPress('d');
+  const aKey = useKeyPress('a');
 
   useEffect(() => {
-    if(upKey){
-      setFocusedDay(prev => prev -= 7);
-    }else if(downKey){
-      setFocusedDay(prev => prev += 7);
-    }else if(leftKey){
-      setFocusedDay(prev => prev -= 1);
-    }else if(rightKey){
-      setFocusedDay(prev => prev += 1);
-    }else if(dKey){
-      nextBtn.current.click();
-    } else if(aKey){
-      prevBtn.current.click();
+    if (!open) {
+      if (upKey) {
+        setFocusedDay((prev) => (prev -= 7));
+      } else if (downKey) {
+        setFocusedDay((prev) => (prev += 7));
+      } else if (leftKey) {
+        setFocusedDay((prev) => (prev -= 1));
+      } else if (rightKey) {
+        setFocusedDay((prev) => (prev += 1));
+      } else if (dKey) {
+        nextBtn.current.click();
+      } else if (aKey) {
+        prevBtn.current.click();
+      }
     }
-  }, [upKey, downKey, leftKey, rightKey, dKey, aKey]);
+  }, [upKey, downKey, leftKey, rightKey, dKey, aKey, open]);
 
   useEffect(() => {
-    if(focusedDay <= 0){
+    if (focusedDay <= 0) {
       prevBtn.current.focus();
     }
-    if(focusedDay > 31){
+    if (focusedDay > numDays) {
       nextBtn.current.focus();
     }
   }, [focusedDay]);
@@ -66,7 +68,14 @@ export default function CalendarRow({ row, nextBtn, prevBtn }) {
             dateProps.dateNum = null;
           }
 
-          return <CalendarDate {...dateProps} focusedKey={focusedDay} idx={dateProps.dateNum} />;
+          return (
+            <CalendarDate
+              {...dateProps}
+              focusedKey={focusedDay}
+              idx={dateProps.dateNum}
+              setFocusedDay={setFocusedDay}
+            />
+          );
         })}
     </tr>
   );

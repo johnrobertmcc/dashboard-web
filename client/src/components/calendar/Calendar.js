@@ -27,11 +27,14 @@ export default function Calendar() {
     loading,
     LOADING_DELAY,
     loader,
+    open,
+    tableRef,
   } = useCalendarContext();
   const { month, year } = date;
   const isMounted = useRef(false);
   const prevBtn = useRef();
   const nextBtn = useRef();
+  const accessibleHeading = `${months[month]} ${year}`;
 
   useEffect(() => {
     if (!isMounted.current) {
@@ -42,18 +45,45 @@ export default function Calendar() {
     }
   }, [LOADING_DELAY, setLoading]);
 
+  useEffect(() => {
+    if (!open) {
+      // tableRef.current.focus();
+    }
+  }, [open]);
+
   return (
     <Container tag="section" className={styles.calendarSection}>
       <div className={styles.buttonContainer}>
-        <button onClick={() => handleClick('prev')} ref={prevBtn}>prev</button>
-        <SectionHeading tag="h3" message={`${months[month]} ${year}`} />
-        <button onClick={() => handleClick('next')} ref={nextBtn}>next</button>
+        <button
+          onClick={() => handleClick('prev')}
+          ref={prevBtn}
+          aria-label="Previous Month"
+        >
+          {months[month - 1 >= 0 ? month - 1 : 11]}
+        </button>
+        <SectionHeading
+          tag="h3"
+          message={accessibleHeading}
+          id="tableHeading"
+        />
+        <button
+          onClick={() => handleClick('next')}
+          ref={nextBtn}
+          aria-label="Next Month"
+        >
+          {months[(month + 1) % 12]}
+        </button>
       </div>
       {loading || !isMounted.current ? (
         loader
       ) : (
         <ResponsiveTable tableKey={month}>
-          <table className={styles.tableCal}>
+          <table
+            className={styles.tableCal}
+            ref={tableRef}
+            tabIndex={0}
+            aria-labelledby="tableHeading"
+          >
             <CalendarHeading />
             <CalendarBody prevBtn={prevBtn} nextBtn={nextBtn} />
           </table>

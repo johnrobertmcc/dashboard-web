@@ -1,6 +1,13 @@
 import Drawer from 'components/utils/Drawer';
 import PropTypes from 'prop-types';
-import { useEffect, createContext, useContext, useState, useMemo } from 'react';
+import {
+  useEffect,
+  createContext,
+  useContext,
+  useState,
+  useMemo,
+  useRef,
+} from 'react';
 import { disableScroll, enableScroll } from 'functions/utils/scroll.js';
 import CalendarDrawerContents from 'components/calendar/CalendarDrawerContents';
 import { useSelector, useDispatch } from 'react-redux';
@@ -64,6 +71,7 @@ export default function CalendarData({ loader, children }) {
   const months = useMemo(() => dayjs.months(), []);
   const weeks = useMemo(() => dayjs.weekdaysShort(), []);
   const { numDays, startOfMonth } = settleDate(date?.year, date?.month);
+  const tableRef = useRef();
 
   useEffect(() => {
     if (!isLoading && isSuccess && items) {
@@ -100,6 +108,7 @@ export default function CalendarData({ loader, children }) {
   function closeDrawer() {
     setOpen(false);
     enableScroll();
+    setTimeout(() => tableRef.current.focus(), 300);
   }
 
   /**
@@ -160,6 +169,7 @@ export default function CalendarData({ loader, children }) {
     open,
     monthTotal,
     upcoming,
+    tableRef,
   };
 
   return (

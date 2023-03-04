@@ -16,26 +16,33 @@ dayjs.extend(isToday);
  * @author  John Robert McCann
  * @since   8/2/2022
  * @version 1.0.0
- * @param  {object}  props            The component as props.
- * @param  {number}  props.dateNum    The calendar date calculated from the matrix index.
- * @param  {number}  props.focusedKey The key focused via keyboard event listeners..
- * @param  {number}  props.idx        The acutal index inside of the row.
- * @return {Element}                  The CalendarDate component.
+ * @param  {object}   props               The component as props.
+ * @param  {number}   props.dateNum       The calendar date calculated from the matrix index.
+ * @param  {number}   props.focusedKey    The key focused via keyboard event listeners..
+ * @param  {number}   props.idx           The acutal index inside of the row.
+ * @param  {Function} props.setFocusedDay Function used to set the focusedDay on outside focus events..
+ * @return {Element}                      The CalendarDate component.
  */
-export default function CalendarDate({ dateNum, focusedKey, idx }) {
+export default function CalendarDate({
+  dateNum,
+  focusedKey,
+  idx,
+  setFocusedDay,
+}) {
   const { openDrawer, data, date = null } = useCalendarContext();
   const [content, setContent] = useState(null);
   const [isFocused, setIsFocused] = useState(false);
   const [total, setTotal] = useState(0);
+  const [ariaHidden, setAriaHidden] = useState(true);
   const dateString = createDateString(date?.year, date?.month, dateNum);
   const keyRef = useRef();
   const enterKey = useKeyPress('Enter');
 
-  useEffect(() =>{
-    if(idx === focusedKey){
+  useEffect(() => {
+    if (idx === focusedKey) {
       keyRef.current.focus();
     }
-  }, [idx, focusedKey])
+  }, [idx, focusedKey]);
 
   useEffect(() => {
     if (!date) {
@@ -50,10 +57,35 @@ export default function CalendarDate({ dateNum, focusedKey, idx }) {
   }, [data, date]);
 
   useEffect(() => {
-    if(isFocused && enterKey){
+    if (isFocused && enterKey) {
       keyRef.current.click();
     }
   }, [isFocused, enterKey]);
+
+  /**
+   * Function used to control aria descriptors.
+   *
+   * @author  John Robert McCann
+   * @since   03/04/2022
+   * @version 1.0.0
+   */
+  function onFocus() {
+    setAriaHidden(false);
+    setIsFocused(true);
+    setFocusedDay(idx);
+  }
+
+  /**
+   * Function used to control aria descriptors.
+   *
+   * @author  John Robert McCann
+   * @since   03/04/2022
+   * @version 1.0.0
+   */
+  function onBlur() {
+    setAriaHidden(true);
+    setIsFocused(false);
+  }
 
   /**
    * Function used to apply the appropriate content to each table cell.
@@ -99,15 +131,19 @@ export default function CalendarDate({ dateNum, focusedKey, idx }) {
       onClick={() => dateNum && openDrawer(dateString)}
       key={dateNum}
       ref={keyRef}
-      onFocus={() => setIsFocused(true)}
-      onBlur={() => setIsFocused(false)}
+      onFocus={onFocus}
+      onBlur={onBlur}
       tabIndex={!dayjs(dateString).isValid() ? -1 : 0}
+      aria-hidden={ariaHidden}
     >
       <div className={styles.tableInner} key={dateNum}>
         {dateNum && (
           <>
-            <h4>{dateNum}</h4>
-            <h5 className={cn(total <= 0 && styles.nonSpent)}>
+            <h4 aria-label={dayjs(dateString).format('LL')}>{dateNum}</h4>
+            <h5
+              className={cn(total <= 0 && styles.nonSpent)}
+              aria-label={`Total Spent: ${total.toFixed(2)}`}
+            >
               {total.toFixed(2)}
             </h5>
           </>
@@ -121,4 +157,7 @@ export default function CalendarDate({ dateNum, focusedKey, idx }) {
 CalendarDate.propTypes = {
   data: itemProps,
   dateNum: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setFocusedDay: PropTypes.func,
+  idx: PropTypes.number,
+  focusedkey: PropTypes.number,
 };

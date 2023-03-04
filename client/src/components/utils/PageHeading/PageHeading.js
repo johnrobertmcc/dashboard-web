@@ -12,15 +12,22 @@ import { createElement } from 'react';
  * @param  {object}  props         The component as props.
  * @param  {string}  props.tag     The proper html semantic tag.
  * @param  {string}  props.message The message to display.
+ * @param  {string}  props.id      The heading id for aria-labelledby..
  * @return {Element}               The SectionHeading component.
  */
-export default function SectionHeading({ tag, message }) {
-  return createElement(tag, { className: styles.pageHead }, message);
+export default function SectionHeading({ tag, message, id }) {
+  return createElement(
+    tag,
+    { className: styles.pageHead, id, 'aria-label': message },
+    message
+  );
 }
 SectionHeading.propTypes = {
   tag: PropTypes.string,
   message: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 SectionHeading.defaultProps = {
   tag: 'h2',
+  id: null,
 };
