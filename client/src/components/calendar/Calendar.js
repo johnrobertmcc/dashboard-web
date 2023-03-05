@@ -27,7 +27,6 @@ export default function Calendar() {
     loading,
     LOADING_DELAY,
     loader,
-    open,
     tableRef,
   } = useCalendarContext();
   const { month, year } = date;
@@ -44,12 +43,6 @@ export default function Calendar() {
       }, LOADING_DELAY);
     }
   }, [LOADING_DELAY, setLoading]);
-
-  useEffect(() => {
-    if (!open) {
-      // tableRef.current.focus();
-    }
-  }, [open]);
 
   return (
     <Container tag="section" className={styles.calendarSection}>

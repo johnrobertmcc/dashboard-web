@@ -135,6 +135,7 @@ export default function CalendarData({ loader, children }) {
       newMonth = newMonth === 0 ? 11 : (newMonth -= 1);
     }
     setDate({ month: newMonth, year: newYear });
+    setTimeout(() => tableRef.current.focus(), 100);
   }
 
   useEffect(() => {

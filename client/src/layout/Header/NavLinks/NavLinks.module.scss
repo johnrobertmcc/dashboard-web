@@ -1,14 +1,23 @@
-.list {
-  @apply tablet:flex justify-between items-center;
+.navBar {
+  @apply h-full;
 
-  .link {
-    @apply px-3 font-bold hover:underline;
-    &.logOut {
-      @apply py-5 px-1 text-dark-primary/60;
+  .list {
+    @apply tablet:flex justify-between items-center h-full;
+
+    .link {
+      @apply font-bold hover:underline h-full w-full;
+
+      &.logOut {
+        @apply text-light-secondary;
+        @apply h-full;
+        > button {
+          @apply py-5 px-1  h-full;
+        }
+      }
     }
   }
-}
 
-.currentPath {
-  @apply bg-white;
+  .currentPath {
+    @apply bg-white;
+  }
 }

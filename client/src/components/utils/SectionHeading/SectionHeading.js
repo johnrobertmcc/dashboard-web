@@ -7,11 +7,11 @@ import { createElement } from 'react';
  * @author  John Robert McCann
  * @since   8/26/2022
  * @version 1.0.0
+ * @component
  *
- * @param  {object}  props         The component as props.
- * @param  {string}  props.tag     The proper html semantic tag.
- * @param  {string}  props.message The message to display.
- * @param  {string}  props.id      The id for aria-labelledby.
+ * @param  {string}  tag     The proper html semantic tag.
+ * @param  {string}  message The message to display.
+ * @param  {string}  id      The id for aria-labelledby.
  * @return {Element}               The SectionHeading component.
  */
 export default function SectionHeading({ tag, message, id }) {

@@ -18,30 +18,17 @@ import { useEffect, useState } from 'react';
 export default function CalendarRow({ row, nextBtn, prevBtn }) {
   const { numDays, startOfMonth, open } = useCalendarContext();
   const [focusedDay, setFocusedDay] = useState(0);
-  const upKey = useKeyPress('ArrowUp');
-  const rightKey = useKeyPress('ArrowRight');
-  const downKey = useKeyPress('ArrowDown');
-  const leftKey = useKeyPress('ArrowLeft');
   const dKey = useKeyPress('d');
   const aKey = useKeyPress('a');
 
   useEffect(() => {
-    if (!open) {
-      if (upKey) {
-        setFocusedDay((prev) => (prev -= 7));
-      } else if (downKey) {
-        setFocusedDay((prev) => (prev += 7));
-      } else if (leftKey) {
-        setFocusedDay((prev) => (prev -= 1));
-      } else if (rightKey) {
-        setFocusedDay((prev) => (prev += 1));
-      } else if (dKey) {
-        nextBtn.current.click();
-      } else if (aKey) {
-        prevBtn.current.click();
-      }
+    if (dKey && !open) {
+      nextBtn.current.click();
     }
-  }, [upKey, downKey, leftKey, rightKey, dKey, aKey, open]);
+    if (aKey && !open) {
+      prevBtn.current.click();
+    }
+  }, [dKey, aKey, open]);
 
   useEffect(() => {
     if (focusedDay <= 0) {

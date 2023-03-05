@@ -27,7 +27,7 @@ export default function Header() {
       className={cn(styles.header, styles[theme])}
     >
       <h1 className="sr-only">{ACCESSIBLE_HEADER}</h1>
-      <button onClick={() => handleClick(LEFT)}>
+      <button onClick={() => handleClick(LEFT)} className={styles.logoWrapper}>
         <img src="./favicon.webp" alt="J.R. Inc" className={styles.logoImg} />
       </button>
       <NavLinks user={user} className={!user && styles.unauthenticated} />

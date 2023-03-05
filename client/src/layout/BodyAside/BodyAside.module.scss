@@ -1,7 +1,9 @@
 .aside {
-  @apply bg-dark-secondary mt-5 rounded-lg py-20;
+  @apply mt-5 rounded-lg py-20;
   @apply fixed top-24 left-0 transform transition-all w-0 tablet:w-24;
   @apply z-10 invisible tablet:visible text-opacity-0 tablet:text-opacity-100 duration-150;
+  @apply bg-light-tertiary;
+
   & ul {
     @apply invisible tablet:visible;
   }
@@ -16,7 +18,10 @@
     @apply flex flex-col h-full;
 
     & li {
-      @apply w-full py-5 text-right pr-2;
+      @apply w-full text-right h-full;
+      > a {
+        @apply h-full py-5 pr-2 block w-full;
+      }
 
       &:first-child {
         @apply mt-10;

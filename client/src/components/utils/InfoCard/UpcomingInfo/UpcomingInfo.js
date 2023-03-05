@@ -3,6 +3,8 @@ import Loading from 'components/utils/Loading';
 import InfoCard from 'components/utils/InfoCard';
 import styles from './UpcomingInfo.module.scss';
 import dayjs from 'dayjs';
+import { ACCESSIBLE_HEADER } from 'constants';
+import { ACCESSIBLE_ID, ACCESSIBLE_TITLE } from './UpcomingInfo.utils';
 const localizedFormat = require('dayjs/plugin/localizedFormat');
 dayjs.extend(localizedFormat);
 
@@ -23,8 +25,10 @@ export default function UpcomingInfo() {
 
   return (
     <InfoCard>
-      <h3 className={styles.title}> Upcoming Expenses</h3>
-      <ul className={styles.list}>
+      <h3 className={styles.title} id={ACCESSIBLE_ID}>
+        {ACCESSIBLE_TITLE}
+      </h3>
+      <ul className={styles.list} aria-labelledby={ACCESSIBLE_ID}>
         {upcoming?.expenses.map((expense, i) => {
           const { amount, date, item, _id = i } = expense;
 

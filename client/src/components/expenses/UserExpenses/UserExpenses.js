@@ -18,13 +18,13 @@ import { Container } from 'layout';
 export default function UserExpenses({ items }) {
   return (
     <Container>
-      <SectionHeading message="Current Expenses" />
+      <SectionHeading message="Current Expenses" id="ledger" />
       {items?.budget ? (
-        <table className={styles.table}>
+        <table className={styles.table} aria-labelledby="ledger">
           <thead>
             <tr>
               <th>Date</th>
-              <th>Item</th>
+              <th>Item</th>[]
               <th>Amount</th>
               <th>Event</th>
               <th>Tag</th>

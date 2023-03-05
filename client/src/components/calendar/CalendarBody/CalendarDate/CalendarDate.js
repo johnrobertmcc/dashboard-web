@@ -103,7 +103,13 @@ export default function CalendarDate({
           : item?.amount?.$numberDecimal;
       sum += parseFloat(parsedAmount);
       return (
-        <li key={item?._id || i} className={styles[item?.tag]}>
+        <li
+          key={item?._id || i}
+          className={styles[item?.tag]}
+          aria-label={`${item?.item || item?.event} costing ${parseFloat(
+            parsedAmount
+          )}`}
+        >
           <p>{item?.item || item?.event}</p>
         </li>
       );

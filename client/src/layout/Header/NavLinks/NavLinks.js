@@ -37,37 +37,39 @@ export default function NavLinks({ className, links }) {
     navigate('/login');
   }
   return (
-    <ul className={cn(className ? className : styles.list)}>
-      {links?.map((link, i) => {
-        if (link?.protected && !user) {
-          return null;
-        }
+    <nav className={styles.navBar}>
+      <ul className={cn(className ? className : styles.list)}>
+        {links?.map((link, i) => {
+          if (link?.protected && !user) {
+            return null;
+          }
 
-        if (!link?.protected && user) {
-          return null;
-        }
+          if (!link?.protected && user) {
+            return null;
+          }
 
-        if (user && link?.title === 'Log Out') {
+          if (user && link?.title === 'Log Out') {
+            return (
+              <li className={cn(styles.link, styles.logOut)} key={i}>
+                <button onClick={() => handleLogOut()}>{link.title}</button>
+              </li>
+            );
+          }
+
           return (
-            <li className={cn(styles.link, styles.logOut)} key={i}>
-              <button onClick={() => handleLogOut()}>{link.title}</button>
+            <li
+              className={cn(
+                styles.link,
+                pathname === link?.url && styles.currentPath
+              )}
+              key={i}
+            >
+              <Link to={link?.url}>{link?.title}</Link>
             </li>
           );
-        }
-
-        return (
-          <li
-            className={cn(
-              styles.link,
-              pathname === link?.url && styles.currentPath
-            )}
-            key={i}
-          >
-            <Link to={link?.url}>{link?.title}</Link>
-          </li>
-        );
-      })}
-    </ul>
+        })}
+      </ul>
+    </nav>
   );
 }
 NavLinks.propTypes = {

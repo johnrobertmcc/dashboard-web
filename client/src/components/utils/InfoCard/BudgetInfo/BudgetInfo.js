@@ -3,6 +3,12 @@ import Loading from 'components/utils/Loading';
 import InfoCard from 'components/utils/InfoCard';
 import delayedRender from 'functions/utils/delayedRender';
 import styles from './BudgetInfo.module.scss';
+import {
+  TOTAL_SPENT,
+  TOTAL_TRANSACTIONS,
+  ACCESSIBLE_ID,
+  ACCESSIBLE_TITLE,
+} from './BudgetInfo.utils';
 
 /**
  * Renders a card for budget information.
@@ -13,7 +19,7 @@ import styles from './BudgetInfo.module.scss';
  * @return  {Element}    The BudgetInfo component.
  */
 export default function BUdgetInfo() {
-  const { monthTotal } = useCalendarContext();
+  const { monthTotal = null } = useCalendarContext();
   const { total = 'LOADING', items = 'LOADING' } = monthTotal;
 
   if (!monthTotal) {
@@ -22,12 +28,19 @@ export default function BUdgetInfo() {
 
   return (
     <InfoCard>
-      <div className={styles.userInfoWrapper}>
-        <h3 className={styles.total}>
-          Total Spent This Month: {delayedRender(total)}
+      <h2 className={styles.title} id={ACCESSIBLE_ID}>
+        {ACCESSIBLE_TITLE}
+      </h2>
+      <div
+        className={styles.userInfoWrapper}
+        role="list"
+        aria-labelledby={ACCESSIBLE_ID}
+      >
+        <h3 className={styles.total} aria-label={TOTAL_SPENT}>
+          {TOTAL_SPENT} {delayedRender(total)}
         </h3>
-        <h3 className={styles.transactions}>
-          Total Transactions: {delayedRender(items)}
+        <h3 className={styles.transactions} aria-label={TOTAL_TRANSACTIONS}>
+          {TOTAL_TRANSACTIONS} {delayedRender(items)}
         </h3>
       </div>
     </InfoCard>

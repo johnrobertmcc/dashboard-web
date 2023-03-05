@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "ttab -t 'Client' npm start --prefix client"
+    "start": "BROWSER=none ttab -t 'Client' npm start --prefix client"
   },
   "author": "J.R. McCann",
   "license": "ISC",

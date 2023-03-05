@@ -1,18 +1,13 @@
 .header {
   @apply relative border-none;
   @apply h-24 flex justify-between items-center;
-  .logoImg {
-    @apply h-12;
-  }
+  @apply bg-light-tertiary;
+  .logoWrapper {
+    @apply h-full;
 
-  &.dark {
-    @apply bg-dark-primary;
-
-    @apply text-dark-secondary;
-  }
-
-  &.light {
-    @apply bg-light-tertiary;
+    .logoImg {
+      @apply h-12;
+    }
   }
 
   .unauthenticated {

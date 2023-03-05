@@ -1,5 +1,9 @@
+.title {
+  @apply text-12 font-bold px-5 mb-1;
+}
 .userInfoWrapper {
-  @apply flex flex-col justify-around h-full md:w-3/4 px-10;
+  @apply flex flex-col justify-around h-full md:w-3/4 px-10 pb-3;
+
   .total,
   .transactions {
     @apply text-12 flex justify-between;
