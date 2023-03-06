@@ -8,7 +8,7 @@
       @apply font-bold hover:underline h-full w-full;
 
       &.logOut {
-        @apply text-light-secondary;
+        @apply text-dark-tertiary;
         @apply h-full;
         > button {
           @apply py-5 px-1  h-full;
@@ -18,6 +18,10 @@
   }
 
   .currentPath {
-    @apply bg-white;
+    @apply bg-dark-tertiary;
+
+    * {
+      @apply text-dark-secondary;
+    }
   }
 }

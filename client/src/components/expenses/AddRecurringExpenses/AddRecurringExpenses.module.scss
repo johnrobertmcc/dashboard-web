@@ -1,3 +1,28 @@
 .submit {
   @apply border w-96;
 }
+
+.recurringExpenses {
+  @apply bg-dark-secondary mt-10 mb-5;
+
+  & h3 {
+    @apply text-dark-tertiary px-2;
+  }
+
+  .form {
+    @apply px-5;
+
+    input,
+    button,
+    select {
+      @apply w-full h-10 capitalize px-3;
+    }
+    * {
+      @apply text-dark-primary bg-dark-tertiary;
+    }
+  }
+
+  .submit {
+    @apply bg-dark-tertiary text-dark-secondary;
+  }
+}

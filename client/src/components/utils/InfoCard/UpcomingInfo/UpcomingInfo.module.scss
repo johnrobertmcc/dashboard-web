@@ -1,10 +1,12 @@
 .title {
   @apply text-12 font-bold pb-2 px-5;
+  @apply text-dark-tertiary;
 }
 .list {
-  @apply w-full;
+  @apply w-full px-8;
 
   & > li {
-    @apply grid grid-cols-3 text-center text-11;
+    @apply text-dark-tertiary;
+    @apply grid grid-cols-3 text-center text-11 gap-x-10;
   }
 }

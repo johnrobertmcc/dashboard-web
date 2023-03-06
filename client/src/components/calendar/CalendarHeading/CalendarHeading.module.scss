@@ -1,5 +1,6 @@
 .tableHeader {
-  @apply font-black bg-slate-300 text-slate-800;
+  @apply font-black text-dark-tertiary;
+  @apply bg-dark-primary;
   .weekDay {
     @apply w-36 py-3;
   }

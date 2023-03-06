@@ -2,31 +2,31 @@
   @apply relative h-16 tablet:h-32 cursor-pointer;
 
   &.over {
-    @apply bg-red-100/60;
+    @apply bg-error-excessive;
   }
 
   &.not-allowed {
-    @apply bg-red-200;
+    @apply bg-error-notAllowed;
   }
 
   &.success {
-    @apply bg-green-50;
+    @apply bg-dark-tertiary/70;
   }
 
   &.acceptable {
-    @apply bg-yellow-100/20;
+    @apply bg-dark-tertiary/60;
   }
 
   &.warning {
-    @apply bg-red-50;
+    @apply bg-error-immediate;
   }
 
   &.immediate {
-    @apply bg-red-300;
+    @apply bg-error-immediate;
   }
 
   &.adjoining {
-    @apply bg-transparent;
+    @apply bg-dark-tertiary;
   }
 
   &.pastDate {
@@ -40,8 +40,8 @@
     @apply opacity-30;
     background-image: repeating-linear-gradient(
       45deg,
-      #eee 10px,
-      #eee 12px,
+      #50668a 10px,
+      #50668a 12px,
       transparent 12px,
       transparent 20px
     );
@@ -49,6 +49,8 @@
 
   & .tableInner {
     @apply overflow-y-auto h-10 sm:h-16 tablet:h-28 w-10 sm:w-16 tablet:w-full;
+    @apply mt-5;
+    @apply text-dark-secondary;
     & > h4 {
       @apply font-bold text-10 sm:text-12 md:text-16 absolute top-1 left-1;
       @apply text-inherit;
@@ -59,7 +61,7 @@
       @apply text-inherit;
 
       &.nonSpent {
-        @apply opacity-50;
+        @apply opacity-80;
       }
     }
 
@@ -70,11 +72,6 @@
 
         & p {
           @apply line-clamp-1 text-left;
-        }
-
-        &.test,
-        &.testing {
-          @apply text-red-300;
         }
 
         &.groceries {

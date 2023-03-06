@@ -2,8 +2,8 @@ import styles from './AddRecurringExpenses.module.scss';
 import { useSettingsContext } from 'context/SettingsData/SettingsData';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container } from 'layout';
 import SectionHeading from 'components/utils/SectionHeading';
+import InfoCard from 'components/utils/InfoCard';
 import {
   CONFIRMED_RECURRING,
   DEFAULT_STATE,
@@ -81,27 +81,29 @@ export default function AddRecurringExpenses() {
   }
 
   return (
-    <Container>
-      <SectionHeading message="Add Expense" />
-      <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
-        {Object.values(data)?.map((input, i) => {
-          const { name, value, type, options = null, tag = 'input' } = input;
+    <ul className={styles.recurringExpenses}>
+      <InfoCard>
+        <SectionHeading tag="h3" message="Add Expense" />
+        <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+          {Object.values(data)?.map((input, i) => {
+            const { name, value, type, options = null, tag = 'input' } = input;
 
-          return createElement(TAG_MAPPING[tag], {
-            key: i,
-            id: name,
-            name,
-            value,
-            placeHolder: name,
-            type: type,
-            options: options || tags,
-            callBack: (e) => handleChange(e),
-          });
-        })}
-        <button type="submit" className={styles.submit}>
-          Submit
-        </button>
-      </form>
-    </Container>
+            return createElement(TAG_MAPPING[tag], {
+              key: i,
+              id: name,
+              name,
+              value,
+              placeHolder: name,
+              type: type,
+              options: options || tags,
+              callBack: (e) => handleChange(e),
+            });
+          })}
+          <button type="submit" className={styles.submit}>
+            Submit
+          </button>
+        </form>
+      </InfoCard>
+    </ul>
   );
 }
